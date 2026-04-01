@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/*
+  Tryphé — paleta desde brand book (RAW / materias naturales).
+  Referencias: arena #f3ebe3, tierra #a17952, salvia #a9b989, melocotón #eec2b0, pizarra #abc4d5
+*/
+:root {
+  --theme-bg: #f3ebe3;
+  --theme-bg-elevated: #f8f3ed;
+  --theme-fg: #2a2218;
+  --theme-muted: #6b5d52;
+  /* Acento principal (CTA, enlaces): tierra / madera */
+  --theme-accent: #a17952;
+  --theme-accent-soft: rgba(161, 121, 82, 0.18);
+  /* Secundarios de marca */
+  --theme-sage: #a9b989;
+  --theme-peach: #eec2b0;
+  --theme-slate: #abc4d5;
+  --theme-border: rgba(42, 34, 24, 0.12);
+  --theme-surface: rgba(238, 194, 176, 0.4);
+
+  --oob-bg: var(--theme-bg);
+  --oob-bg-elevated: var(--theme-bg-elevated);
+  --oob-surface: var(--theme-surface);
+  --oob-border: var(--theme-border);
+  --oob-gold: var(--theme-accent);
+  --oob-gold-dim: color-mix(in oklab, var(--theme-accent) 85%, black);
+  --oob-gold-hover: color-mix(in oklab, var(--theme-accent) 88%, white);
+  --oob-gold-glow: color-mix(in oklab, var(--theme-peach) 55%, transparent);
+  --oob-cream: var(--theme-fg);
+  --oob-muted: var(--theme-muted);
+  --oob-fairway: var(--theme-sage);
+  --oob-fairway-soft: color-mix(in oklab, var(--theme-sage) 45%, transparent);
+  --foreground: var(--theme-fg);
+  --background: var(--theme-bg);
+
+  /* Barra superior: pizarra oscura (coherente con paleta, legible sobre melocotón/salvia en hover) */
+  --oob-topbar-bg: #2f3a42;
+  --oob-topbar-text: #f8f4ef;
+  --oob-topbar-muted: rgba(248, 244, 239, 0.62);
+  --oob-topbar-border: rgba(171, 196, 213, 0.15);
+  --oob-topbar-hover: rgba(171, 196, 213, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--oob-bg);
+  color: var(--oob-cream);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--oob-gold-glow);
+  color: var(--theme-fg);
+}
+
+.oob-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .oob-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.oob-heading-xl {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.oob-line-gold {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--theme-slate),
+    var(--theme-accent),
+    var(--theme-slate),
+    transparent
+  );
+}
