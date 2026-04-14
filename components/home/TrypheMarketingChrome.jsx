@@ -49,9 +49,7 @@ export function TrypheMarketingChrome({
 
       {!shopConfigured ? (
         <div className="border-b border-neutral-200 bg-[#f5f0e8] px-3 py-2 text-center text-[10px] leading-snug text-neutral-800 sm:text-[11px]">
-          <strong>Shopify no conectado.</strong> Configura{" "}
-          <code className="rounded border border-neutral-300 bg-white px-1">.env.local</code> (ver{" "}
-          <code className="rounded border border-neutral-300 bg-white px-1">.env.example</code>).
+          <strong>Solo falta pasar clave de acceso a Neil.</strong>
         </div>
       ) : null}
 
