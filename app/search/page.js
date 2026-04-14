@@ -19,8 +19,8 @@ export default async function SearchPage({ searchParams }) {
 
   return (
     <div className="oob-container py-10 md:py-14">
-      <h1 className="oob-heading-xl text-2xl md:text-3xl text-[var(--oob-cream)] mb-2">
-        Búsqueda
+      <h1 className="oob-heading-xl text-2xl md:text-3xl text-[var(--oob-cream)] mb-2" data-gsap="fade-up">
+        Busqueda
       </h1>
       {q ? (
         <p className="text-sm text-[var(--oob-muted)] mb-8">
@@ -44,7 +44,7 @@ export default async function SearchPage({ searchParams }) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4" data-gsap="fade-up" data-gsap-stagger="0.06">
           {products.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}

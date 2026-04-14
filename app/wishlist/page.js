@@ -9,7 +9,7 @@ export const metadata = {
 export default function WishlistPage() {
   return (
     <div className="oob-container py-12 md:py-16">
-      <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4">
+      <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4" data-gsap="fade-up">
         Lista de deseos
       </h1>
       <p className="text-sm text-[var(--oob-muted)] mb-8 max-w-xl">

@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <div className="oob-container py-12 md:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        <div>
+        <div data-gsap="fade-up">
           <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4">
             Contacto
           </h1>
@@ -83,7 +83,7 @@ export default function ContactPage() {
             </button>
           </form>
         </div>
-        <div className="space-y-8">
+        <div className="space-y-8" data-gsap="fade-up" data-gsap-delay="0.15">
           <section>
             <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--oob-gold)] mb-3">
               Datos directos

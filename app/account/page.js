@@ -11,7 +11,7 @@ export default function AccountPage() {
 
   return (
     <div className="oob-container max-w-lg py-16 md:py-20">
-      <h1 className="oob-heading-xl text-3xl text-[var(--oob-cream)] mb-4">Mi cuenta</h1>
+      <h1 className="oob-heading-xl text-3xl text-[var(--oob-cream)] mb-4" data-gsap="fade-up">Mi cuenta</h1>
       <p className="text-[var(--oob-muted)] text-sm mb-8">
         El inicio de sesión y el registro de clientes los gestiona Shopify. Desde aquí puedes abrir
         las páginas oficiales de cuenta de tu tienda.

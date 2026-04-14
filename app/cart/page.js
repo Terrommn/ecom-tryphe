@@ -19,7 +19,7 @@ export default async function CartPage() {
 
   return (
     <div className="oob-container py-10 md:py-14">
-      <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-2">
+      <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-2" data-gsap="fade-up">
         Carrito
       </h1>
       {!configured ? (
@@ -27,7 +27,7 @@ export default async function CartPage() {
           Conecta Shopify (variables de entorno) para usar el carrito.
         </p>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-8" data-gsap="fade-up" data-gsap-delay="0.1">
           <div className="lg:col-span-2 space-y-6">
             <FreeShippingBar subtotalAmount={cart?.cost?.subtotalAmount} />
             <CartLines cart={cart} />

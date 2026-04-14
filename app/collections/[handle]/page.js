@@ -74,7 +74,7 @@ export default async function CollectionPage({ params, searchParams }) {
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--oob-fairway)]/30 to-[var(--oob-bg)]" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--oob-bg)] to-transparent" />
-        <div className="oob-container relative h-full flex flex-col justify-end pb-8">
+        <div className="oob-container relative h-full flex flex-col justify-end pb-8" data-gsap="fade-up">
           <nav className="text-xs text-[var(--oob-muted)] mb-3" aria-label="Migas">
             <Link href="/" className="hover:text-[var(--oob-gold)]">
               Inicio
@@ -110,7 +110,7 @@ export default async function CollectionPage({ params, searchParams }) {
             No hay productos con estos filtros.
           </p>
         ) : (
-          <div className={gridClass}>
+          <div className={gridClass} data-gsap="fade-up" data-gsap-stagger="0.06">
             {products.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

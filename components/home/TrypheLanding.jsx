@@ -8,8 +8,8 @@ import { formatMoney } from "@/lib/money";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { PerfumeDiscoveryQuiz } from "@/components/quiz/PerfumeDiscoveryQuiz";
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphé";
-const tagline = process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() || "RAW — ESENCIAL";
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphe";
+const tagline = process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() || "RAW -- ESENCIAL";
 
 /** Fotos editoriales propias (public/home/). */
 const IMG_DUO_CITY = "/home/hero-duo-city.png";
@@ -26,22 +26,22 @@ const COLLECTION_IMAGE_FALLBACK = [
 
 const CELEBRITY_PLACEHOLDERS = [
   {
-    quote: "«Una firma que entiende el lujo sin el ruido.»",
-    source: "Revista — próximamente",
+    quote: "<<Una firma que entiende el lujo sin el ruido.>>",
+    source: "Revista -- proximamente",
     image: IMG_DUO_CITY,
   },
   {
-    quote: "«La promesa es clara: emoción antes que notas.»",
+    quote: "<<La promesa es clara: emocion antes que notas.>>",
     source: "Columna de estilo",
     image: IMG_DUO_URBAN,
   },
   {
-    quote: "«El empaque ya es un regalo en sí mismo.»",
+    quote: "<<El empaque ya es un regalo en si mismo.>>",
     source: "Editorial belleza",
     image: IMG_DUO_CITY,
   },
   {
-    quote: "«Tryphé apuesta por la proyección, no por el cliché.»",
+    quote: "<<Tryphe apuesta por la proyeccion, no por el cliche.>>",
     source: "Prensa digital",
     image: IMG_DUO_URBAN,
   },
@@ -54,7 +54,7 @@ const UGC_CITIES = [
     image: IMG_DUO_CITY,
   },
   {
-    city: "Ciudad de México",
+    city: "Ciudad de Mexico",
     label: "CDMX",
     image: IMG_DUO_URBAN,
   },
@@ -86,9 +86,9 @@ export function TrypheLanding({
 
   const featuredTiles = useMemo(() => {
     const labels = [
-      "Perfumes para Él",
+      "Perfumes para El",
       "Perfumes para Ella",
-      "Los más vendidos",
+      "Los mas vendidos",
       "Sets de regalo",
     ];
     return featuredCollections.map((c, i) => ({
@@ -105,28 +105,32 @@ export function TrypheLanding({
 
   return (
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
-      {/* 1.1 Hero — editorial split, sin degradados */}
+      {/* 1.1 Hero -- editorial split */}
       <section className="grid min-h-[min(88vh,920px)] md:grid-cols-2">
-        <div className="relative min-h-[42vh] md:min-h-0">
+        <div className="relative min-h-[42vh] overflow-hidden md:min-h-0" data-gsap="zoom-out">
           <Image
             src={heroImageUrl}
-            alt="Pareja con estilo en calle urbana — estética editorial Tryphé"
+            alt="Pareja con estilo en calle urbana -- estetica editorial Tryphe"
             fill
             className="object-cover object-[center_25%]"
             sizes="(max-width:768px) 100vw, 50vw"
             priority
           />
         </div>
-        <div className="flex flex-col justify-center border-neutral-950/10 bg-[#faf9f7] px-6 py-14 md:border-l md:px-12 lg:px-16 xl:px-20">
+        <div
+          className="flex flex-col justify-center border-neutral-950/10 bg-[#faf9f7] px-6 py-14 md:border-l md:px-12 lg:px-16 xl:px-20"
+          data-gsap="fade-up"
+          data-gsap-stagger="0.12"
+        >
           <p className="text-[9px] font-bold tracking-[0.45em] text-neutral-500 uppercase">
-            Estética olfativa
+            Estetica olfativa
           </p>
           <h2 className="mt-6 font-serif text-[clamp(2rem,5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
-            Huele al éxito que mereces
+            Huele al exito que mereces
           </h2>
           <p className="mt-8 max-w-md text-sm leading-[1.75] text-neutral-600 md:text-base">
-            Inspiración cercana a laboratorios de nicho: silencio, materia y intención. Tu fragancia
-            como firma — no como adorno.
+            Inspiracion cercana a laboratorios de nicho: silencio, materia e intencion. Tu fragancia
+            como firma -- no como adorno.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
@@ -139,18 +143,18 @@ export function TrypheLanding({
               href="/collections"
               className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-neutral-950 uppercase transition hover:bg-neutral-950 hover:text-[#faf9f7]"
             >
-              Catálogo
+              Catalogo
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 1.2 Quiz interactivo (cuestionario completo en la misma página) */}
+      {/* 1.2 Quiz interactivo */}
       <section
         id="encuentra-tu-aroma"
         className="scroll-mt-28 border-y border-neutral-950/10 bg-[#faf9f7]"
       >
-        <div className="mx-auto max-w-5xl px-4 py-12 md:px-8 md:py-16">
+        <div className="mx-auto max-w-5xl px-4 py-12 md:px-8 md:py-16" data-gsap="fade-up">
           <PerfumeDiscoveryQuiz products={quizProducts} variant="embedded" />
         </div>
       </section>
@@ -159,15 +163,19 @@ export function TrypheLanding({
       {featuredTiles.length > 0 ? (
         <section className="bg-[#faf9f7] py-16 md:py-24">
           <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-            <div className="mb-12 text-center md:mb-16">
+            <div className="mb-12 text-center md:mb-16" data-gsap="fade-up">
               <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
                 Colecciones destacadas
               </p>
               <h3 className="mt-4 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
-                El catálogo en cuatro entradas
+                El catalogo en cuatro entradas
               </h3>
             </div>
-            <div className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4">
+            <div
+              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4"
+              data-gsap="scale-in"
+              data-gsap-stagger="0.1"
+            >
               {featuredTiles.map((c, idx) => {
                 const fallback =
                   COLLECTION_IMAGE_FALLBACK[idx % COLLECTION_IMAGE_FALLBACK.length];
@@ -204,7 +212,7 @@ export function TrypheLanding({
       {/* 1.4 Love by Celebrities */}
       <section className="border-t border-neutral-950/10 bg-white py-16 md:py-24">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end" data-gsap="fade-up">
             <div>
               <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
                 Prensa & cultura
@@ -213,8 +221,8 @@ export function TrypheLanding({
                 Love by Celebrities
               </h3>
               <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-600">
-                Menciones y validaciones de estilo — contenido editorial para situar la marca en el
-                mismo universo que el lujo contemporáneo.
+                Menciones y validaciones de estilo -- contenido editorial para situar la marca en el
+                mismo universo que el lujo contemporaneo.
               </p>
             </div>
             <div className="hidden gap-2 md:flex">
@@ -239,6 +247,8 @@ export function TrypheLanding({
           <div
             ref={celebScrollRef}
             className="mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch]"
+            data-gsap="fade-in"
+            data-gsap-delay="0.2"
           >
             {CELEBRITY_PLACEHOLDERS.map((item, i) => (
               <article
@@ -248,7 +258,7 @@ export function TrypheLanding({
                 <div className="relative aspect-[4/3] bg-neutral-200">
                   <Image
                     src={item.image}
-                    alt={`Editorial ${i + 1} — Love by Celebrities`}
+                    alt={`Editorial ${i + 1} -- Love by Celebrities`}
                     fill
                     className="object-cover"
                     sizes="340px"
@@ -271,7 +281,7 @@ export function TrypheLanding({
       {/* 1.5 Confianza y calidad */}
       <section className="border-y border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">
         <div className="mx-auto grid max-w-screen-2xl lg:grid-cols-2">
-          <div className="relative min-h-[300px] lg:min-h-[480px]">
+          <div className="relative min-h-[300px] overflow-hidden lg:min-h-[480px]" data-gsap="zoom-out">
             <Image
               src={IMG_DUO_URBAN}
               alt="Empaque regalo premium"
@@ -280,7 +290,12 @@ export function TrypheLanding({
               sizes="(max-width:1024px) 100vw, 50vw"
             />
           </div>
-          <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:py-24">
+          <div
+            className="flex flex-col justify-center px-6 py-16 md:px-12 lg:py-24"
+            data-gsap="fade-up"
+            data-gsap-delay="0.2"
+            data-gsap-stagger="0.1"
+          >
             <p className="text-[9px] font-bold tracking-[0.4em] text-[#faf9f7]/45 uppercase">
               Transparencia
             </p>
@@ -288,9 +303,9 @@ export function TrypheLanding({
               Confianza y calidad
             </h3>
             <p className="mt-10 text-base leading-[1.85] text-[#faf9f7]/80 md:text-lg">
-              <span className="text-[#faf9f7]">Misma fórmula, precio justo.</span> Referencia de mercado
+              <span className="text-[#faf9f7]">Misma formula, precio justo.</span> Referencia de mercado
               en boutiques de lujo frecuentemente por encima de{" "}
-              <span className="font-semibold text-[#faf9f7]">$8,000</span> — nuestro enfoque, desde{" "}
+              <span className="font-semibold text-[#faf9f7]">$8,000</span> -- nuestro enfoque, desde{" "}
               <span className="font-semibold text-[#faf9f7]">$649</span>, prioriza el acceso sin
               renunciar a la experiencia.
             </p>
@@ -301,10 +316,10 @@ export function TrypheLanding({
         </div>
       </section>
 
-      {/* 1.6 UGC — prueba social (estructura; sustituir por videos reales) */}
+      {/* 1.6 UGC -- prueba social */}
       <section className="bg-[#faf9f7] py-16 md:py-24">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-2xl text-center" data-gsap="fade-up">
             <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
               Prueba social
             </p>
@@ -312,11 +327,15 @@ export function TrypheLanding({
               Historias reales
             </h3>
             <p className="mt-5 text-sm leading-relaxed text-neutral-600">
-              Contenido de personas reales — no modelos — en Monterrey, CDMX y Guadalajara. Las tomas
-              de abajo son referencia visual; sustituye por tus clips cuando estén listos.
+              Contenido de personas reales -- no modelos -- en Monterrey, CDMX y Guadalajara. Las tomas
+              de abajo son referencia visual; sustituye por tus clips cuando esten listos.
             </p>
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div
+            className="mt-14 grid gap-6 md:grid-cols-3"
+            data-gsap="scale-in"
+            data-gsap-stagger="0.15"
+          >
             {UGC_CITIES.map(({ city, label, image }) => (
               <div
                 key={city}
@@ -325,7 +344,7 @@ export function TrypheLanding({
                 <div className="relative aspect-video bg-neutral-200">
                   <Image
                     src={image}
-                    alt={`${city} — comunidad Tryphé`}
+                    alt={`${city} -- comunidad Tryphe`}
                     fill
                     className="object-cover"
                     sizes="(max-width:768px) 100vw, 33vw"
@@ -352,23 +371,30 @@ export function TrypheLanding({
       {shopConfigured && products.length > 0 ? (
         <section className="border-t border-neutral-950/10 bg-white py-16 md:py-24">
           <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-            <div className="mb-12 flex flex-col justify-between gap-6 md:mb-16 md:flex-row md:items-end">
+            <div
+              className="mb-12 flex flex-col justify-between gap-6 md:mb-16 md:flex-row md:items-end"
+              data-gsap="fade-up"
+            >
               <div>
                 <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
-                  Selección tienda
+                  Seleccion tienda
                 </p>
                 <h3 className="mt-3 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
-                  Los más buscados
+                  Los mas buscados
                 </h3>
               </div>
               <Link
                 href="/collections"
                 className="text-[9px] font-bold tracking-[0.25em] text-neutral-950 uppercase underline-offset-8 hover:underline"
               >
-                Ver catálogo completo
+                Ver catalogo completo
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-px bg-neutral-950/10 sm:grid-cols-3 lg:grid-cols-4">
+            <div
+              className="grid grid-cols-2 gap-px bg-neutral-950/10 sm:grid-cols-3 lg:grid-cols-4"
+              data-gsap="fade-up"
+              data-gsap-stagger="0.06"
+            >
               {products.map((p) => (
                 <Link
                   key={p.handle}
@@ -386,7 +412,7 @@ export function TrypheLanding({
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-[10px] text-neutral-400">
-                        —
+                        --
                       </div>
                     )}
                   </div>
@@ -411,9 +437,9 @@ export function TrypheLanding({
         </section>
       ) : null}
 
-      <section className="border-t border-neutral-950/10 bg-white py-12">
+      <section className="border-t border-neutral-950/10 bg-white py-12" data-gsap="fade-in">
         <div className="mx-auto max-w-screen-lg px-4 text-center text-sm text-neutral-700">
-          Envíos y devoluciones:{" "}
+          Envios y devoluciones:{" "}
           <Link href="/faq" className="font-semibold underline underline-offset-4">
             FAQ
           </Link>{" "}
@@ -425,7 +451,11 @@ export function TrypheLanding({
       </section>
 
       <footer className="border-t border-neutral-950/10 bg-[#faf9f7]">
-        <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-y-2 px-4 py-10 text-center md:grid-cols-4 md:px-10 md:text-left">
+        <div
+          className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-y-2 px-4 py-10 text-center md:grid-cols-4 md:px-10 md:text-left"
+          data-gsap="fade-in"
+          data-gsap-stagger="0.08"
+        >
           <Link
             href="/acerca"
             className="py-1 text-[9px] font-bold tracking-[0.2em] text-neutral-700 uppercase hover:text-neutral-950"
@@ -436,7 +466,7 @@ export function TrypheLanding({
             href="/faq"
             className="py-1 text-[9px] font-bold tracking-[0.2em] text-neutral-700 uppercase hover:text-neutral-950"
           >
-            Atención
+            Atencion
           </Link>
           <Link
             href="/cart"
@@ -448,7 +478,7 @@ export function TrypheLanding({
             href="/contacto"
             className="py-1 text-[9px] font-bold tracking-[0.2em] text-neutral-700 uppercase hover:text-neutral-950"
           >
-            Visítanos
+            Visitanos
           </Link>
         </div>
       </footer>

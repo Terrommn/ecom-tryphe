@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ConditionalChrome } from "@/components/layout/ConditionalChrome";
+import { GsapScrollSetup } from "@/components/gsap/GsapScrollSetup";
 
 const inter = Inter({
   variable: "--font-body",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${display.variable} antialiased min-h-dvh flex flex-col overflow-x-hidden`}
       >
+        <GsapScrollSetup />
         <ConditionalChrome>{children}</ConditionalChrome>
       </body>
     </html>

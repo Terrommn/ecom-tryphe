@@ -12,19 +12,21 @@ export default async function CollectionsIndexPage() {
 
   return (
     <div className="oob-container py-12 md:py-16">
-      <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4">
-        Colecciones
-      </h1>
-      <p className="text-[var(--oob-muted)] max-w-xl mb-12">
-        Catálogo sincronizado con tu admin de Shopify.
-      </p>
+      <div data-gsap="fade-up">
+        <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4">
+          Colecciones
+        </h1>
+        <p className="text-[var(--oob-muted)] max-w-xl mb-12">
+          Catalogo sincronizado con tu admin de Shopify.
+        </p>
+      </div>
 
       {collections.length === 0 ? (
         <p className="text-[var(--oob-muted)]">
           No hay colecciones públicas. Configura Shopify o añade colecciones en el admin.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-gsap="scale-in" data-gsap-stagger="0.1">
           {collections.map((col) => (
             <Link
               key={col.id}

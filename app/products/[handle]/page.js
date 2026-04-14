@@ -34,7 +34,7 @@ export default async function ProductPage({ params }) {
         <span className="text-[var(--oob-cream)]">{product.title}</span>
       </nav>
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16" data-gsap="fade-up">
         <ProductGallery images={images} title={product.title} />
         <div>
           <ProductPurchase product={product} />

@@ -24,7 +24,7 @@ export function SiteFooter() {
   return (
     <footer className="relative z-[1] border-t border-[color:var(--oob-border)] bg-[var(--oob-bg-elevated)] mt-24 pb-12 pt-16">
       <div className="oob-container">
-        <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--oob-border)] pb-12 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-12 flex flex-col gap-6 border-b border-[color:var(--oob-border)] pb-12 sm:flex-row sm:items-center sm:justify-between" data-gsap="fade-up">
           <Link href="/" className="group inline-flex max-w-md shrink-0">
             <BrandWordmark variant="onLight" className="transition-opacity group-hover:opacity-85" />
           </Link>
@@ -33,7 +33,7 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4" data-gsap="fade-up" data-gsap-stagger="0.1">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--oob-gold)] mb-4">
               Empresa
@@ -94,7 +94,7 @@ export function SiteFooter() {
             </p>
           </div>
         </div>
-        <div className="oob-line-gold mt-14 mb-8 max-w-md" />
+        <div className="oob-line-gold mt-14 mb-8 max-w-md" data-gsap="line-draw" />
         <p className="text-center text-xs text-[var(--oob-muted)]">
           © {year} {siteName}. Todos los derechos reservados.
         </p>
