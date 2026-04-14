@@ -7,8 +7,14 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 
 export function ConditionalChrome({ children }) {
   const pathname = usePathname();
-  const isMarketingShell =
-    pathname === "/" || pathname === "/encuentra-tu-aroma";
+  const marketingPaths = [
+    "/",
+    "/encuentra-tu-aroma",
+    "/collections/hombre",
+    "/collections/mujer",
+    "/acerca",
+  ];
+  const isMarketingShell = marketingPaths.includes(pathname);
 
   if (isMarketingShell) {
     return <div className="flex min-h-0 flex-1 flex-col">{children}</div>;

@@ -1,21 +1,21 @@
-import { LegalPage } from "@/components/legal/LegalPage";
+import { isShopifyConfigured } from "@/lib/shopify";
+import { getMarketingNavLinks } from "@/lib/marketing-nav";
+import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
+import { AboutLanding } from "@/components/about/AboutLanding";
 
 export const metadata = {
-  title: "Acerca de nosotros | Tienda",
-  description: "Historia y valores de la marca.",
+  title: "Sobre Tryphé | Nuestra historia",
+  description:
+    "Historia, valores y proceso detrás de Tryphé — fragancias de nicho accesibles desde México.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const shopConfigured = isShopifyConfigured();
+  const navLinks = await getMarketingNavLinks();
+
   return (
-    <LegalPage title="Acerca de nosotros" updated={null}>
-      <p>
-        Este contenido es un marcador de posición. Sustitúyelo por la historia de tu marca, equipo y
-        valores cuando definas la narrativa.
-      </p>
-      <h2>Próximos pasos</h2>
-      <p>
-        Añade secciones (historia, misión, proceso) y medios cuando tengas fotos o vídeo aprobados.
-      </p>
-    </LegalPage>
+    <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
+      <AboutLanding />
+    </TrypheMarketingChrome>
   );
 }
