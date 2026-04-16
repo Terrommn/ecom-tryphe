@@ -1,22 +1,21 @@
-import { FaqAccordion } from "@/components/faq/FaqAccordion";
+import { isShopifyConfigured } from "@/lib/shopify";
+import { getMarketingNavLinks } from "@/lib/marketing-nav";
+import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
+import { FaqLanding } from "@/components/faq/FaqLanding";
 
 export const metadata = {
-  title: "Preguntas frecuentes | Tienda",
-  description: "Pedidos, envíos, devoluciones, tallas, pagos y más.",
+  title: "Preguntas frecuentes | Tryphé",
+  description:
+    "Respuestas a las dudas más comunes sobre pedidos, envíos, devoluciones, pagos y cuidado de tu fragancia Tryphé.",
 };
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const shopConfigured = isShopifyConfigured();
+  const navLinks = await getMarketingNavLinks();
+
   return (
-    <article className="oob-container max-w-3xl py-12 md:py-16">
-      <div data-gsap="fade-up">
-        <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)] mb-4">
-          Preguntas frecuentes
-        </h1>
-        <p className="text-[var(--oob-muted)] mb-10 text-sm">
-          Encuentra respuestas a las dudas mas comunes sobre pedidos, envios, devoluciones y mas.
-        </p>
-      </div>
-      <FaqAccordion />
-    </article>
+    <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
+      <FaqLanding />
+    </TrypheMarketingChrome>
   );
 }
