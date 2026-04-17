@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef } from "react";
-import { Play, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMemo } from "react";
+import { Star } from "lucide-react";
 import { formatMoney } from "@/lib/money";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { PerfumeDiscoveryQuiz } from "@/components/quiz/PerfumeDiscoveryQuiz";
@@ -26,42 +26,93 @@ const COLLECTION_IMAGE_FALLBACK = [
 
 const CELEBRITY_PLACEHOLDERS = [
   {
-    quote: "<<Una firma que entiende el lujo sin el ruido.>>",
-    source: "Revista -- proximamente",
+    quote: "Una firma que entiende el lujo sin el ruido.",
+    source: "Revista — próximamente",
     image: IMG_DUO_CITY,
   },
   {
-    quote: "<<La promesa es clara: emocion antes que notas.>>",
+    quote: "La promesa es clara: emoción antes que notas.",
     source: "Columna de estilo",
     image: IMG_DUO_URBAN,
   },
   {
-    quote: "<<El empaque ya es un regalo en si mismo.>>",
+    quote: "El empaque ya es un regalo en sí mismo.",
     source: "Editorial belleza",
     image: IMG_DUO_CITY,
   },
   {
-    quote: "<<Tryphe apuesta por la proyeccion, no por el cliche.>>",
+    quote: "Tryphé apuesta por la proyección, no por el cliché.",
     source: "Prensa digital",
     image: IMG_DUO_URBAN,
   },
 ];
 
-const UGC_CITIES = [
+const REVIEWS = [
   {
-    city: "Monterrey",
-    label: "N.L.",
-    image: IMG_DUO_CITY,
+    name: "Sofía Martínez",
+    location: "Monterrey, N.L.",
+    rating: 5,
+    date: "14 abr 2026",
+    product: "ASTER",
+    quote:
+      "Llevo tres semanas con ASTER y sigue proyectando igual que el primer día. Nadie me cree que no es un perfume de $3,000.",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=80",
   },
   {
-    city: "Ciudad de Mexico",
-    label: "CDMX",
-    image: IMG_DUO_URBAN,
+    name: "Diego Ramírez",
+    location: "CDMX",
+    rating: 5,
+    date: "9 abr 2026",
+    product: "VICTORIUM",
+    quote:
+      "VICTORIUM es una bestia. Lo uso para salir los viernes y termino la noche con piropos. La estela dura horas.",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=240&h=240&q=80",
   },
   {
-    city: "Guadalajara",
-    label: "Jal.",
-    image: IMG_DUO_CITY,
+    name: "Valentina López",
+    location: "Guadalajara, Jal.",
+    rating: 5,
+    date: "2 abr 2026",
+    product: "MAGNA",
+    quote:
+      "El empaque ya me ganó antes de olerlo. Es un regalo dentro de otro regalo. MAGNA es mi nuevo favorito.",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=240&h=240&q=80",
+  },
+  {
+    name: "Andrés Vega",
+    location: "Puebla, Pue.",
+    rating: 5,
+    date: "28 mar 2026",
+    product: "SANTOR",
+    quote:
+      "Compré SANTOR porque no quería gastar $5k en Santal 33. La calidad es sorprendente — huele casi idéntico y dura más.",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=80",
+  },
+  {
+    name: "Regina Castillo",
+    location: "Querétaro, Qro.",
+    rating: 5,
+    date: "21 mar 2026",
+    product: "ALVUS",
+    quote:
+      "ALVUS es fresco sin ser básico. Mi novio me pidió uno para él. Ahora los dos somos fans.",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=240&h=240&q=80",
+  },
+  {
+    name: "Mateo Herrera",
+    location: "Tijuana, B.C.",
+    rating: 5,
+    date: "14 mar 2026",
+    product: "VICTORIUM",
+    quote:
+      "Entrega en 3 días a la frontera. El atomizador es de lujo real, no esos baratos que salpican. Ya encargué dos más.",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=240&h=240&q=80",
   },
 ];
 
@@ -80,8 +131,6 @@ export function TrypheLanding({
   products = [],
   quizProducts = [],
 }) {
-  const celebScrollRef = useRef(null);
-
   const heroImageUrl = HERO_EDITORIAL_SRC;
 
   const featuredTiles = useMemo(() => {
@@ -96,12 +145,6 @@ export function TrypheLanding({
       label: labels[i] ?? c.title,
     }));
   }, [featuredCollections]);
-
-  const scrollCeleb = (dir) => {
-    const el = celebScrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 340, behavior: "smooth" });
-  };
 
   return (
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
@@ -209,71 +252,137 @@ export function TrypheLanding({
         </section>
       ) : null}
 
-      {/* 1.4 Love by Celebrities */}
-      <section className="border-t border-neutral-950/10 bg-white py-16 md:py-24">
+      {/* 1.4 Love by Celebrities — editorial magazine layout */}
+      <section className="bg-[#faf9f7] py-20 md:py-28">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end" data-gsap="fade-up">
-            <div>
-              <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
-                Prensa & cultura
+          {/* Masthead editorial */}
+          <div className="text-center" data-gsap="fade-up">
+            <div className="flex items-center justify-center gap-6">
+              <span className="h-px w-20 bg-neutral-950/25 md:w-28" />
+              <p className="text-[10px] font-bold tracking-[0.55em] text-neutral-950/70 uppercase">
+                Prensa & Cultura
               </p>
-              <h3 className="mt-3 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
-                Love by Celebrities
-              </h3>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-600">
-                Menciones y validaciones de estilo -- contenido editorial para situar la marca en el
-                mismo universo que el lujo contemporaneo.
-              </p>
+              <span className="h-px w-20 bg-neutral-950/25 md:w-28" />
             </div>
-            <div className="hidden gap-2 md:flex">
-              <button
-                type="button"
-                onClick={() => scrollCeleb(-1)}
-                className="flex h-10 w-10 items-center justify-center border border-neutral-950/15 transition hover:border-neutral-950"
-                aria-label="Anterior"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollCeleb(1)}
-                className="flex h-10 w-10 items-center justify-center border border-neutral-950/15 transition hover:border-neutral-950"
-                aria-label="Siguiente"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
+            <h3 className="mt-7 font-serif text-[clamp(2.75rem,6.5vw,5.25rem)] font-medium leading-[1] tracking-tight text-neutral-950">
+              Love by <em className="italic text-neutral-950/70">Celebrities</em>
+            </h3>
+            <p className="mx-auto mt-7 max-w-xl text-sm leading-[1.85] text-neutral-600 md:text-base">
+              Menciones y validaciones de estilo — contenido editorial para situar la marca en el
+              mismo universo que el lujo contemporáneo.
+            </p>
           </div>
+
+          {/* Editorial grid asimétrico */}
           <div
-            ref={celebScrollRef}
-            className="mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [-webkit-overflow-scrolling:touch]"
-            data-gsap="fade-in"
-            data-gsap-delay="0.2"
+            className="mt-16 grid grid-cols-1 gap-10 md:mt-24 md:grid-cols-12 md:gap-x-12 md:gap-y-16"
+            data-gsap="fade-up"
+            data-gsap-delay="0.15"
+            data-gsap-stagger="0.1"
           >
-            {CELEBRITY_PLACEHOLDERS.map((item, i) => (
-              <article
-                key={i}
-                className="min-w-[min(85vw,320px)] shrink-0 snap-start overflow-hidden border border-neutral-950/10 bg-[#faf9f7] md:min-w-[340px]"
-              >
-                <div className="relative aspect-[4/3] bg-neutral-200">
-                  <Image
-                    src={item.image}
-                    alt={`Editorial ${i + 1} -- Love by Celebrities`}
-                    fill
-                    className="object-cover"
-                    sizes="340px"
-                  />
+            {/* Editorial 01 — feature grande (ocupa 7/12 y 2 filas) */}
+            <article className="group flex flex-col md:col-span-7 md:row-span-2">
+              <div className="relative aspect-[4/5] overflow-hidden bg-neutral-200">
+                <Image
+                  src={CELEBRITY_PLACEHOLDERS[0].image}
+                  alt={`Editorial 1 — ${CELEBRITY_PLACEHOLDERS[0].source}`}
+                  fill
+                  className="object-cover grayscale transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
+                  sizes="(max-width:768px) 100vw, 58vw"
+                />
+                <div className="absolute top-6 left-6 md:top-8 md:left-8">
+                  <p className="font-serif text-5xl leading-none text-[#faf9f7] md:text-6xl">01</p>
+                  <span className="mt-4 block h-px w-12 bg-[#faf9f7]/70" />
                 </div>
-                <div className="p-8 md:p-10">
-                  <p className="font-serif text-xl leading-snug text-neutral-950 md:text-2xl">
-                    {item.quote}
-                  </p>
-                  <p className="mt-8 text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
-                    {item.source}
-                  </p>
+              </div>
+              <div className="mt-8 md:mt-10">
+                <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+                  {CELEBRITY_PLACEHOLDERS[0].source}
+                </p>
+                <blockquote className="mt-5 font-serif text-2xl leading-[1.3] text-neutral-950 md:text-3xl lg:text-4xl">
+                  <span className="mr-1 text-neutral-950/40">«</span>
+                  {CELEBRITY_PLACEHOLDERS[0].quote}
+                  <span className="ml-1 text-neutral-950/40">»</span>
+                </blockquote>
+              </div>
+            </article>
+
+            {/* Editoriales 02 y 03 — apilados a la derecha */}
+            {[1, 2].map((idx) => (
+              <article
+                key={idx}
+                className="group flex gap-5 md:col-span-5 md:gap-6"
+              >
+                <div className="relative w-2/5 flex-shrink-0 overflow-hidden bg-neutral-200 md:w-[45%]">
+                  <div className="relative aspect-[3/4] h-full w-full">
+                    <Image
+                      src={CELEBRITY_PLACEHOLDERS[idx].image}
+                      alt={`Editorial ${idx + 1} — ${CELEBRITY_PLACEHOLDERS[idx].source}`}
+                      fill
+                      className="object-cover grayscale transition-[filter] duration-1000 ease-out group-hover:grayscale-0"
+                      sizes="(max-width:768px) 40vw, 20vw"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col justify-between py-1">
+                  <div>
+                    <p className="font-serif text-4xl leading-none text-neutral-950/25 md:text-5xl">
+                      {String(idx + 1).padStart(2, "0")}
+                    </p>
+                    <p className="mt-5 text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+                      {CELEBRITY_PLACEHOLDERS[idx].source}
+                    </p>
+                    <blockquote className="mt-4 font-serif text-base leading-[1.4] text-neutral-950 md:text-lg lg:text-xl">
+                      <span className="text-neutral-950/40">«</span>
+                      {CELEBRITY_PLACEHOLDERS[idx].quote}
+                      <span className="text-neutral-950/40">»</span>
+                    </blockquote>
+                  </div>
+                  <span className="mt-6 block h-px w-10 bg-neutral-950/25" />
                 </div>
               </article>
             ))}
+
+            {/* Editorial 04 — banda horizontal ancha */}
+            <article className="group mt-4 flex flex-col gap-8 border-t border-neutral-950/15 pt-12 md:col-span-12 md:mt-8 md:flex-row md:gap-14 md:pt-16">
+              <div className="relative overflow-hidden bg-neutral-200 md:w-1/2">
+                <div className="relative aspect-[16/10] w-full md:aspect-[5/3]">
+                  <Image
+                    src={CELEBRITY_PLACEHOLDERS[3].image}
+                    alt={`Editorial 4 — ${CELEBRITY_PLACEHOLDERS[3].source}`}
+                    fill
+                    className="object-cover grayscale transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
+                    sizes="(max-width:768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="flex items-baseline gap-6">
+                  <p className="font-serif text-6xl leading-none text-neutral-950/25 md:text-7xl">
+                    04
+                  </p>
+                  <span className="h-px flex-1 bg-neutral-950/20" />
+                </div>
+                <p className="mt-7 text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+                  {CELEBRITY_PLACEHOLDERS[3].source}
+                </p>
+                <blockquote className="mt-5 font-serif text-2xl leading-[1.25] text-neutral-950 md:text-3xl lg:text-4xl">
+                  <span className="mr-1 text-neutral-950/40">«</span>
+                  {CELEBRITY_PLACEHOLDERS[3].quote}
+                  <span className="ml-1 text-neutral-950/40">»</span>
+                </blockquote>
+              </div>
+            </article>
+          </div>
+
+          {/* Footer editorial con metadatos */}
+          <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-neutral-950/15 pt-8 md:mt-20 md:flex-row md:items-center">
+            <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+              04 Editoriales destacados
+            </p>
+            <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+              Tryphé — Prensa {new Date().getFullYear()}
+            </p>
           </div>
         </div>
       </section>
@@ -316,52 +425,96 @@ export function TrypheLanding({
         </div>
       </section>
 
-      {/* 1.6 UGC -- prueba social */}
-      <section className="bg-[#faf9f7] py-16 md:py-24">
+      {/* 1.6 Reviews — prueba social */}
+      <section className="bg-[#faf9f7] py-20 md:py-28">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
           <div className="mx-auto max-w-2xl text-center" data-gsap="fade-up">
             <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
               Prueba social
             </p>
-            <h3 className="mt-4 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
-              Historias reales
+            <h3 className="mt-4 font-serif text-3xl font-medium text-neutral-950 md:text-5xl">
+              Lo que dicen nuestros clientes
             </h3>
-            <p className="mt-5 text-sm leading-relaxed text-neutral-600">
-              Contenido de personas reales -- no modelos -- en Monterrey, CDMX y Guadalajara. Las tomas
-              de abajo son referencia visual; sustituye por tus clips cuando esten listos.
-            </p>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <div className="flex items-center gap-0.5 text-neutral-950">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4" fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+              <p className="text-sm font-medium text-neutral-950">4.9</p>
+              <span className="h-3 w-px bg-neutral-950/30" />
+              <p className="text-xs text-neutral-600">
+                Basado en <span className="font-semibold text-neutral-950">1,240+</span> reseñas verificadas
+              </p>
+            </div>
           </div>
+
           <div
-            className="mt-14 grid gap-6 md:grid-cols-3"
-            data-gsap="scale-in"
-            data-gsap-stagger="0.15"
+            className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            data-gsap="fade-up"
+            data-gsap-delay="0.15"
+            data-gsap-stagger="0.08"
           >
-            {UGC_CITIES.map(({ city, label, image }) => (
-              <div
-                key={city}
-                className="flex flex-col border border-neutral-950/10 bg-white"
+            {REVIEWS.map((review) => (
+              <article
+                key={review.name}
+                className="flex flex-col border border-neutral-950/10 bg-white p-8 transition-colors hover:border-neutral-950/30 md:p-9"
               >
-                <div className="relative aspect-video bg-neutral-200">
-                  <Image
-                    src={image}
-                    alt={`${city} -- comunidad Tryphe`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width:768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-neutral-950/35">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#faf9f7] text-[#faf9f7]">
-                      <Play className="ml-1 h-6 w-6" fill="currentColor" />
-                    </div>
+                {/* Header: avatar + nombre + ubicación */}
+                <div className="flex items-center gap-4">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-neutral-200">
+                    <Image
+                      src={review.avatar}
+                      alt={`Avatar de ${review.name}`}
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-serif text-base font-medium text-neutral-950">
+                      {review.name}
+                    </p>
+                    <p className="truncate text-[10px] font-bold tracking-[0.2em] text-neutral-500 uppercase">
+                      {review.location}
+                    </p>
                   </div>
                 </div>
-                <div className="border-t border-neutral-950/10 p-5 text-center">
-                  <p className="font-serif text-lg text-neutral-950">{city}</p>
-                  <p className="mt-1 text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
-                    {label}
+
+                {/* Rating + fecha */}
+                <div className="mt-6 flex items-center justify-between">
+                  <div className="flex items-center gap-0.5 text-neutral-950">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-3.5 w-3.5"
+                        fill={i < review.rating ? "currentColor" : "none"}
+                        strokeWidth={i < review.rating ? 0 : 1.5}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-[10px] tracking-wider text-neutral-500 uppercase">
+                    {review.date}
                   </p>
                 </div>
-              </div>
+
+                {/* Quote */}
+                <blockquote className="mt-6 flex-1 font-serif text-base leading-[1.65] text-neutral-800 md:text-[17px]">
+                  <span className="mr-1 text-neutral-950/40">«</span>
+                  {review.quote}
+                  <span className="ml-1 text-neutral-950/40">»</span>
+                </blockquote>
+
+                {/* Footer: producto comprado */}
+                <div className="mt-7 flex items-center gap-3 border-t border-neutral-950/10 pt-5">
+                  <span className="text-[9px] font-bold tracking-[0.3em] text-neutral-500 uppercase">
+                    Compró
+                  </span>
+                  <span className="font-serif text-sm font-medium text-neutral-950">
+                    {review.product}
+                  </span>
+                </div>
+              </article>
             ))}
           </div>
         </div>

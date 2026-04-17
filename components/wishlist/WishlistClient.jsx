@@ -18,7 +18,7 @@ export function WishlistClient() {
 
   if (items.length === 0) {
     return (
-      <p className="text-[var(--oob-muted)] py-8 rounded-lg border border-dashed border-[color:var(--oob-border)] px-6">
+      <p className="text-neutral-500 py-8 border border-dashed border-neutral-200 px-6">
         Aún no has guardado productos. Usa &ldquo;Guardar en lista&rdquo; en la ficha de producto.
       </p>
     );
@@ -29,18 +29,18 @@ export function WishlistClient() {
       {items.map((item) => (
         <li
           key={item.handle}
-          className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)]/40 px-4 py-3"
+          className="flex flex-wrap items-center justify-between gap-4 border border-neutral-200 bg-neutral-100/40 px-4 py-3"
         >
           <Link
             href={`/products/${item.handle}`}
-            className="font-medium text-[var(--oob-cream)] hover:text-[var(--oob-gold)]"
+            className="font-medium text-neutral-950 hover:opacity-60"
           >
             {item.title || item.handle}
           </Link>
           <div className="flex items-center gap-3">
             <Link
               href={`/products/${item.handle}`}
-              className="text-xs font-semibold uppercase tracking-wider text-[var(--oob-gold)] hover:underline"
+              className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-950 hover:underline"
             >
               Ver producto
             </Link>
@@ -50,7 +50,7 @@ export function WishlistClient() {
                 removeWishlistItem(item.handle);
                 setItems(getWishlistItems());
               }}
-              className="text-xs text-[var(--oob-muted)] hover:text-red-400"
+              className="text-xs text-neutral-500 hover:text-red-400"
             >
               Quitar
             </button>

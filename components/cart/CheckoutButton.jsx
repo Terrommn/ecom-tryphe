@@ -6,7 +6,7 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
       <button
         type="button"
         disabled
-        className="w-full rounded-full bg-[var(--oob-muted)] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-[var(--oob-bg)] cursor-not-allowed"
+        className="w-full bg-neutral-500 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-white cursor-not-allowed"
       >
         Proceder al pago
       </button>
@@ -15,7 +15,7 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
   return (
     <Link
       href={checkoutUrl}
-      className="flex w-full items-center justify-center rounded-full bg-[var(--oob-gold)] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-[var(--oob-bg)] transition hover:bg-[var(--oob-gold-hover)]"
+      className="flex w-full items-center justify-center bg-neutral-950 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition hover:bg-neutral-800"
     >
       Proceder al pago
     </Link>

@@ -11,6 +11,7 @@ import {
   getCursor,
   collectionNextHref,
 } from "@/lib/collection-params";
+import { TrypheShell } from "@/components/layout/TrypheShell";
 
 export async function generateMetadata({ params }) {
   const { handle } = await params;
@@ -59,75 +60,79 @@ export default async function CollectionPage({ params, searchParams }) {
       : "grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 xl:grid-cols-4";
 
   return (
-    <div className="pb-20">
-      <div className="relative h-[220px] md:h-[280px] border-b border-[color:var(--oob-border)]">
-        {collection.image?.url ? (
-          <Image
-            src={collection.image.url}
-            alt={collection.image.altText || collection.title}
-            fill
-            className="object-cover"
-            sizes="100vw"
-            priority
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--oob-fairway)]/30 to-[var(--oob-bg)]" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--oob-bg)] to-transparent" />
-        <div className="oob-container relative h-full flex flex-col justify-end pb-8" data-gsap="fade-up">
-          <nav className="text-xs text-[var(--oob-muted)] mb-3" aria-label="Migas">
-            <Link href="/" className="hover:text-[var(--oob-gold)]">
-              Inicio
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href="/collections" className="hover:text-[var(--oob-gold)]">
-              Colecciones
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-[var(--oob-cream)]">{collection.title}</span>
-          </nav>
-          <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)]">
-            {collection.title}
-          </h1>
-          {collection.descriptionHtml ? (
-            <div
-              className="mt-3 max-w-2xl text-sm text-[var(--oob-muted)] line-clamp-2 [&_p]:inline"
-              dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
-            />
-          ) : null}
+    <TrypheShell>
+      <div className="bg-[#faf9f7]">
+        <div className="pb-20">
+          <div className="relative h-[220px] md:h-[280px] border-b border-neutral-200">
+            {collection.image?.url ? (
+              <Image
+                src={collection.image.url}
+                alt={collection.image.altText || collection.title}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-neutral-950/30 to-[#faf9f7]" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f7] to-transparent" />
+            <div className="mx-auto max-w-screen-2xl px-4 lg:px-10 relative h-full flex flex-col justify-end pb-8" data-gsap="fade-up">
+              <nav className="text-xs text-neutral-500 mb-3" aria-label="Migas">
+                <Link href="/" className="hover:text-neutral-950">
+                  Inicio
+                </Link>
+                <span className="mx-2">/</span>
+                <Link href="/collections" className="hover:text-neutral-950">
+                  Colecciones
+                </Link>
+                <span className="mx-2">/</span>
+                <span className="text-neutral-950">{collection.title}</span>
+              </nav>
+              <h1 className="font-serif text-3xl md:text-4xl font-medium text-neutral-950">
+                {collection.title}
+              </h1>
+              {collection.descriptionHtml ? (
+                <div
+                  className="mt-3 max-w-2xl text-sm text-neutral-500 line-clamp-2 [&_p]:inline"
+                  dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
+                />
+              ) : null}
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-screen-2xl px-4 lg:px-10 py-10 md:py-12 space-y-8">
+            <CollectionToolbar handle={handle} searchParams={sp} />
+            <p className="text-sm text-neutral-500">
+              {products.length} producto{products.length !== 1 ? "s" : ""}
+              {hasNext ? " (página con más resultados disponibles)" : ""}
+            </p>
+
+            {products.length === 0 ? (
+              <p className="text-center text-neutral-500 py-16">
+                No hay productos con estos filtros.
+              </p>
+            ) : (
+              <div className={gridClass} data-gsap="fade-up" data-gsap-stagger="0.06">
+                {products.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
+
+            {hasNext && endCursor ? (
+              <div className="flex justify-center pt-8">
+                <Link
+                  href={collectionNextHref(handle, sp, endCursor)}
+                  className="border border-neutral-950 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-950 hover:bg-neutral-950 hover:text-[#faf9f7] transition-colors"
+                >
+                  Cargar más
+                </Link>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
-
-      <div className="oob-container py-10 md:py-12 space-y-8">
-        <CollectionToolbar handle={handle} searchParams={sp} />
-        <p className="text-sm text-[var(--oob-muted)]">
-          {products.length} producto{products.length !== 1 ? "s" : ""}
-          {hasNext ? " (página con más resultados disponibles)" : ""}
-        </p>
-
-        {products.length === 0 ? (
-          <p className="text-center text-[var(--oob-muted)] py-16">
-            No hay productos con estos filtros.
-          </p>
-        ) : (
-          <div className={gridClass} data-gsap="fade-up" data-gsap-stagger="0.06">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        )}
-
-        {hasNext && endCursor ? (
-          <div className="flex justify-center pt-8">
-            <Link
-              href={collectionNextHref(handle, sp, endCursor)}
-              className="rounded-full border border-[var(--oob-gold)] px-8 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--oob-gold)] hover:bg-[var(--oob-gold)] hover:text-[var(--oob-bg)] transition-colors"
-            >
-              Cargar más
-            </Link>
-          </div>
-        ) : null}
-      </div>
-    </div>
+    </TrypheShell>
   );
 }

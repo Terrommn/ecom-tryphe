@@ -45,14 +45,14 @@ export function CollectionToolbar({ handle, searchParams: sp }) {
       >
         {view === "list" ? <input type="hidden" name="view" value="list" /> : null}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--oob-muted)] mb-1">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-1">
             Ordenar
           </label>
           <select
             name="sort"
             defaultValue={currentSort}
             onChange={(e) => e.target.form?.submit()}
-            className="rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)] px-3 py-2 text-sm text-[var(--oob-cream)]"
+            className="border border-neutral-200 bg-neutral-100 px-3 py-2 text-sm text-neutral-950"
           >
             <option value="manual">Destacados</option>
             <option value="bestselling">Más vendido</option>
@@ -64,7 +64,7 @@ export function CollectionToolbar({ handle, searchParams: sp }) {
         </div>
         <div className="flex gap-2">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--oob-muted)] mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-1">
               Precio min
             </label>
             <input
@@ -74,11 +74,11 @@ export function CollectionToolbar({ handle, searchParams: sp }) {
               min="0"
               defaultValue={minPrice}
               placeholder="0"
-              className="w-24 rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)] px-2 py-2 text-sm text-[var(--oob-cream)]"
+              className="w-24 border border-neutral-200 bg-neutral-100 px-2 py-2 text-sm text-neutral-950"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--oob-muted)] mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-1">
               Precio max
             </label>
             <input
@@ -87,39 +87,39 @@ export function CollectionToolbar({ handle, searchParams: sp }) {
               step="0.01"
               min="0"
               defaultValue={maxPrice}
-              className="w-24 rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)] px-2 py-2 text-sm text-[var(--oob-cream)]"
+              className="w-24 border border-neutral-200 bg-neutral-100 px-2 py-2 text-sm text-neutral-950"
             />
           </div>
         </div>
-        <label className="flex items-center gap-2 text-sm text-[var(--oob-cream)] cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-neutral-950 cursor-pointer">
           <input
             type="checkbox"
             name="available"
             value="1"
             defaultChecked={available}
-            className="rounded border-[color:var(--oob-border)]"
+            className="border-neutral-200"
           />
           Solo disponibles
         </label>
         <button
           type="submit"
-          className="rounded-full border border-[var(--oob-gold)] px-4 py-2 text-sm font-medium text-[var(--oob-gold)] hover:bg-[var(--oob-gold)] hover:text-[var(--oob-bg)] transition-colors"
+          className="border border-neutral-950 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-950 hover:bg-neutral-950 hover:text-white transition-colors"
         >
           Aplicar filtros
         </button>
       </form>
 
       <div className="flex items-center gap-2">
-        <span className="text-xs text-[var(--oob-muted)] uppercase tracking-wider">Vista</span>
+        <span className="text-xs text-neutral-500 uppercase tracking-wider">Vista</span>
         <Link
           href={gridHref}
-          className={`rounded px-3 py-1.5 text-sm ${view === "grid" ? "bg-[var(--oob-gold)] text-[var(--oob-bg)]" : "border border-[color:var(--oob-border)] text-[var(--oob-cream)]"}`}
+          className={`px-3 py-1.5 text-sm ${view === "grid" ? "bg-neutral-950 text-white" : "border border-neutral-200 text-neutral-950"}`}
         >
           Cuadrícula
         </Link>
         <Link
           href={listHref}
-          className={`rounded px-3 py-1.5 text-sm ${view === "list" ? "bg-[var(--oob-gold)] text-[var(--oob-bg)]" : "border border-[color:var(--oob-border)] text-[var(--oob-cream)]"}`}
+          className={`px-3 py-1.5 text-sm ${view === "list" ? "bg-neutral-950 text-white" : "border border-neutral-200 text-neutral-950"}`}
         >
           Lista
         </Link>

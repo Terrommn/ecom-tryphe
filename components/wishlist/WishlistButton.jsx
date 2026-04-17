@@ -29,7 +29,7 @@ export function WishlistButton({ handle, title }) {
     <button
       type="button"
       onClick={toggle}
-      className="inline-flex items-center gap-2 rounded-full border border-[color:var(--oob-border)] px-5 py-2.5 text-sm text-[var(--oob-cream)] hover:border-[var(--oob-gold)] hover:text-[var(--oob-gold)] transition-colors"
+      className="w-full flex items-center justify-center gap-2.5 border border-neutral-300 py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:border-neutral-950 hover:text-neutral-950"
       aria-pressed={on}
     >
       <svg className="h-4 w-4" fill={on ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
@@ -40,7 +40,7 @@ export function WishlistButton({ handle, title }) {
           d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
         />
       </svg>
-      {on ? "En tu lista" : "Guardar en lista"}
+      {on ? "En tu lista" : "Guardar"}
     </button>
   );
 }

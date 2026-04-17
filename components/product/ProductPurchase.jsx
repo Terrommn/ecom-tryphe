@@ -76,87 +76,105 @@ export function ProductPurchase({ product }) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-7">
+      {/* Kicker + Title */}
       <div>
-        <h1 className="oob-heading-xl text-3xl md:text-4xl text-[var(--oob-cream)]">
+        {product.productType && (
+          <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-neutral-400 mb-3">
+            {product.productType}
+          </p>
+        )}
+        <h1 className="font-serif text-[clamp(1.75rem,3.5vw,2.5rem)] font-medium leading-[1.08] text-neutral-950">
           {product.title}
         </h1>
-        {product.productType ? (
-          <p className="mt-2 text-sm text-[var(--oob-muted)]">{product.productType}</p>
-        ) : null}
-        <div className="mt-6 flex flex-wrap items-baseline gap-3">
-          {displayPrice ? (
-            <span className="text-2xl font-medium text-[var(--oob-gold)]">
-              {formatMoney(displayPrice.amount, displayPrice.currencyCode)}
-            </span>
-          ) : null}
-          {compareAt?.amount &&
-          Number(compareAt.amount) > Number(displayPrice?.amount || 0) ? (
-            <span className="text-lg text-[var(--oob-muted)] line-through">
-              {formatMoney(compareAt.amount, compareAt.currencyCode)}
-            </span>
-          ) : null}
-        </div>
       </div>
 
-      {product.options?.length > 0 ? (
-        <div className="space-y-4">
+      {/* Price */}
+      <div className="flex flex-wrap items-baseline gap-3">
+        {displayPrice && (
+          <span className="font-serif text-2xl font-medium text-neutral-950">
+            {formatMoney(displayPrice.amount, displayPrice.currencyCode)}
+          </span>
+        )}
+        {compareAt?.amount &&
+        Number(compareAt.amount) > Number(displayPrice?.amount || 0) ? (
+          <span className="text-sm text-neutral-400 line-through">
+            {formatMoney(compareAt.amount, compareAt.currencyCode)}
+          </span>
+        ) : null}
+      </div>
+
+      <div className="h-px bg-neutral-950/10" />
+
+      {/* Variant selector */}
+      {product.options?.length > 0 && (
+        <div className="space-y-5">
           {product.options.map((opt) => (
             <div key={opt.name}>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--oob-muted)] mb-2">
+              <label className="block text-[9px] font-bold uppercase tracking-[0.35em] text-neutral-400 mb-3">
                 {opt.name}
               </label>
-              <select
-                value={selected[opt.name] || ""}
-                onChange={(e) => setOption(opt.name, e.target.value)}
-                className="w-full max-w-xs rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)] px-4 py-2.5 text-[var(--oob-cream)] focus:border-[var(--oob-gold)] focus:outline-none focus:ring-1 focus:ring-[var(--oob-gold)]"
-              >
-                {opt.values.map((val) => (
-                  <option key={val} value={val}>
-                    {val}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-wrap gap-2">
+                {opt.values.map((val) => {
+                  const isActive = selected[opt.name] === val;
+                  return (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setOption(opt.name, val)}
+                      className={`px-5 py-2.5 text-xs font-medium tracking-wide border transition-all duration-200 ${
+                        isActive
+                          ? "border-neutral-950 text-neutral-950 bg-neutral-950/[0.04]"
+                          : "border-neutral-300 text-neutral-500 hover:border-neutral-950 hover:text-neutral-950"
+                      }`}
+                    >
+                      {val}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
-      ) : null}
+      )}
 
-      <div className="flex flex-wrap items-center gap-4">
+      {/* CTA */}
+      <div className="space-y-3 pt-1">
         <button
           type="button"
           disabled={pending || !activeVariant?.availableForSale}
           onClick={handleAdd}
-          className="inline-flex items-center justify-center rounded-full bg-[var(--oob-gold)] px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-[var(--oob-bg)] transition hover:bg-[var(--oob-gold-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-4 text-[10px] font-bold uppercase tracking-[0.25em] bg-neutral-950 text-[#faf9f7] transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {pending ? "Añadiendo…" : "Agregar al carrito"}
+          {pending
+            ? "Añadiendo…"
+            : activeVariant && !activeVariant.availableForSale
+              ? "Agotado"
+              : "Agregar al carrito"}
         </button>
         <WishlistButton handle={product.handle} title={product.title} />
-        {activeVariant && !activeVariant.availableForSale ? (
-          <span className="text-sm text-[var(--oob-muted)]">Agotado</span>
-        ) : null}
       </div>
-      {msg ? <p className="text-sm text-red-400">{msg}</p> : null}
 
-      <div className="border-t border-[color:var(--oob-border)] pt-6 text-sm text-[var(--oob-muted)] space-y-2">
+      {msg && <p className="text-sm text-red-500">{msg}</p>}
+
+      {/* Shipping info */}
+      <div className="pt-2 text-[11px] text-neutral-400 space-y-1.5">
         <p>
-          <a href="/envios" className="text-[var(--oob-gold)] hover:underline">
+          <a
+            href="/envios"
+            className="underline underline-offset-4 decoration-neutral-300 transition-colors hover:text-neutral-950 hover:decoration-neutral-950"
+          >
             Envíos
           </a>{" "}
           y{" "}
-          <a href="/devoluciones" className="text-[var(--oob-gold)] hover:underline">
+          <a
+            href="/devoluciones"
+            className="underline underline-offset-4 decoration-neutral-300 transition-colors hover:text-neutral-950 hover:decoration-neutral-950"
+          >
             devoluciones
           </a>{" "}
           según políticas de la tienda.
         </p>
-        {activeVariant?.quantityAvailable != null ? (
-          <p>
-            Disponibilidad:{" "}
-            {activeVariant.availableForSale
-              ? `${activeVariant.quantityAvailable} en stock (aprox.)`
-              : "No disponible"}
-          </p>
-        ) : null}
       </div>
     </div>
   );

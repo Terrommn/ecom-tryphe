@@ -21,10 +21,10 @@ export function ProductCard({ product }) {
   }
 
   return (
-    <article className="group flex flex-col rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)]/40 overflow-hidden transition hover:border-[var(--oob-gold)]/50 hover:shadow-lg hover:shadow-black/10">
-      <Link href={href} className="relative aspect-[3/4] block bg-[var(--oob-bg-elevated)] overflow-hidden">
+    <article className="group flex flex-col border border-neutral-200 bg-neutral-100/40 overflow-hidden transition hover:border-neutral-400 hover:shadow-lg hover:shadow-black/10">
+      <Link href={href} className="relative aspect-[3/4] block bg-white overflow-hidden">
         {badge ? (
-          <span className="absolute left-3 top-3 z-[1] rounded-full bg-[var(--oob-fairway)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+          <span className="absolute left-3 top-3 z-[1] bg-neutral-950 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
             {badge}
           </span>
         ) : null}
@@ -38,23 +38,23 @@ export function ProductCard({ product }) {
           />
         ) : (
           <div
-            className="absolute inset-0 bg-gradient-to-br from-[var(--oob-surface)] to-[var(--oob-bg)] flex items-center justify-center"
+            className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-[#faf9f7] flex items-center justify-center"
             aria-hidden
           >
-            <span className="text-[var(--oob-muted)] text-xs uppercase tracking-widest">—</span>
+            <span className="text-neutral-500 text-xs uppercase tracking-widest">—</span>
           </div>
         )}
       </Link>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-medium text-[var(--oob-cream)] line-clamp-2 group-hover:text-[var(--oob-gold)] transition-colors">
+        <h3 className="font-medium text-neutral-950 line-clamp-2 group-hover:opacity-60 transition-opacity">
           <Link href={href}>{product.title}</Link>
         </h3>
         {amount != null ? (
-          <p className="mt-2 text-sm text-[var(--oob-gold)]">{formatMoney(amount, currency)}</p>
+          <p className="mt-2 text-sm font-serif text-neutral-950">{formatMoney(amount, currency)}</p>
         ) : null}
         <Link
           href={href}
-          className="mt-4 inline-flex w-fit items-center text-xs font-semibold uppercase tracking-wider text-[var(--oob-cream)] underline-offset-4 hover:text-[var(--oob-gold)] hover:underline"
+          className="mt-4 inline-flex w-fit items-center text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-950 underline-offset-4 hover:opacity-60 hover:underline"
         >
           {ctaLabel}
         </Link>

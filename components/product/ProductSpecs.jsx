@@ -9,17 +9,21 @@ export function ProductSpecs({ metafields }) {
   };
 
   return (
-    <div className="mt-10 border-t border-[color:var(--oob-border)] pt-8">
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--oob-gold)] mb-4">
+    <div className="mt-14">
+      <div className="h-px bg-neutral-950/10 mb-10" />
+      <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-neutral-400 mb-6">
         Ficha técnica
-      </h2>
-      <dl className="space-y-3 text-sm">
+      </p>
+      <dl className="space-y-4 text-sm">
         {list.map((m) => (
-          <div key={`${m.namespace}.${m.key}`} className="grid gap-1 sm:grid-cols-[minmax(0,140px)_1fr]">
-            <dt className="text-[var(--oob-muted)]">
+          <div
+            key={`${m.namespace}.${m.key}`}
+            className="grid gap-1 sm:grid-cols-[160px_1fr]"
+          >
+            <dt className="text-neutral-400 text-xs uppercase tracking-wider">
               {labels[m.key] || m.key}
             </dt>
-            <dd className="text-[var(--oob-cream)]">{m.value}</dd>
+            <dd className="text-neutral-800">{m.value}</dd>
           </div>
         ))}
       </dl>

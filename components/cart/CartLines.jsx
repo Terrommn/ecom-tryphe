@@ -33,9 +33,9 @@ export function CartLines({ cart }) {
 
   if (!lines.length) {
     return (
-      <p className="text-[var(--oob-muted)] py-8">
+      <p className="text-neutral-500 py-8">
         Tu carrito está vacío.{" "}
-        <Link href="/collections" className="text-[var(--oob-gold)] hover:underline">
+        <Link href="/collections" className="text-neutral-950 hover:underline">
           Explorar colecciones
         </Link>
       </p>
@@ -48,7 +48,7 @@ export function CartLines({ cart }) {
 
   return (
     <div className="space-y-8">
-      <ul className="divide-y divide-[color:var(--oob-border)] border border-[color:var(--oob-border)] rounded-lg overflow-hidden">
+      <ul className="divide-y divide-neutral-200 border border-neutral-200 overflow-hidden">
         {lines.map(({ node: line }) => {
           const v = line.merchandise;
           if (!v?.product) return null;
@@ -63,11 +63,11 @@ export function CartLines({ cart }) {
           return (
             <li
               key={line.id}
-              className="flex flex-col sm:flex-row gap-4 p-4 bg-[var(--oob-surface)]/30"
+              className="flex flex-col sm:flex-row gap-4 p-4 bg-neutral-100/30"
             >
               <Link
                 href={getProductHref(product)}
-                className="relative h-28 w-24 shrink-0 overflow-hidden rounded border border-[color:var(--oob-border)] bg-[var(--oob-bg-elevated)]"
+                className="relative h-28 w-24 shrink-0 overflow-hidden border border-neutral-200 bg-white"
               >
                 {img?.url ? (
                   <Image
@@ -82,15 +82,15 @@ export function CartLines({ cart }) {
               <div className="flex-1 min-w-0">
                 <Link
                   href={getProductHref(product)}
-                  className="font-medium text-[var(--oob-cream)] hover:text-[var(--oob-gold)]"
+                  className="font-medium text-neutral-950 hover:opacity-60"
                 >
                   {product?.title}
                 </Link>
                 {v.title && v.title !== "Default Title" ? (
-                  <p className="text-sm text-[var(--oob-muted)] mt-1">{v.title}</p>
+                  <p className="text-sm text-neutral-500 mt-1">{v.title}</p>
                 ) : null}
                 <div className="mt-3 flex flex-wrap items-center gap-4">
-                  <label className="text-xs text-[var(--oob-muted)] flex items-center gap-2">
+                  <label className="text-xs text-neutral-500 flex items-center gap-2">
                     Cantidad
                     <input
                       type="number"
@@ -102,14 +102,14 @@ export function CartLines({ cart }) {
                         const q = parseInt(e.target.value, 10);
                         if (!Number.isNaN(q)) updateQty(line.id, q);
                       }}
-                      className="w-16 rounded border border-[color:var(--oob-border)] bg-[var(--oob-bg)] px-2 py-1 text-sm text-[var(--oob-cream)]"
+                      className="w-16 border border-neutral-200 bg-[#faf9f7] px-2 py-1 text-sm text-neutral-950"
                     />
                   </label>
                   <button
                     type="button"
                     disabled={pending}
                     onClick={() => remove(line.id)}
-                    className="text-xs uppercase tracking-wider text-[var(--oob-muted)] hover:text-red-400"
+                    className="text-xs uppercase tracking-wider text-neutral-500 hover:text-red-400"
                   >
                     Eliminar
                   </button>
@@ -117,11 +117,11 @@ export function CartLines({ cart }) {
               </div>
               <div className="text-right shrink-0">
                 {price ? (
-                  <p className="text-[var(--oob-gold)] font-medium">
+                  <p className="font-serif text-neutral-950 font-medium">
                     {formatMoney(lineTotal, price.currencyCode)}
                   </p>
                 ) : null}
-                <p className="text-xs text-[var(--oob-muted)] mt-1">
+                <p className="text-xs text-neutral-500 mt-1">
                   {line.quantity} × {price ? formatMoney(price.amount, price.currencyCode) : "—"}
                 </p>
               </div>
@@ -132,7 +132,7 @@ export function CartLines({ cart }) {
 
       <form action={applyDiscountFormAction} className="flex flex-wrap gap-3 items-end">
         <div>
-          <label htmlFor="discount-code" className="block text-xs text-[var(--oob-muted)] mb-1">
+          <label htmlFor="discount-code" className="block text-xs text-neutral-500 mb-1">
             Código de descuento
           </label>
           <input
@@ -140,37 +140,37 @@ export function CartLines({ cart }) {
             name="code"
             type="text"
             placeholder="Código"
-            className="rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-surface)] px-4 py-2 text-sm text-[var(--oob-cream)]"
+            className="border border-neutral-200 bg-neutral-100 px-4 py-2 text-sm text-neutral-950"
           />
         </div>
         <button
           type="submit"
           disabled={pending}
-          className="rounded-full border border-[var(--oob-gold)] px-5 py-2 text-sm font-medium text-[var(--oob-gold)] hover:bg-[var(--oob-gold)] hover:text-[var(--oob-bg)] disabled:opacity-50"
+          className="border border-neutral-950 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-950 hover:bg-neutral-950 hover:text-white disabled:opacity-50"
         >
           Aplicar
         </button>
       </form>
       {codes.length > 0 ? (
-        <p className="text-sm text-[var(--oob-muted)]">
+        <p className="text-sm text-neutral-500">
           Códigos: {codes.map((c) => c.code).join(", ")}
         </p>
       ) : null}
 
-      <div className="border-t border-[color:var(--oob-border)] pt-6 space-y-2 text-sm">
+      <div className="border-t border-neutral-200 pt-6 space-y-2 text-sm">
         {subtotal ? (
-          <div className="flex justify-between text-[var(--oob-muted)]">
+          <div className="flex justify-between text-neutral-500">
             <span>Subtotal</span>
             <span>{formatMoney(subtotal.amount, subtotal.currencyCode)}</span>
           </div>
         ) : null}
         {total ? (
-          <div className="flex justify-between text-lg font-medium text-[var(--oob-cream)]">
+          <div className="flex justify-between text-lg font-medium text-neutral-950">
             <span>Total</span>
-            <span>{formatMoney(total.amount, total.currencyCode)}</span>
+            <span className="font-serif">{formatMoney(total.amount, total.currencyCode)}</span>
           </div>
         ) : null}
-        <p className="text-xs text-[var(--oob-muted)] pt-2">
+        <p className="text-xs text-neutral-500 pt-2">
           Impuestos y envío se calculan en el siguiente paso (checkout de Shopify).
         </p>
       </div>

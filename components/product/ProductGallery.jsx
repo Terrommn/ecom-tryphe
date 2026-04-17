@@ -10,35 +10,26 @@ export function ProductGallery({ images, title }) {
 
   if (!main?.url) {
     return (
-      <div className="aspect-[3/4] rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-bg-elevated)] flex items-center justify-center">
-        <span className="text-[var(--oob-muted)] text-sm">Sin imagen</span>
+      <div className="aspect-[3/4] bg-neutral-100 flex items-center justify-center">
+        <span className="text-neutral-400 text-sm">Sin imagen</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-bg-elevated)]">
-        <Image
-          src={main.url}
-          alt={main.altText || title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          priority
-        />
-      </div>
-      {list.length > 1 ? (
-        <div className="flex gap-2 overflow-x-auto pb-1">
+    <div className="flex flex-col-reverse gap-4 sm:flex-row sm:gap-5">
+      {/* Thumbnails — vertical strip on desktop */}
+      {list.length > 1 && (
+        <div className="flex gap-2.5 sm:flex-col sm:gap-3 overflow-x-auto sm:overflow-y-auto sm:max-h-[640px] pb-1 sm:pb-0 sm:pr-1 shrink-0">
           {list.map((img, i) => (
             <button
               key={img.id || i}
               type="button"
               onClick={() => setActive(i)}
-              className={`relative h-20 w-16 shrink-0 overflow-hidden rounded border transition ${
+              className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden transition-all duration-200 ${
                 i === active
-                  ? "border-[var(--oob-gold)] ring-1 ring-[var(--oob-gold)]"
-                  : "border-[color:var(--oob-border)] opacity-70 hover:opacity-100"
+                  ? "ring-2 ring-neutral-950 ring-offset-2 ring-offset-[#faf9f7] opacity-100"
+                  : "opacity-50 hover:opacity-80"
               }`}
             >
               <Image
@@ -46,12 +37,24 @@ export function ProductGallery({ images, title }) {
                 alt=""
                 fill
                 className="object-cover"
-                sizes="64px"
+                sizes="80px"
               />
             </button>
           ))}
         </div>
-      ) : null}
+      )}
+
+      {/* Main image */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-100">
+        <Image
+          src={main.url}
+          alt={main.altText || title}
+          fill
+          className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+          sizes="(max-width: 1024px) 100vw, 55vw"
+          priority
+        />
+      </div>
     </div>
   );
 }
