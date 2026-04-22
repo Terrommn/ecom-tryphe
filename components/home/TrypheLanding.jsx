@@ -22,7 +22,7 @@ const IMG_BOTTLES_GRID = "/brand/bottles-grid.png";
 const IMG_BOTTLE_SOLARE = "/brand/bottle-solare.png";
 const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
-const HERO_EDITORIAL_SRC = IMG_BOTTLE_SANTOR;
+const HERO_EDITORIAL_SRC = IMG_BOTTLE_ELYSSE;
 
 const COLLECTION_IMAGE_FALLBACK = [
   IMG_BOTTLES_GRID,
@@ -625,7 +625,7 @@ export function TrypheLanding({
               data-gsap="zoom-out"
             >
               <Image
-                src={bundleCollection?.imageUrl || IMG_BOTTLES_GRID}
+                src={bundleCollection?.imageUrl || "/home/hero-duo-urban.png"}
                 alt={bundleCollection?.imageAlt || "Sets de regalo Tryphé"}
                 fill
                 className="object-cover"
