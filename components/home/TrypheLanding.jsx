@@ -11,39 +11,46 @@ import { PerfumeDiscoveryQuiz } from "@/components/quiz/PerfumeDiscoveryQuiz";
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphe";
 const tagline = process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() || "RAW -- ESENCIAL";
 
-/** Fotos editoriales propias (public/home/). */
-const IMG_DUO_CITY = "/home/hero-duo-city.png";
-const IMG_DUO_URBAN = "/home/hero-duo-urban.png";
+/** Fotos editoriales propias (public/brand/). */
+const IMG_BOTTLE_SANTOR = "/brand/bottle-santor.png";
+const IMG_ESSENCE_AMADERADOS = "/brand/essence-amaderados.png";
+const IMG_BOTTLE_MAGNA = "/brand/bottle-magna.png";
+const IMG_BOTTLE_VALIANT = "/brand/bottle-valiant.png";
+const IMG_BOTTLE_ELAN = "/brand/bottle-elan.png";
+const IMG_ESSENCE_FRESCO = "/brand/essence-fresco.png";
+const IMG_BOTTLES_GRID = "/brand/bottles-grid.png";
+const IMG_BOTTLE_SOLARE = "/brand/bottle-solare.png";
+const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
-const HERO_EDITORIAL_SRC = IMG_DUO_CITY;
+const HERO_EDITORIAL_SRC = IMG_BOTTLE_SANTOR;
 
 const COLLECTION_IMAGE_FALLBACK = [
-  IMG_DUO_CITY,
-  IMG_DUO_URBAN,
-  IMG_DUO_CITY,
-  IMG_DUO_URBAN,
+  IMG_BOTTLES_GRID,
+  IMG_BOTTLE_ELYSSE,
+  IMG_BOTTLE_SOLARE,
+  IMG_BOTTLE_MAGNA,
 ];
 
 const CELEBRITY_PLACEHOLDERS = [
   {
     quote: "Una firma que entiende el lujo sin el ruido.",
     source: "Revista — próximamente",
-    image: IMG_DUO_CITY,
+    image: IMG_ESSENCE_AMADERADOS,
   },
   {
     quote: "La promesa es clara: emoción antes que notas.",
     source: "Columna de estilo",
-    image: IMG_DUO_URBAN,
+    image: IMG_BOTTLE_ELAN,
   },
   {
     quote: "El empaque ya es un regalo en sí mismo.",
     source: "Editorial belleza",
-    image: IMG_DUO_CITY,
+    image: IMG_BOTTLE_VALIANT,
   },
   {
     quote: "Tryphé apuesta por la proyección, no por el cliché.",
     source: "Prensa digital",
-    image: IMG_DUO_URBAN,
+    image: IMG_ESSENCE_FRESCO,
   },
 ];
 
@@ -134,17 +141,14 @@ export function TrypheLanding({
   const heroImageUrl = HERO_EDITORIAL_SRC;
 
   const featuredTiles = useMemo(() => {
-    const labels = [
-      "Perfumes para El",
-      "Perfumes para Ella",
-      "Los mas vendidos",
-      "Sets de regalo",
-    ];
-    return featuredCollections.map((c, i) => ({
+    const labels = ["Perfumes para El", "Perfumes para Ella", "Los mas vendidos"];
+    return featuredCollections.slice(0, 3).map((c, i) => ({
       ...c,
       label: labels[i] ?? c.title,
     }));
   }, [featuredCollections]);
+
+  const bundleCollection = featuredCollections[3] || null;
 
   return (
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
@@ -169,26 +173,46 @@ export function TrypheLanding({
             Estetica olfativa
           </p>
           <h2 className="mt-6 font-serif text-[clamp(2rem,5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
-            Huele al exito que mereces
+            Huele a quien ya lo logró
           </h2>
           <p className="mt-8 max-w-md text-sm leading-[1.75] text-neutral-600 md:text-base">
-            Inspiracion cercana a laboratorios de nicho: silencio, materia e intencion. Tu fragancia
-            como firma -- no como adorno.
+            Inspirado en perfumería de nicho.
+            <br />
+            Diseñado para proyectar presencia, no para pasar desapercibido.
+            <br />
+            Tu fragancia como firma — no como accesorio.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/#encuentra-tu-aroma"
               className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 bg-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-[#faf9f7] uppercase transition hover:bg-neutral-800"
             >
-              Encuentra tu Aroma
+              Encuentra tu Aroma Ideal
             </Link>
             <Link
               href="/collections"
               className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-neutral-950 uppercase transition hover:bg-neutral-950 hover:text-[#faf9f7]"
             >
-              Catalogo
+              Explorar Fragancias
             </Link>
           </div>
+          <p className="mt-8 font-serif text-sm italic text-neutral-700 md:text-base">
+            Porque la primera impresión no se repite.
+          </p>
+        </div>
+      </section>
+
+      {/* 1.1b Trust-bar — garantía 30 días */}
+      <section className="border-y border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-center gap-3 px-4 py-4 text-center md:flex-row md:gap-6 md:px-10">
+          <p className="text-[9px] font-bold tracking-[0.4em] text-[#faf9f7]/60 uppercase">
+            Garantía TRYPHÉ 30 días
+          </p>
+          <span className="hidden h-3 w-px bg-[#faf9f7]/25 md:block" />
+          <p className="font-serif text-sm leading-tight text-[#faf9f7] md:text-base">
+            Pruébalo sin riesgo. Si no conecta contigo, lo cambiamos por otra fragancia.{" "}
+            <span className="italic text-[#faf9f7]/75">Sin preguntas.</span>
+          </p>
         </div>
       </section>
 
@@ -215,7 +239,7 @@ export function TrypheLanding({
               </h3>
             </div>
             <div
-              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4"
+              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-3"
               data-gsap="scale-in"
               data-gsap-stagger="0.1"
             >
@@ -234,7 +258,7 @@ export function TrypheLanding({
                     alt={c.imageAlt || c.title}
                     fill
                     className="object-cover transition duration-700 group-hover:opacity-90"
-                    sizes="(max-width:768px) 50vw, 25vw"
+                    sizes="(max-width:768px) 50vw, 33vw"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-neutral-950 p-4 text-[#faf9f7]">
                     <p className="text-[8px] font-bold tracking-[0.25em] text-[#faf9f7]/60 uppercase">
@@ -268,8 +292,9 @@ export function TrypheLanding({
               Love by <em className="italic text-neutral-950/70">Celebrities</em>
             </h3>
             <p className="mx-auto mt-7 max-w-xl text-sm leading-[1.85] text-neutral-600 md:text-base">
-              Menciones y validaciones de estilo — contenido editorial para situar la marca en el
-              mismo universo que el lujo contemporáneo.
+              No es coincidencia. Es percepción.
+              <br />
+              TRYPHÉ vive en el mismo universo donde el estilo no se explica — se reconoce.
             </p>
           </div>
 
@@ -392,7 +417,7 @@ export function TrypheLanding({
         <div className="mx-auto grid max-w-screen-2xl lg:grid-cols-2">
           <div className="relative min-h-[300px] overflow-hidden lg:min-h-[480px]" data-gsap="zoom-out">
             <Image
-              src={IMG_DUO_URBAN}
+              src={IMG_BOTTLE_SOLARE}
               alt="Empaque regalo premium"
               fill
               className="object-cover"
@@ -589,6 +614,132 @@ export function TrypheLanding({
           No hay productos publicados en Shopify.
         </section>
       ) : null}
+
+      {/* 1.8 Bundles / Sets de regalo — sección dedicada con protagonismo */}
+      <section className="border-t border-neutral-950/10 bg-[#faf9f7] py-20 md:py-28">
+        <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
+          <div className="grid gap-12 md:grid-cols-12 md:gap-14 lg:gap-20">
+            {/* Imagen editorial */}
+            <div
+              className="relative aspect-[4/5] overflow-hidden bg-neutral-200 md:col-span-7 md:aspect-[5/6]"
+              data-gsap="zoom-out"
+            >
+              <Image
+                src={bundleCollection?.imageUrl || IMG_BOTTLES_GRID}
+                alt={bundleCollection?.imageAlt || "Sets de regalo Tryphé"}
+                fill
+                className="object-cover"
+                sizes="(max-width:768px) 100vw, 58vw"
+              />
+              <div className="absolute top-6 left-6 md:top-10 md:left-10">
+                <p className="font-serif text-5xl leading-none text-[#faf9f7] md:text-6xl">05</p>
+                <span className="mt-4 block h-px w-12 bg-[#faf9f7]/70" />
+              </div>
+            </div>
+
+            {/* Texto + CTA */}
+            <div
+              className="flex flex-col justify-center md:col-span-5"
+              data-gsap="fade-up"
+              data-gsap-delay="0.15"
+              data-gsap-stagger="0.1"
+            >
+              <p className="text-[10px] font-bold tracking-[0.5em] text-neutral-500 uppercase">
+                Sets &amp; Bundles
+              </p>
+              <h3 className="mt-6 font-serif text-[clamp(2.25rem,4.5vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
+                Dos fragancias, una sola firma.
+              </h3>
+              <p className="mt-8 text-sm leading-[1.85] text-neutral-600 md:text-base">
+                Combinaciones pensadas para el día y la noche, para regalo o ritual propio. Un
+                empaque premium — el lujo de abrirlo es parte del aroma.
+              </p>
+
+              <ul className="mt-8 space-y-3 text-sm text-neutral-700 md:text-[15px]">
+                <li className="flex gap-3">
+                  <span className="mt-2 h-px w-6 bg-neutral-950/40" />
+                  <span>Duo curado con dos aromas complementarios.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-2 h-px w-6 bg-neutral-950/40" />
+                  <span>Empaque de regalo listo para entregar.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-2 h-px w-6 bg-neutral-950/40" />
+                  <span>Mejor precio que la compra individual.</span>
+                </li>
+              </ul>
+
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  href={
+                    bundleCollection
+                      ? `/collections/${encodeURIComponent(bundleCollection.handle)}`
+                      : "/collections"
+                  }
+                  className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 bg-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-[#faf9f7] uppercase transition hover:bg-neutral-800"
+                >
+                  Ver Sets &amp; Bundles
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 1.9 Partner TRYPHÉ — distribuidores */}
+      <section className="border-t border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">
+        <div
+          className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28"
+          data-gsap="fade-up"
+          data-gsap-stagger="0.1"
+        >
+          <div className="grid items-end gap-10 md:grid-cols-12 md:gap-14">
+            <div className="md:col-span-7">
+              <div className="flex items-center gap-4">
+                <span className="h-px w-12 bg-[#faf9f7]/40" />
+                <p className="text-[10px] font-bold tracking-[0.5em] text-[#faf9f7]/60 uppercase">
+                  Partner TRYPHÉ
+                </p>
+              </div>
+              <h3 className="mt-6 font-serif text-[clamp(2.25rem,5vw,4rem)] font-medium leading-[1.05] tracking-tight text-[#faf9f7]">
+                Conviértete en distribuidor TRYPHÉ.
+              </h3>
+              <p className="mt-8 max-w-xl text-sm leading-[1.85] text-[#faf9f7]/75 md:text-base">
+                Buscamos aliados que compartan nuestra visión de perfumería accesible y de alto
+                nivel. Programa de distribución con márgenes competitivos, soporte de marca y
+                catálogo completo para tiendas físicas y digitales.
+              </p>
+            </div>
+
+            <div className="md:col-span-5">
+              <ul className="space-y-4 border-t border-[#faf9f7]/15 pt-6 text-sm text-[#faf9f7]/80">
+                <li className="flex items-start gap-4">
+                  <span className="mt-2 h-px w-6 bg-[#faf9f7]/40" />
+                  <span>Márgenes mayoristas y precios escalonados por volumen.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="mt-2 h-px w-6 bg-[#faf9f7]/40" />
+                  <span>Material de marca y fotografía editorial para tu punto de venta.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="mt-2 h-px w-6 bg-[#faf9f7]/40" />
+                  <span>Acompañamiento directo — sin intermediarios.</span>
+                </li>
+              </ul>
+
+              <div className="mt-10">
+                <Link
+                  href="/partners"
+                  className="inline-flex min-h-[48px] items-center justify-center border border-[#faf9f7] bg-transparent px-10 text-[10px] font-bold tracking-[0.25em] text-[#faf9f7] uppercase transition hover:bg-[#faf9f7] hover:text-neutral-950"
+                >
+                  Quiero ser Partner
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="border-t border-neutral-950/10 bg-white py-12" data-gsap="fade-in">
         <div className="mx-auto max-w-screen-lg px-4 text-center text-sm text-neutral-700">

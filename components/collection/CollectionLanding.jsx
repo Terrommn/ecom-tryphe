@@ -18,8 +18,8 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_HOMBRE = "/home/hero-duo-urban.png";
-const IMG_MUJER = "/home/hero-duo-city.png";
+const IMG_HOMBRE = "/brand/bottle-elan.png";
+const IMG_MUJER = "/brand/bottle-valiant.png";
 
 const COPY = {
   hombre: {

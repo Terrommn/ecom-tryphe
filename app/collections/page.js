@@ -8,8 +8,32 @@ export const metadata = {
   description: "Listado de colecciones públicas desde Shopify.",
 };
 
+const COLLECTION_IMAGE_OVERRIDES = {
+  formal: { url: "/collections/formal.png", altText: "Formal" },
+  hombre: { url: "/collections/hombre.png", altText: "Hombre" },
+  mujer: { url: "/collections/mujer.png", altText: "Mujer" },
+  casual: { url: "/collections/casual.png", altText: "Casual" },
+};
+
+const CURATED_COLLECTIONS = [
+  { id: "curated-formal", handle: "formal", title: "Formal" },
+  { id: "curated-hombre", handle: "hombre", title: "Hombre" },
+  { id: "curated-mujer", handle: "mujer", title: "Mujer" },
+  { id: "curated-casual", handle: "casual", title: "Casual" },
+];
+
 export default async function CollectionsIndexPage() {
-  const collections = await getCollectionsCatalog(48);
+  const shopifyCollections = await getCollectionsCatalog(48);
+
+  const byHandle = new Map(shopifyCollections.map((c) => [c.handle, c]));
+  for (const curated of CURATED_COLLECTIONS) {
+    if (!byHandle.has(curated.handle)) byHandle.set(curated.handle, curated);
+  }
+
+  const collections = Array.from(byHandle.values()).map((col) => {
+    const override = COLLECTION_IMAGE_OVERRIDES[col.handle];
+    return override ? { ...col, image: override } : col;
+  });
 
   return (
     <TrypheShell>
@@ -34,7 +58,7 @@ export default async function CollectionsIndexPage() {
                 <Link
                   key={col.id}
                   href={`/collections/${col.handle}`}
-                  className="group relative overflow-hidden rounded-lg border border-neutral-200 aspect-[4/3] bg-white"
+                  className="group relative overflow-hidden rounded-lg border border-neutral-200 aspect-[4/5] bg-white"
                 >
                   {col.image?.url ? (
                     <Image

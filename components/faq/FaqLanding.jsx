@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_HERO = "/home/hero-duo-urban.png";
+const IMG_HERO = "/brand/essence-fresco.png";
 
 const SECTIONS = [
   {

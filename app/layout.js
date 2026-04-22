@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ConditionalChrome } from "@/components/layout/ConditionalChrome";
 import { GsapScrollSetup } from "@/components/gsap/GsapScrollSetup";
+import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 
 const inter = Inter({
   variable: "--font-body",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       >
         <GsapScrollSetup />
         <ConditionalChrome>{children}</ConditionalChrome>
+        <WhatsAppFab />
       </body>
     </html>
   );

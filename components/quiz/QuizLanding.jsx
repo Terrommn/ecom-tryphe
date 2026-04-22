@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_HERO = "/home/hero-duo-city.png";
+const IMG_HERO = "/brand/bottle-elysse.png";
 
 const TESTIMONIALS = [
   {

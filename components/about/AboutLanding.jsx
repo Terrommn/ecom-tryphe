@@ -17,8 +17,9 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_CITY = "/home/hero-duo-city.png";
-const IMG_URBAN = "/home/hero-duo-urban.png";
+const IMG_HERO = "/brand/bottles-grid.png";
+const IMG_STORY = "/brand/essence-amaderados.png";
+const IMG_PROCESS = "/brand/bottle-magna.png";
 
 const VALUES = [
   {
@@ -78,7 +79,7 @@ export function AboutLanding() {
       <section className="relative flex min-h-[80vh] items-center overflow-hidden bg-neutral-950">
         <div ref={heroImgRef} className="absolute inset-0">
           <Image
-            src={IMG_CITY}
+            src={IMG_HERO}
             alt="Sobre Tryphé — estética editorial"
             fill
             className="object-cover opacity-50"
@@ -141,7 +142,7 @@ export function AboutLanding() {
           <div className="relative min-h-[360px] overflow-hidden lg:min-h-0">
             <div ref={storyImgRef} className="absolute inset-[-10%]">
               <Image
-                src={IMG_URBAN}
+                src={IMG_STORY}
                 alt="Proceso creativo Tryphé"
                 fill
                 className="object-cover"
@@ -184,7 +185,7 @@ export function AboutLanding() {
       <section className="relative overflow-hidden bg-neutral-950">
         <div ref={processImgRef} className="absolute inset-[-10%]">
           <Image
-            src={IMG_CITY}
+            src={IMG_PROCESS}
             alt="Proceso de creación"
             fill
             className="object-cover opacity-30"
