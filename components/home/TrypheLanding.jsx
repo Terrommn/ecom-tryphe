@@ -282,54 +282,54 @@ export function TrypheLanding({
       </section>
 
       {/* 1.3 Colecciones destacadas */}
-      {featuredTiles.length > 0 ? (
-        <section className="bg-[#faf9f7] py-16 md:py-24">
-          <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
-            <div className="mb-12 text-center md:mb-16" data-gsap="fade-up">
-              <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
-                Colecciones destacadas
-              </p>
-              <h3 className="mt-4 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
-                El catalogo en cuatro entradas
-              </h3>
-            </div>
-            <div
-              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-3"
-              data-gsap="scale-in"
-              data-gsap-stagger="0.1"
-            >
-              {featuredTiles.map((c, idx) => {
-                const fallback =
-                  COLLECTION_IMAGE_FALLBACK[idx % COLLECTION_IMAGE_FALLBACK.length];
-                const imgSrc = c.imageUrl || fallback;
-                return (
-                <Link
-                  key={c.handle}
-                  href={`/collections/${encodeURIComponent(c.handle)}`}
-                  className="group relative aspect-[3/4] bg-neutral-200"
-                >
-                  <Image
-                    src={imgSrc}
-                    alt={c.imageAlt || c.title}
-                    fill
-                    className="object-cover transition duration-700 group-hover:opacity-90"
-                    sizes="(max-width:768px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-neutral-950 p-4 text-[#faf9f7]">
-                    <p className="text-[8px] font-bold tracking-[0.25em] text-[#faf9f7]/60 uppercase">
-                      {c.label}
-                    </p>
-                    <p className="mt-1 line-clamp-2 font-serif text-sm font-medium leading-tight">
-                      {c.title}
-                    </p>
-                  </div>
-                </Link>
-                );
-              })}
-            </div>
+      <section className="bg-[#faf9f7] py-16 md:py-24">
+        <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
+          <div className="mb-12 text-center md:mb-16" data-gsap="fade-up">
+            <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
+              Colecciones destacadas
+            </p>
+            <h3 className="mt-4 font-serif text-3xl font-medium text-neutral-950 md:text-4xl">
+              El catalogo en cuatro entradas
+            </h3>
           </div>
-        </section>
-      ) : null}
+          <div
+            className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4"
+            data-gsap="scale-in"
+            data-gsap-stagger="0.1"
+          >
+            {[
+              { label: "Mujer", title: "Para Ella", image: "/home/col-mujer.jpg", href: "/collections/mujer" },
+              { label: "Formal", title: "Formal", image: "/home/col-formal.jpg", href: "/collections/formal" },
+              { label: "Hombre", title: "Para Él", image: "/home/col-hombre.jpg", href: "/collections/hombre" },
+              { label: "Casual", title: "Casual", image: "/home/col-casual.jpg", href: "/collections/casual" },
+            ].map((c) => (
+              <Link
+                key={c.label}
+                href={c.href}
+                className="group relative aspect-[3/4] overflow-hidden bg-neutral-200"
+              >
+                <Image
+                  src={c.image}
+                  alt={c.title}
+                  fill
+                  className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                  sizes="(max-width:768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/45" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-[#faf9f7]">
+                  <p className="text-[9px] font-bold tracking-[0.5em] uppercase opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                    {c.label}
+                  </p>
+                  <p className="mt-2 font-serif text-2xl font-medium tracking-tight md:text-3xl drop-shadow-lg">
+                    {c.title}
+                  </p>
+                  <span className="mt-3 h-px w-0 bg-[#faf9f7]/70 transition-all duration-700 group-hover:w-16" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* 1.4 Love by Celebrities — editorial magazine layout */}
       <section className="bg-[#faf9f7] py-20 md:py-28">
