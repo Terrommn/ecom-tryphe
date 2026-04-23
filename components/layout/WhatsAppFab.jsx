@@ -1,4 +1,4 @@
-const WHATSAPP_PHONE = "525555555555";
+const WHATSAPP_PHONE = "528184587897";
 const WHATSAPP_MESSAGE = "Hola TRYPHÉ, tengo una duda sobre sus fragancias.";
 
 export function WhatsAppFab() {

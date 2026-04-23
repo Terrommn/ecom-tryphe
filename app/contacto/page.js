@@ -100,8 +100,8 @@ export default function ContactPage() {
                   <li>Teléfono: [REVISAR]</li>
                   <li>
                     WhatsApp:{" "}
-                    <a href="https://wa.me/" className="text-neutral-950 hover:underline">
-                      [REVISAR enlace]
+                    <a href="https://wa.me/528184587897" className="text-neutral-950 hover:underline">
+                      +52 81 8458 7897
                     </a>
                   </li>
                   <li>Dirección: [REVISAR]</li>

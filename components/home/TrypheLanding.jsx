@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { Star } from "lucide-react";
 import { formatMoney } from "@/lib/money";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
@@ -22,7 +22,12 @@ const IMG_BOTTLES_GRID = "/brand/bottles-grid.png";
 const IMG_BOTTLE_SOLARE = "/brand/bottle-solare.png";
 const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
-const HERO_EDITORIAL_SRC = IMG_BOTTLE_ELYSSE;
+const HERO_SLIDES = [
+  "/home/hero-duo-city.png",
+  "/home/bottle-ignis.png",
+  "/home/bottle-water.jpg",
+  "/home/bottle-cabos.jpg",
+];
 
 const COLLECTION_IMAGE_FALLBACK = [
   IMG_BOTTLES_GRID,
@@ -35,22 +40,22 @@ const CELEBRITY_PLACEHOLDERS = [
   {
     quote: "Una firma que entiende el lujo sin el ruido.",
     source: "Revista — próximamente",
-    image: IMG_ESSENCE_AMADERADOS,
+    image: "/home/celeb-01.png",
   },
   {
     quote: "La promesa es clara: emoción antes que notas.",
     source: "Columna de estilo",
-    image: IMG_BOTTLE_ELAN,
+    image: "/home/celeb-02.png",
   },
   {
     quote: "El empaque ya es un regalo en sí mismo.",
     source: "Editorial belleza",
-    image: IMG_BOTTLE_VALIANT,
+    image: "/home/celeb-03.png",
   },
   {
     quote: "Tryphé apuesta por la proyección, no por el cliché.",
     source: "Prensa digital",
-    image: IMG_ESSENCE_FRESCO,
+    image: "/home/celeb-04.png",
   },
 ];
 
@@ -138,7 +143,20 @@ export function TrypheLanding({
   products = [],
   quizProducts = [],
 }) {
-  const heroImageUrl = HERO_EDITORIAL_SRC;
+  const [heroIdx, setHeroIdx] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setHeroIdx((i) => (i + 1) % HERO_SLIDES.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setHeroIdx((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(nextSlide, 5000);
+    return () => clearInterval(id);
+  }, [nextSlide]);
 
   const featuredTiles = useMemo(() => {
     const labels = ["Perfumes para El", "Perfumes para Ella", "Los mas vendidos"];
@@ -152,17 +170,54 @@ export function TrypheLanding({
 
   return (
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
-      {/* 1.1 Hero -- editorial split */}
+      {/* 1.1 Hero -- editorial split with slider */}
       <section className="grid min-h-[min(88vh,920px)] md:grid-cols-2">
-        <div className="relative min-h-[42vh] overflow-hidden md:min-h-0" data-gsap="zoom-out">
-          <Image
-            src={heroImageUrl}
-            alt="Pareja con estilo en calle urbana -- estetica editorial Tryphe"
-            fill
-            className="object-cover object-[center_25%]"
-            sizes="(max-width:768px) 100vw, 50vw"
-            priority
-          />
+        <div className="relative min-h-[42vh] overflow-hidden md:min-h-0 md:aspect-square">
+          {HERO_SLIDES.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt={`Editorial Tryphé ${i + 1}`}
+              fill
+              className={`object-cover object-center transition-opacity duration-1000 ease-in-out ${
+                i === heroIdx ? "opacity-100" : "opacity-0"
+              }`}
+              sizes="(max-width:768px) 100vw, 50vw"
+              priority={i === 0}
+            />
+          ))}
+          {/* Nav arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
+            aria-label="Anterior"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
+            aria-label="Siguiente"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          {/* Dots */}
+          <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+            {HERO_SLIDES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setHeroIdx(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === heroIdx ? "w-6 bg-white" : "w-2 bg-white/50"
+                }`}
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
         <div
           className="flex flex-col justify-center border-neutral-950/10 bg-[#faf9f7] px-6 py-14 md:border-l md:px-12 lg:px-16 xl:px-20"
@@ -417,8 +472,8 @@ export function TrypheLanding({
         <div className="mx-auto grid max-w-screen-2xl lg:grid-cols-2">
           <div className="relative min-h-[300px] overflow-hidden lg:min-h-[480px]" data-gsap="zoom-out">
             <Image
-              src={IMG_BOTTLE_SOLARE}
-              alt="Empaque regalo premium"
+              src="/home/bottle-water.jpg"
+              alt="Tryphé Elysse cayendo en agua"
               fill
               className="object-cover"
               sizes="(max-width:1024px) 100vw, 50vw"
@@ -615,11 +670,10 @@ export function TrypheLanding({
         </section>
       ) : null}
 
-      {/* 1.8 Bundles / Sets de regalo — sección dedicada con protagonismo */}
+      {/* 1.8 Bundles / Sets de regalo — sección dedicada con protagonismo
       <section className="border-t border-neutral-950/10 bg-[#faf9f7] py-20 md:py-28">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-10">
           <div className="grid gap-12 md:grid-cols-12 md:gap-14 lg:gap-20">
-            {/* Imagen editorial */}
             <div
               className="relative aspect-[4/5] overflow-hidden bg-neutral-200 md:col-span-7 md:aspect-[5/6]"
               data-gsap="zoom-out"
@@ -636,8 +690,6 @@ export function TrypheLanding({
                 <span className="mt-4 block h-px w-12 bg-[#faf9f7]/70" />
               </div>
             </div>
-
-            {/* Texto + CTA */}
             <div
               className="flex flex-col justify-center md:col-span-5"
               data-gsap="fade-up"
@@ -654,7 +706,6 @@ export function TrypheLanding({
                 Combinaciones pensadas para el día y la noche, para regalo o ritual propio. Un
                 empaque premium — el lujo de abrirlo es parte del aroma.
               </p>
-
               <ul className="mt-8 space-y-3 text-sm text-neutral-700 md:text-[15px]">
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 bg-neutral-950/40" />
@@ -669,7 +720,6 @@ export function TrypheLanding({
                   <span>Mejor precio que la compra individual.</span>
                 </li>
               </ul>
-
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href={
@@ -686,6 +736,7 @@ export function TrypheLanding({
           </div>
         </div>
       </section>
+      */}
 
       {/* 1.9 Partner TRYPHÉ — distribuidores */}
       <section className="border-t border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">

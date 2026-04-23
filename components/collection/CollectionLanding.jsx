@@ -18,8 +18,8 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_HOMBRE = "/brand/bottle-elan.png";
-const IMG_MUJER = "/brand/bottle-valiant.png";
+const IMG_HOMBRE = "/home/hero-hombre.jpg";
+const IMG_MUJER = "/home/hero-mujer.jpg";
 
 const COPY = {
   hombre: {
@@ -31,7 +31,7 @@ const COPY = {
     editorialTitle: "La firma invisible",
     editorialText:
       "Cada fragancia masculina de Tryphé nace de la tensión entre lo crudo y lo refinado. Materias primas de nicho — vetiver haitiano, oud camboyano, cuero reconstituido — trabajadas con la precisión de un laboratorio suizo. El resultado: una proyección que deja huella sin saturar el espacio.",
-    editorialImage: IMG_HOMBRE,
+    editorialImage: "/home/editorial-hombre.png",
     heroImage: IMG_HOMBRE,
     ctaText: "Encuentra tu firma",
   },
@@ -44,7 +44,7 @@ const COPY = {
     editorialTitle: "Una declaración silenciosa",
     editorialText:
       "Las composiciones femeninas de Tryphé exploran la dualidad: la suavidad del iris con la intensidad del oud, la frescura del neroli contra la profundidad de la vainilla tahitiana. No buscamos replicar — buscamos evocar. Cada nota es una capa de intención.",
-    editorialImage: IMG_MUJER,
+    editorialImage: "/home/editorial-mujer.png",
     heroImage: IMG_MUJER,
     ctaText: "Descubre tu aroma",
   },

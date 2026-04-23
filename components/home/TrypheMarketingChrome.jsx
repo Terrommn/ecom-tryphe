@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Search, Mail, User, ShoppingBag, Menu, X } from "lucide-react";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphé";
@@ -57,13 +58,15 @@ export function TrypheMarketingChrome({
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-10">
           <div className="flex h-16 items-center justify-between sm:h-[4.5rem]">
             <Link href="/" className="shrink-0">
-              <h1 className="font-serif text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
-                {siteName}
-                <sup className="ml-0.5 text-[9px] font-normal">®</sup>
-              </h1>
-              <p className="mt-0.5 text-[8px] font-bold tracking-[0.35em] text-neutral-500 uppercase">
-                {tagline}
-              </p>
+              <Image
+                src="/logo.png"
+                alt={siteName}
+                width={240}
+                height={48}
+                sizes="(max-width: 640px) 140px, 200px"
+                className="h-10 w-auto max-w-[200px] sm:h-12"
+                priority
+              />
             </Link>
 
             <form

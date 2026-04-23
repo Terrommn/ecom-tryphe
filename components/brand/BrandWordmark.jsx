@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const DEFAULT_WORDMARK = "/brand/logo-placeholder.svg";
+const DEFAULT_WORDMARK = "/logo.png";
 
 /**
  * Wordmark: imagen (por defecto `logo-placeholder.svg`) o solo texto si

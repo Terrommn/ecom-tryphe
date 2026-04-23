@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 
-const IMG_HERO = "/brand/bottle-solare.png";
-const IMG_PROGRAM = "/brand/bottle-magna.png";
+const IMG_HERO = "/home/celeb-03.png";
+const IMG_PROGRAM = "/home/celeb-01.png";
 
 const PILLARS = [
   {
@@ -580,10 +580,10 @@ export function PartnersLanding() {
                       WhatsApp comercial
                     </p>
                     <a
-                      href="https://wa.me/"
+                      href="https://wa.me/528184587897"
                       className="mt-2 block font-serif text-lg text-neutral-950 hover:underline underline-offset-4"
                     >
-                      [REVISAR enlace]
+                      +52 81 8458 7897
                     </a>
                   </li>
                   <li>

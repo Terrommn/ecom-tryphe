@@ -17,9 +17,9 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const IMG_HERO = "/brand/bottles-grid.png";
-const IMG_STORY = "/brand/essence-amaderados.png";
-const IMG_PROCESS = "/brand/bottle-magna.png";
+const IMG_HERO = "/home/hero-duo-city.png";
+const IMG_STORY = "/home/celeb-01.png";
+const IMG_PROCESS = "/home/celeb-04.png";
 
 const VALUES = [
   {
