@@ -64,7 +64,7 @@ export function TrypheMarketingChrome({
                 width={320}
                 height={64}
                 sizes="(max-width: 640px) 180px, 280px"
-                className="h-14 w-auto max-w-[280px] sm:h-16"
+                className="h-16 w-auto max-w-[300px] sm:h-[4.5rem]"
                 priority
               />
             </Link>
