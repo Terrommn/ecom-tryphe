@@ -24,11 +24,10 @@ const IMG_BOTTLE_SOLARE = "/brand/bottle-solare.png";
 const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
 const HERO_SLIDES = [
-  "/home/hero-duo-city.png",
   "/home/hero-stylish-duo.png",
-  "/home/bottle-ignis.png",
   "/home/bottle-water.jpg",
-  "/home/bottle-cabos.jpg",
+  "/home/hero-bottles-lineup.png",
+  "/home/hero-boxes-display.png",
 ];
 
 const COLLECTION_IMAGE_FALLBACK = [
