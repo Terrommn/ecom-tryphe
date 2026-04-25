@@ -258,7 +258,71 @@ export function TrypheLanding({
         </div>
       </section>
 
-      {/* 1.1b Trust-bar — garantía 30 días */}
+      {/* 1.1b Promos Mayo */}
+      <section className="bg-neutral-950 py-16 md:py-20">
+        <div className="mx-auto max-w-screen-xl px-4 md:px-10">
+          <div className="text-center mb-12" data-gsap="fade-up">
+            <p className="text-[10px] font-bold tracking-[0.55em] uppercase text-[#a17952]">
+              Mayo exclusivo
+            </p>
+            <h3 className="mt-4 font-serif text-2xl font-medium text-[#faf9f7] md:text-3xl">
+              Elige tu firma. Complementa tu presencia.
+            </h3>
+          </div>
+          <div
+            className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto"
+            data-gsap="fade-up"
+            data-gsap-stagger="0.15"
+          >
+            <div className="border border-neutral-800 p-8 md:p-10 text-center transition-all duration-500 hover:border-[#a17952]/30">
+              <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#a17952] mb-4">
+                01
+              </p>
+              <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl leading-snug">
+                Compra un 100 ml
+              </h4>
+              <p className="mt-3 font-serif text-base italic text-neutral-400">
+                y llévate un 60 ml al{" "}
+                <span className="text-[#d4a574]">50% de descuento</span>
+              </p>
+              <div className="mt-6 h-px w-12 bg-[#a17952]/30 mx-auto" />
+              <p className="mt-6 text-[11px] text-neutral-500 leading-relaxed">
+                Elige tu fragancia principal y complementa con un formato ideal para llevar.
+              </p>
+              <Link
+                href="/collections"
+                className="mt-8 inline-block border border-[#faf9f7]/20 px-8 py-3 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition-all duration-300 hover:bg-[#faf9f7] hover:text-neutral-950"
+              >
+                Elegir fragancia
+              </Link>
+            </div>
+            <div className="border border-neutral-800 p-8 md:p-10 text-center transition-all duration-500 hover:border-[#a17952]/30">
+              <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#a17952] mb-4">
+                02
+              </p>
+              <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl leading-snug">
+                Compra 2 de 100 ml
+              </h4>
+              <p className="mt-3 font-serif text-base italic text-neutral-400">
+                y el 60 ml{" "}
+                <span className="text-[#d4a574]">va por nuestra cuenta</span>
+              </p>
+              <div className="mt-6 h-px w-12 bg-[#a17952]/30 mx-auto" />
+              <p className="mt-6 text-[11px] text-neutral-500 leading-relaxed">
+                Domina cada escenario. Tres fragancias para proyectar en cualquier momento.
+              </p>
+              <Link
+                href="/collections"
+                className="mt-8 inline-block border border-[#faf9f7]/20 px-8 py-3 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition-all duration-300 hover:bg-[#faf9f7] hover:text-neutral-950"
+              >
+                Elegir fragancias
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 1.1c Trust-bar — garantía 30 días */}
       <section className="border-y border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-center gap-3 px-4 py-4 text-center md:flex-row md:gap-6 md:px-10">
           <p className="text-[9px] font-bold tracking-[0.4em] text-[#faf9f7]/60 uppercase">

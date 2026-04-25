@@ -24,6 +24,45 @@ function CartCount() {
   return <span className="ml-1 text-xs font-bold">({count})</span>;
 }
 
+const ANNOUNCEMENTS = [
+  <>
+    Envío gratis en pedidos mayores a $1,500 ·{" "}
+    <Link href="/envios" className="underline underline-offset-4 hover:text-white">
+      condiciones
+    </Link>
+  </>,
+  <>
+    Mayo · Compra 100 ml y llévate un 60 ml al{" "}
+    <span className="text-[#d4a574]">50% de descuento</span>
+  </>,
+  <>
+    Mayo · Compra 2 de 100 ml y el 60 ml{" "}
+    <span className="text-[#d4a574]">va por nuestra cuenta</span>
+  </>,
+];
+
+function AnnouncementBar() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % ANNOUNCEMENTS.length), 4000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="relative bg-neutral-950 py-2 text-center text-[9px] font-bold tracking-[0.35em] text-[#faf9f7] uppercase sm:text-[10px] overflow-hidden h-8 flex items-center justify-center">
+      {ANNOUNCEMENTS.map((msg, i) => (
+        <span
+          key={i}
+          className={`absolute inset-x-0 px-4 transition-all duration-500 ${
+            i === idx ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          {msg}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /**
  * Barra superior + header editorial (misma UI que la home Tryphé).
  *
@@ -41,12 +80,7 @@ export function TrypheMarketingChrome({
 
   return (
     <div className="min-h-screen bg-[#faf9f7] font-sans text-neutral-950 antialiased">
-      <div className="bg-neutral-950 py-2 text-center text-[9px] font-bold tracking-[0.35em] text-[#faf9f7] uppercase sm:text-[10px]">
-        Envío gratis en pedidos mayores a $1,500 ·{" "}
-        <Link href="/envios" className="underline underline-offset-4 hover:text-white">
-          condiciones
-        </Link>
-      </div>
+      <AnnouncementBar />
 
       {!shopConfigured ? (
         <div className="border-b border-neutral-200 bg-[#f5f0e8] px-3 py-2 text-center text-[10px] leading-snug text-neutral-800 sm:text-[11px]">
