@@ -7,6 +7,7 @@ import { Star } from "lucide-react";
 import { formatMoney } from "@/lib/money";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { PerfumeDiscoveryQuiz } from "@/components/quiz/PerfumeDiscoveryQuiz";
+import { UgcVideoSection } from "@/components/home/UgcVideoSection";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphe";
 const tagline = process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() || "RAW -- ESENCIAL";
@@ -488,6 +489,9 @@ export function TrypheLanding({
           </div>
         </div>
       </section>
+
+      {/* 1.3c UGC Videos */}
+      <UgcVideoSection />
 
       {/* 1.4 Love by Celebrities — editorial magazine layout */}
       <section className="bg-[#faf9f7] py-20 md:py-28">
