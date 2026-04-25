@@ -9,18 +9,25 @@ export const metadata = {
 };
 
 const COLLECTION_IMAGE_OVERRIDES = {
-  formal: { url: "/collections/formal.png", altText: "Formal" },
-  hombre: { url: "/collections/hombre.png", altText: "Hombre" },
-  mujer: { url: "/collections/mujer.png", altText: "Mujer" },
-  casual: { url: "/collections/casual.png", altText: "Casual" },
+  formal: { url: "/home/col-formal.jpg", altText: "Formal" },
+  hombre: { url: "/home/col-hombre.jpg", altText: "Hombre" },
+  mujer: { url: "/home/col-mujer.jpg", altText: "Mujer" },
+  casual: { url: "/home/col-casual.jpg", altText: "Casual" },
 };
 
 const CURATED_COLLECTIONS = [
-  { id: "curated-formal", handle: "formal", title: "Formal" },
-  { id: "curated-hombre", handle: "hombre", title: "Hombre" },
-  { id: "curated-mujer", handle: "mujer", title: "Mujer" },
-  { id: "curated-casual", handle: "casual", title: "Casual" },
+  { id: "curated-formal", handle: "formal", title: "Formal", label: "Formal", displayTitle: "Formal" },
+  { id: "curated-hombre", handle: "hombre", title: "Hombre", label: "Hombre", displayTitle: "Para Él" },
+  { id: "curated-mujer", handle: "mujer", title: "Mujer", label: "Mujer", displayTitle: "Para Ella" },
+  { id: "curated-casual", handle: "casual", title: "Casual", label: "Casual", displayTitle: "Casual" },
 ];
+
+const DISPLAY_TITLES = {
+  formal: { label: "Formal", displayTitle: "Formal" },
+  hombre: { label: "Hombre", displayTitle: "Para Él" },
+  mujer: { label: "Mujer", displayTitle: "Para Ella" },
+  casual: { label: "Casual", displayTitle: "Casual" },
+};
 
 export default async function CollectionsIndexPage() {
   const shopifyCollections = await getCollectionsCatalog(48);
@@ -43,9 +50,7 @@ export default async function CollectionsIndexPage() {
             <h1 className="font-serif text-3xl md:text-4xl font-medium text-neutral-950 mb-4">
               Colecciones
             </h1>
-            <p className="text-neutral-500 max-w-xl mb-12">
-              Catalogo sincronizado con tu admin de Shopify.
-            </p>
+            <div className="mb-12" />
           </div>
 
           {collections.length === 0 ? (
@@ -53,35 +58,48 @@ export default async function CollectionsIndexPage() {
               No hay colecciones públicas. Configura Shopify o añade colecciones en el admin.
             </p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-gsap="scale-in" data-gsap-stagger="0.1">
-              {collections.map((col) => (
-                <Link
-                  key={col.id}
-                  href={`/collections/${col.handle}`}
-                  className="group relative overflow-hidden rounded-lg border border-neutral-200 aspect-[4/5] bg-white"
-                >
-                  {col.image?.url ? (
-                    <Image
-                      src={col.image.url}
-                      alt={col.image.altText || col.title}
-                      fill
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  ) : (
-                    <div
-                      className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-[#faf9f7]"
-                      aria-hidden
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f7] via-[#faf9f7]/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h2 className="font-serif text-3xl md:text-4xl font-medium text-xl text-neutral-950 group-hover:text-neutral-950 transition-colors">
-                      {col.title}
-                    </h2>
-                  </div>
-                </Link>
-              ))}
+            <div
+              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4"
+              data-gsap="scale-in"
+              data-gsap-stagger="0.1"
+            >
+              {collections.map((col) => {
+                const display = DISPLAY_TITLES[col.handle];
+                const label = display?.label || col.title;
+                const title = display?.displayTitle || col.title;
+                return (
+                  <Link
+                    key={col.id}
+                    href={`/collections/${col.handle}`}
+                    className="group relative aspect-[3/4] overflow-hidden bg-neutral-200"
+                  >
+                    {col.image?.url ? (
+                      <Image
+                        src={col.image.url}
+                        alt={col.image.altText || col.title}
+                        fill
+                        className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                        sizes="(max-width:768px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-300"
+                        aria-hidden
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/45" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-[#faf9f7]">
+                      <p className="text-[9px] font-bold tracking-[0.5em] uppercase opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                        {label}
+                      </p>
+                      <p className="mt-2 font-serif text-2xl font-medium tracking-tight md:text-3xl drop-shadow-lg">
+                        {title}
+                      </p>
+                      <span className="mt-3 h-px w-0 bg-[#faf9f7]/70 transition-all duration-700 group-hover:w-16" />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

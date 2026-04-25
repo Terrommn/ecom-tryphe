@@ -61,10 +61,10 @@ export function TrypheMarketingChrome({
               <Image
                 src="/logo.png"
                 alt={siteName}
-                width={240}
-                height={48}
-                sizes="(max-width: 640px) 140px, 200px"
-                className="h-10 w-auto max-w-[200px] sm:h-12"
+                width={320}
+                height={64}
+                sizes="(max-width: 640px) 180px, 280px"
+                className="h-14 w-auto max-w-[280px] sm:h-16"
                 priority
               />
             </Link>

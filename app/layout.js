@@ -3,6 +3,7 @@ import "./globals.css";
 import { ConditionalChrome } from "@/components/layout/ConditionalChrome";
 import { GsapScrollSetup } from "@/components/gsap/GsapScrollSetup";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
+import { WelcomePopup } from "@/components/layout/WelcomePopup";
 
 const inter = Inter({
   variable: "--font-body",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
         <GsapScrollSetup />
         <ConditionalChrome>{children}</ConditionalChrome>
         <WhatsAppFab />
+        <WelcomePopup />
       </body>
     </html>
   );

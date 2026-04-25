@@ -24,6 +24,7 @@ const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
 const HERO_SLIDES = [
   "/home/hero-duo-city.png",
+  "/home/hero-stylish-duo.png",
   "/home/bottle-ignis.png",
   "/home/bottle-water.jpg",
   "/home/bottle-cabos.jpg",
@@ -327,6 +328,99 @@ export function TrypheLanding({
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 1.3b Collections Preview */}
+      <section className="bg-neutral-950 py-20 md:py-28">
+        <div className="mx-auto max-w-screen-xl px-4 md:px-10">
+          <div className="text-center" data-gsap="fade-up">
+            <div className="flex items-center justify-center gap-6">
+              <span className="h-px w-16 bg-[#a17952]/40 md:w-24" />
+              <p className="text-[10px] font-bold tracking-[0.55em] text-[#a17952] uppercase">
+                Collections
+              </p>
+              <span className="h-px w-16 bg-[#a17952]/40 md:w-24" />
+            </div>
+            <h3 className="mt-6 font-serif text-2xl font-medium text-[#faf9f7] md:text-4xl lg:text-5xl leading-tight">
+              No eliges un perfume...{" "}
+              <em className="italic text-[#faf9f7]/60">
+                eliges cómo quieres ser percibido.
+              </em>
+            </h3>
+            <p className="mt-4 text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed">
+              Cada Collection representa una intención distinta: presencia, atracción, estatus, impacto.
+            </p>
+          </div>
+
+          <div
+            className="mt-14 grid gap-6 md:grid-cols-3"
+            data-gsap="fade-up"
+            data-gsap-stagger="0.12"
+          >
+            {[
+              {
+                name: "Atracción Silenciosa",
+                headline: "No persigues atención... la provocas",
+                price: "$1,799",
+                badge: "Más elegido",
+                cta: "Quiero provocar atracción",
+                href: "/products/atraccion-silenciosa-100-ml",
+              },
+              {
+                name: "Lujo Inteligente",
+                headline: "No gastas más... eliges mejor",
+                price: "$1,199",
+                badge: null,
+                cta: "Quiero elegir mejor",
+                href: "/products/lujo-inteligente-100-ml",
+              },
+              {
+                name: "Impacto Inmediato",
+                headline: "Desde el primer momento... se nota",
+                price: "$849",
+                badge: "Empieza aquí",
+                cta: "Quiero causar impacto",
+                href: "/products/impacto-inmediato-60-ml",
+              },
+            ].map((col) => (
+              <div
+                key={col.name}
+                className="group relative flex flex-col border border-neutral-800 bg-neutral-900/50 p-6 md:p-8 transition-all duration-500 hover:border-[#a17952]/30"
+              >
+                {col.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-block bg-[#a17952] px-4 py-1 text-[9px] font-bold tracking-[0.3em] uppercase text-white">
+                    {col.badge}
+                  </span>
+                )}
+                <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl">
+                  {col.name}
+                </h4>
+                <p className="mt-2 font-serif text-sm italic text-neutral-400">
+                  {col.headline}
+                </p>
+                <div className="flex-1" />
+                <p className="mt-6 font-serif text-xl font-medium text-[#faf9f7]">
+                  {col.price}
+                </p>
+                <Link
+                  href={col.href}
+                  className="mt-4 block w-full border border-[#faf9f7]/20 py-3 text-center text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition-all duration-300 hover:bg-[#faf9f7] hover:text-neutral-950"
+                >
+                  {col.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center" data-gsap="fade-up">
+            <Link
+              href="/collections/sets"
+              className="inline-block border border-[#a17952]/40 px-10 py-4 text-[10px] font-bold tracking-[0.35em] uppercase text-[#a17952] transition-all duration-300 hover:bg-[#a17952] hover:text-white"
+            >
+              Ver todas las Collections
+            </Link>
           </div>
         </div>
       </section>
