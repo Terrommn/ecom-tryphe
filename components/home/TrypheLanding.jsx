@@ -265,7 +265,7 @@ export function TrypheLanding({
             <p className="text-[10px] font-bold tracking-[0.55em] uppercase text-[#a17952]">
               Mayo exclusivo
             </p>
-            <h3 className="mt-4 font-serif text-2xl font-medium text-[#faf9f7] md:text-3xl">
+            <h3 className="mt-4 font-serif text-4xl font-medium text-[#faf9f7] md:text-5xl">
               Elige tu firma. Complementa tu presencia.
             </h3>
           </div>
@@ -279,10 +279,10 @@ export function TrypheLanding({
                 01
               </p>
               <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl leading-snug">
-                Compra un 100 ml
+                Compra un perfume de 100 ml
               </h4>
               <p className="mt-3 font-serif text-base italic text-neutral-400">
-                y llévate un 60 ml al{" "}
+                y llévate otro de 60 ml al{" "}
                 <span className="text-[#d4a574]">50% de descuento</span>
               </p>
               <div className="mt-6 h-px w-12 bg-[#a17952]/30 mx-auto" />
@@ -301,7 +301,7 @@ export function TrypheLanding({
                 02
               </p>
               <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl leading-snug">
-                Compra 2 de 100 ml
+                Compra 2 perfumes de 100 ml
               </h4>
               <p className="mt-3 font-serif text-base italic text-neutral-400">
                 y el 60 ml{" "}
@@ -363,10 +363,10 @@ export function TrypheLanding({
             data-gsap-stagger="0.1"
           >
             {[
-              { label: "Mujer", title: "Para Ella", image: "/home/col-mujer.jpg", href: "/collections/mujer" },
-              { label: "Formal", title: "Formal", image: "/home/col-formal.jpg", href: "/collections/formal" },
-              { label: "Hombre", title: "Para Él", image: "/home/col-hombre.jpg", href: "/collections/hombre" },
-              { label: "Casual", title: "Casual", image: "/home/col-casual.jpg", href: "/collections/casual" },
+              { label: "Mujer", title: "PARA ELLA", image: "/home/col-mujer.jpg", href: "/collections/mujer" },
+              { label: "Formal", title: "FORMAL", image: "/home/col-formal.jpg", href: "/collections/formal" },
+              { label: "Hombre", title: "PARA ÉL", image: "/home/col-hombre.jpg", href: "/collections/hombre" },
+              { label: "Casual", title: "CASUAL", image: "/home/col-casual.jpg", href: "/collections/casual" },
             ].map((c) => (
               <Link
                 key={c.label}
@@ -403,7 +403,7 @@ export function TrypheLanding({
             <div className="flex items-center justify-center gap-6">
               <span className="h-px w-16 bg-[#a17952]/40 md:w-24" />
               <p className="text-[10px] font-bold tracking-[0.55em] text-[#a17952] uppercase">
-                Collections
+                Bundles
               </p>
               <span className="h-px w-16 bg-[#a17952]/40 md:w-24" />
             </div>
@@ -414,7 +414,7 @@ export function TrypheLanding({
               </em>
             </h3>
             <p className="mt-4 text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed">
-              Cada Collection representa una intención distinta: presencia, atracción, estatus, impacto.
+              Cada Bundle representa una intención distinta: presencia, atracción, estatus, impacto.
             </p>
           </div>
 
@@ -431,6 +431,7 @@ export function TrypheLanding({
                 badge: "Más elegido",
                 cta: "Quiero provocar atracción",
                 href: "/products/atraccion-silenciosa-100-ml",
+                image: "/home/bundle-atraccion-silenciosa.webp",
               },
               {
                 name: "Lujo Inteligente",
@@ -439,6 +440,7 @@ export function TrypheLanding({
                 badge: null,
                 cta: "Quiero elegir mejor",
                 href: "/products/lujo-inteligente-100-ml",
+                image: "/home/bundle-lujo-inteligente.webp",
               },
               {
                 name: "Impacto Inmediato",
@@ -447,6 +449,7 @@ export function TrypheLanding({
                 badge: "Empieza aquí",
                 cta: "Quiero causar impacto",
                 href: "/products/impacto-inmediato-60-ml",
+                image: "/home/bundle-impacto-inmediato.png",
               },
             ].map((col) => (
               <div
@@ -454,9 +457,19 @@ export function TrypheLanding({
                 className="group relative flex flex-col border border-neutral-800 bg-neutral-900/50 p-6 md:p-8 transition-all duration-500 hover:border-[#a17952]/30"
               >
                 {col.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-block bg-[#a17952] px-4 py-1 text-[9px] font-bold tracking-[0.3em] uppercase text-white">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 inline-block bg-[#a17952] px-4 py-1 text-[9px] font-bold tracking-[0.3em] uppercase text-white">
                     {col.badge}
                   </span>
+                )}
+                {col.image && (
+                  <div className="relative aspect-[4/3] -mx-6 -mt-6 md:-mx-8 md:-mt-8 mb-6 overflow-hidden">
+                    <Image
+                      src={col.image}
+                      alt={col.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
                 )}
                 <h4 className="font-serif text-xl font-medium text-[#faf9f7] md:text-2xl">
                   {col.name}
@@ -483,7 +496,7 @@ export function TrypheLanding({
               href="/collections/sets"
               className="inline-block border border-[#a17952]/40 px-10 py-4 text-[10px] font-bold tracking-[0.35em] uppercase text-[#a17952] transition-all duration-300 hover:bg-[#a17952] hover:text-white"
             >
-              Ver todas las Collections
+              Ver todos los Bundles
             </Link>
           </div>
         </div>
@@ -656,7 +669,7 @@ export function TrypheLanding({
               <span className="text-[#faf9f7]">Misma formula, precio justo.</span> Referencia de mercado
               en boutiques de lujo frecuentemente por encima de{" "}
               <span className="font-semibold text-[#faf9f7]">$8,000</span> -- nuestro enfoque, desde{" "}
-              <span className="font-semibold text-[#faf9f7]">$649</span>, prioriza el acceso sin
+              <span className="font-semibold text-[#faf9f7]">$499</span>, prioriza el acceso sin
               renunciar a la experiencia.
             </p>
             <p className="mt-8 text-sm leading-relaxed text-[#faf9f7]/65">

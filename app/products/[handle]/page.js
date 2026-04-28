@@ -178,7 +178,7 @@ export default async function ProductPage({ params }) {
                 Referencia de mercado en boutiques de lujo frecuentemente por encima de{" "}
                 <span className="font-semibold text-neutral-950">$8,000</span> — nuestro
                 enfoque, desde{" "}
-                <span className="font-semibold text-neutral-950">$649</span>, prioriza el
+                <span className="font-semibold text-neutral-950">$499</span>, prioriza el
                 acceso sin renunciar a la experiencia.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">

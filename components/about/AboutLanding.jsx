@@ -136,7 +136,7 @@ export function AboutLanding() {
             <p className="mt-6 text-base leading-[1.85] text-neutral-600 md:text-lg">
               No somos una marca de "dupes". Cada fórmula es original, inspirada en perfiles
               olfativos que resuenan con la cultura y el clima latinoamericano. El resultado:
-              fragancias que proyectan, duran y emocionan — desde $649.
+              fragancias que proyectan, duran y emocionan — desde $499.
             </p>
           </div>
           <div className="relative min-h-[360px] overflow-hidden lg:min-h-0">

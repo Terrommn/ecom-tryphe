@@ -26,17 +26,17 @@ function CartCount() {
 
 const ANNOUNCEMENTS = [
   <>
-    Envío gratis en pedidos mayores a $1,500 ·{" "}
+    Envío gratis al comprar 2 o más perfumes ·{" "}
     <Link href="/envios" className="underline underline-offset-4 hover:text-white">
       condiciones
     </Link>
   </>,
   <>
-    Mayo · Compra 100 ml y llévate un 60 ml al{" "}
+    Mayo · Compra un perfume de 100 ml y llévate otro de 60 ml al{" "}
     <span className="text-[#d4a574]">50% de descuento</span>
   </>,
   <>
-    Mayo · Compra 2 de 100 ml y el 60 ml{" "}
+    Mayo · Compra 2 perfumes de 100 ml y el 60 ml{" "}
     <span className="text-[#d4a574]">va por nuestra cuenta</span>
   </>,
 ];

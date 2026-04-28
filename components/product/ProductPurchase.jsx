@@ -107,9 +107,13 @@ export function ProductPurchase({ product }) {
       <div className="h-px bg-neutral-950/10" />
 
       {/* Variant selector */}
-      {product.options?.length > 0 && (
+      {product.options?.filter(
+        (opt) => !(opt.name === "Title" && opt.values.length === 1 && opt.values[0] === "Default Title"),
+      ).length > 0 && (
         <div className="space-y-5">
-          {product.options.map((opt) => (
+          {product.options.filter(
+            (opt) => !(opt.name === "Title" && opt.values.length === 1 && opt.values[0] === "Default Title"),
+          ).map((opt) => (
             <div key={opt.name}>
               <label className="block text-[9px] font-bold uppercase tracking-[0.35em] text-neutral-400 mb-3">
                 {opt.name}
@@ -163,11 +167,11 @@ export function ProductPurchase({ product }) {
           Mayo exclusivo
         </p>
         <p className="text-[13px] text-[#faf9f7] leading-relaxed">
-          Compra un 100 ml y llévate un 60 ml al{" "}
+          Compra un perfume de 100 ml y llévate otro de 60 ml al{" "}
           <span className="font-semibold text-[#d4a574]">50% de descuento</span>.
         </p>
         <p className="mt-1 text-[13px] text-[#faf9f7] leading-relaxed">
-          Compra 2 de 100 ml y el 60 ml{" "}
+          Compra 2 perfumes de 100 ml y el 60 ml{" "}
           <span className="font-semibold text-[#d4a574]">va por nuestra cuenta</span>.
         </p>
       </div>

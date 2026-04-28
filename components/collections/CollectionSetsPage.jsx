@@ -3,6 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 
+const INSPIRATIONS = {
+  MAGNA: "Baccarat Rouge 540",
+  ETERNA: "La Vie Est Belle",
+  SANTOR: "Santal 33",
+  AZUR: "Polo Blue",
+  VALIANT: "212 Men",
+  ELAN: "Le Male",
+  SOLARE: "Light Blue",
+  ELYSSE: "Ralph",
+  ASTER: "Burberry Her",
+  VICTORIUM: "Invictus",
+  ALVUS: "Lacoste White",
+};
+
 const COLLECTIONS = {
   "100ml": [
     {
@@ -237,7 +251,13 @@ function CollectionCard({ collection }) {
             Incluye
           </p>
           <p className="text-sm font-medium text-neutral-800 tracking-wide">
-            {collection.includes.join(" · ")}
+            {collection.includes
+              .map((name) =>
+                INSPIRATIONS[name]
+                  ? `${name} (insp. ${INSPIRATIONS[name]})`
+                  : name
+              )
+              .join(" · ")}
           </p>
         </div>
 
@@ -255,6 +275,11 @@ function CollectionCard({ collection }) {
                 <span className="text-neutral-500">{u.occasion}</span>
                 <span className="font-medium text-neutral-800">
                   {u.fragrance}
+                  {INSPIRATIONS[u.fragrance] && (
+                    <span className="font-normal text-neutral-400 text-xs ml-1">
+                      (insp. {INSPIRATIONS[u.fragrance]})
+                    </span>
+                  )}
                 </span>
               </div>
             ))}

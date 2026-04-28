@@ -89,10 +89,7 @@ export default async function CollectionsIndexPage() {
                     )}
                     <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/45" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-[#faf9f7]">
-                      <p className="text-[9px] font-bold tracking-[0.5em] uppercase opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                        {label}
-                      </p>
-                      <p className="mt-2 font-serif text-2xl font-medium tracking-tight md:text-3xl drop-shadow-lg">
+                      <p className="font-serif text-2xl font-medium tracking-tight md:text-3xl drop-shadow-lg">
                         {title}
                       </p>
                       <span className="mt-3 h-px w-0 bg-[#faf9f7]/70 transition-all duration-700 group-hover:w-16" />

@@ -45,7 +45,7 @@ export function ProductGallery({ images, title }) {
       )}
 
       {/* Main image */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
         <Image
           src={main.url}
           alt={main.altText || title}
