@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, Mail, User, ShoppingBag, Menu, X } from "lucide-react";
 
@@ -169,6 +170,7 @@ export function TrypheMarketingChrome({
           >
             <X className="h-6 w-6" />
           </button>
+          <MobileSearchBar onClose={() => setIsMenuOpen(false)} />
           {navLinks.map((item) => (
             <Link
               key={`${item.href}-${item.label}`}
@@ -184,5 +186,32 @@ export function TrypheMarketingChrome({
 
       {children}
     </div>
+  );
+}
+
+function MobileSearchBar({ onClose }) {
+  const router = useRouter();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const q = new FormData(e.currentTarget).get("q")?.toString().trim();
+    if (q) {
+      router.push(`/search?q=${encodeURIComponent(q)}`);
+      onClose?.();
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-4">
+      <div className="flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2.5">
+        <Search className="h-4 w-4 shrink-0 text-neutral-400" />
+        <input
+          name="q"
+          type="search"
+          placeholder="Buscar..."
+          className="flex-1 bg-transparent border-0 p-0 text-sm text-neutral-900 placeholder:text-neutral-400 focus:ring-0 focus:outline-none"
+        />
+      </div>
+    </form>
   );
 }

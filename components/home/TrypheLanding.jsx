@@ -262,7 +262,7 @@ export function TrypheLanding({
       <section className="bg-neutral-950 py-16 md:py-20">
         <div className="mx-auto max-w-screen-xl px-4 md:px-10">
           <div className="text-center mb-12" data-gsap="fade-up">
-            <p className="text-[10px] font-bold tracking-[0.55em] uppercase text-[#a17952]">
+            <p className="text-lg md:text-2xl font-bold tracking-[0.55em] uppercase text-[#a17952]">
               Mayo exclusivo
             </p>
             <h3 className="mt-4 font-serif text-4xl font-medium text-[#faf9f7] md:text-5xl">

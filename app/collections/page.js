@@ -47,7 +47,7 @@ export default async function CollectionsIndexPage() {
       <div className="bg-[#faf9f7]">
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-10 py-12 md:py-16">
           <div data-gsap="fade-up">
-            <h1 className="font-serif text-3xl md:text-4xl font-medium text-neutral-950 mb-4">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium text-neutral-950 mb-4">
               Colecciones
             </h1>
             <div className="mb-12" />

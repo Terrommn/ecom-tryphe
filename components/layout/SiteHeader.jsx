@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { BrandWordmark } from "@/components/brand/BrandWordmark";
-import { HeaderSearch } from "@/components/layout/HeaderSearch";
+import { HeaderSearch, MobileSearchForm } from "@/components/layout/HeaderSearch";
 import { CartBadge } from "@/components/layout/CartBadge";
 
 const nav = [
-  { href: "/collections", label: "Colecciones" },
+  { href: "/collections", label: "Bundles" },
   { href: "/search", label: "Buscar" },
 ];
 
@@ -92,6 +92,8 @@ function MobileNav() {
         </svg>
       </summary>
       <div className="absolute right-0 top-full mt-2 w-64 max-h-[80vh] overflow-y-auto rounded-lg border border-[color:var(--oob-border)] bg-[var(--oob-bg-elevated)] py-2 shadow-xl shadow-black/20">
+        <MobileSearchForm />
+        <div className="border-t border-[color:var(--oob-border)] my-2" />
         {nav.map((item) => (
           <Link
             key={item.href}

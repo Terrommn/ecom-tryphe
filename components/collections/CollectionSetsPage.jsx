@@ -331,10 +331,10 @@ export function CollectionSetsPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/90 to-neutral-950" />
         <div className="relative mx-auto max-w-screen-xl px-4 text-center md:px-10">
           <p
-            className="text-[10px] font-bold tracking-[0.6em] uppercase text-[#a17952]"
+            className="text-lg md:text-2xl font-bold tracking-[0.6em] uppercase text-[#a17952]"
             data-gsap="fade-up"
           >
-            Collections
+            Bundles
           </p>
           <h1
             className="mx-auto mt-6 max-w-3xl font-serif text-3xl font-medium leading-tight text-[#faf9f7] md:text-5xl lg:text-6xl"
