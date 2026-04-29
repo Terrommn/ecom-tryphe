@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/cart/c/:path*",
+        destination: "https://vh3sx0-jz.myshopify.com/cart/c/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
