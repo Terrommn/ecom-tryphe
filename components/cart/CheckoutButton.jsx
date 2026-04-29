@@ -14,7 +14,7 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
   }
   return (
     <Link
-      href={checkoutUrl}
+      href={checkoutUrl?.replace("tryphe.mx", "vh3sx0-jz.myshopify.com")}
       className="flex w-full items-center justify-center bg-neutral-950 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition hover:bg-neutral-800"
     >
       Proceder al pago
