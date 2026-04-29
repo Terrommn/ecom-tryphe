@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1807661143240899');
+          fbq('init', '3244695725692411');
           fbq('track', 'PageView');
         `}</Script>
         <noscript>
@@ -48,10 +48,20 @@ export default function RootLayout({ children }) {
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1807661143240899&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=3244695725692411&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0K8K3HL1TC"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-0K8K3HL1TC');
+        `}</Script>
       </head>
       <body
         className={`${inter.variable} ${display.variable} antialiased min-h-dvh flex flex-col overflow-x-hidden`}
