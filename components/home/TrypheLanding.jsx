@@ -228,7 +228,7 @@ export function TrypheLanding({
   }, []);
 
   useEffect(() => {
-    const id = setInterval(nextSlide, 8000);
+    const id = setInterval(nextSlide, 12000);
     return () => clearInterval(id);
   }, [nextSlide]);
 
@@ -269,8 +269,8 @@ export function TrypheLanding({
                 sizes="(max-width:768px) 100vw, 50vw"
               />
               {/* Badge sobre imagen */}
-              <div className="absolute left-4 top-4 z-10">
-                <span className="inline-block bg-[#a9b989] px-4 py-1.5 text-[9px] font-bold tracking-[0.22em] uppercase text-neutral-950 shadow-sm">
+              <div className="absolute left-2 top-2 z-10 md:left-4 md:top-4">
+                <span className="inline-block bg-[#a9b989] px-2 py-1 text-[7px] font-bold tracking-[0.18em] uppercase text-neutral-950 shadow-sm md:px-4 md:py-1.5 md:text-[9px] md:tracking-[0.22em]">
                   BONUS · LIMITADO A 99 PIEZAS
                 </span>
               </div>
@@ -383,7 +383,7 @@ export function TrypheLanding({
 
           {/* ── Banner 2: Historia / Testimonial ── */}
           <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
-            <div className="relative min-h-[40vh] overflow-hidden md:min-h-0">
+            <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Novios.png"
                 alt="Pareja — historia Tryphé"
@@ -392,8 +392,8 @@ export function TrypheLanding({
                 sizes="(max-width:768px) 100vw, 50vw"
               />
             </div>
-            <div className="flex flex-col justify-center border-t-[3px] border-neutral-950/8 bg-[#faf9f7] px-6 py-10 md:border-t-0 md:px-12 lg:px-16 xl:px-20">
-              <div key={`b1-${heroIdx}`} className="flex flex-col">
+            <div className="flex flex-col justify-start bg-[#faf9f7] px-4 relative z-10 rounded-t-2xl pt-4 pb-3 md:justify-center md:rounded-none md:py-10 md:px-12 lg:px-16 xl:px-20">
+              <div key={`b1-${heroIdx}`} className="flex flex-col gap-1.5 md:gap-0 py-0">
                 <div className="hero-enter hero-enter-d1 flex items-center gap-2">
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
@@ -404,22 +404,20 @@ export function TrypheLanding({
                     +10,000 clientes felices
                   </span>
                 </div>
-                <p className="hero-enter hero-enter-d1 mt-5 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
-                  La historia detrás de Tryphé
+                <p className="hero-enter hero-enter-d1 mt-1 md:mt-5 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
+                  El resultado
                 </p>
-                <h2 className="hero-enter hero-enter-d2 mt-3 font-serif text-[clamp(1.65rem,4vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
-                  Empezó como una fragancia.
-                  <br />
-                  Terminó cambiándolo todo.
-                </h2>
-                <div className="hero-enter hero-enter-d3 mt-6 h-px w-12 bg-neutral-950/20" />
-                <blockquote className="hero-enter hero-enter-d3 mt-5 font-serif text-lg italic text-neutral-800 md:text-xl">
+                <h2 className="hero-enter hero-enter-d2 mt-0.5 md:mt-3 font-serif text-[clamp(1.65rem,4vw,3.5rem)] font-bold leading-[1.05] tracking-tight text-neutral-950">
                   &ldquo;Mi mejor amiga ahora es mi novia&rdquo;
-                </blockquote>
-                <p className="hero-enter hero-enter-d4 mt-3 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                </h2>
+                <p className="hero-enter hero-enter-d3 mt-0.5 md:mt-4 font-serif text-base italic text-neutral-600 md:text-lg">
+                  Empezó como una fragancia, terminó cambiándolo todo.
+                </p>
+                <div className="hero-enter hero-enter-d3 mt-1.5 md:mt-6 h-px w-12 bg-neutral-950/20" />
+                <p className="hero-enter hero-enter-d4 mt-1 md:mt-3 max-w-sm text-sm leading-[1.75] text-neutral-600">
                   Cuando creas algo que te cambia la vida, tienes que compartirlo.
                 </p>
-                <div className="hero-enter hero-enter-d5 mt-8 flex flex-wrap gap-3">
+                <div className="hero-enter hero-enter-d5 mt-2 md:mt-8 flex flex-wrap gap-3">
                   <Link
                     href="/acerca"
                     className="inline-flex min-h-[44px] items-center justify-center bg-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition hover:bg-neutral-800"
@@ -439,7 +437,7 @@ export function TrypheLanding({
 
           {/* ── Banner 3: Atracción / Hombre ── */}
           <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
-            <div className="relative min-h-[40vh] overflow-hidden md:min-h-0">
+            <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Ligue.png"
                 alt="Hombre — Tryphé Atracción Silenciosa"
@@ -448,19 +446,19 @@ export function TrypheLanding({
                 sizes="(max-width:768px) 100vw, 50vw"
               />
             </div>
-            <div className="flex flex-col justify-center border-t-[3px] border-neutral-950/8 bg-[#faf9f7] px-6 py-10 md:border-t-0 md:px-12 lg:px-16 xl:px-20">
-              <div key={`b2-${heroIdx}`} className="flex flex-col">
+            <div className="flex flex-col justify-start bg-[#faf9f7] px-4 relative z-10 rounded-t-2xl pt-4 pb-3 md:justify-center md:rounded-none md:py-10 md:px-12 lg:px-16 xl:px-20">
+              <div key={`b2-${heroIdx}`} className="flex flex-col gap-1.5 md:gap-0">
                 <p className="hero-enter hero-enter-d1 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
                   Para los que quieren destacar
                 </p>
-                <h2 className="hero-enter hero-enter-d2 mt-5 font-serif text-[clamp(2.25rem,6vw,5rem)] font-medium leading-[1.0] tracking-tight text-neutral-950">
+                <h2 className="hero-enter hero-enter-d2 mt-0.5 md:mt-5 font-serif text-[clamp(2.25rem,6vw,5rem)] font-medium leading-[1.0] tracking-tight text-neutral-950">
                   Huele guapo.
                 </h2>
-                <div className="hero-enter hero-enter-d3 mt-6 h-px w-12 bg-neutral-950/20" />
-                <p className="hero-enter hero-enter-d3 mt-5 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                <div className="hero-enter hero-enter-d3 mt-1.5 md:mt-6 h-px w-12 bg-neutral-950/20" />
+                <p className="hero-enter hero-enter-d3 mt-1 md:mt-5 max-w-sm text-sm leading-[1.75] text-neutral-600">
                   ¿Te imaginas ser el &ldquo;es que no sé qué tiene&rdquo; en la plática con las amigas?
                 </p>
-                <div className="hero-enter hero-enter-d4 mt-8 flex flex-wrap gap-3">
+                <div className="hero-enter hero-enter-d4 mt-2 md:mt-8 flex flex-wrap gap-3">
                   <Link
                     href="/collections/hombre"
                     className="inline-flex min-h-[44px] items-center justify-center bg-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition hover:bg-neutral-800"
@@ -513,18 +511,32 @@ export function TrypheLanding({
         </div>
       </section>
 
-      {/* Trust bar — debajo del hero */}
-      <div className="w-full overflow-x-auto bg-[#d4c4b0]">
-        <div className="mx-auto flex min-w-max items-center divide-x divide-neutral-950/10 md:max-w-screen-xl md:min-w-0">
-          {[
-            { icon: "↩", label: "Devoluciones gratis" },
-            { icon: "→", label: "Envíos sin costo" },
-            { icon: "★", label: "+10,000 reseñas" },
-            { icon: "⊘", label: "Pago 100% seguro" },
-          ].map(({ icon, label }) => (
-            <div key={label} className="flex shrink-0 items-center justify-center gap-1.5 px-4 py-2 md:flex-1 md:px-4 md:py-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-900 md:text-xs">{label}</span>
-              <span className="text-xs text-neutral-700">{icon}</span>
+      {/* Trust bar — marquee infinito debajo del hero */}
+      <style>{`
+        @keyframes trustScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+      <div className="w-full overflow-hidden bg-[#d4c4b0]">
+        <div
+          className="flex w-max"
+          style={{ animation: "trustScroll 22s linear infinite" }}
+        >
+          {[...Array(2)].map((_, copy) => (
+            <div key={copy} className="flex shrink-0 items-center">
+              {[
+                { icon: "↩", label: "Devoluciones gratis" },
+                { icon: "→", label: "Envíos sin costo" },
+                { icon: "★", label: "+10,000 reseñas" },
+                { icon: "⊘", label: "Pago 100% seguro" },
+                { icon: "🛡", label: "30 días de garantía" },
+              ].map(({ icon, label }) => (
+                <div key={label} className="flex shrink-0 items-center justify-center gap-1.5 px-6 py-2 md:px-8 md:py-3">
+                  <span className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-900 md:text-xs">{label}</span>
+                  <span className="text-xs text-neutral-700">{icon}</span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -541,13 +553,13 @@ export function TrypheLanding({
             </p>
 
             {/* Tab nav */}
-            <div className="mt-4 flex items-end justify-center gap-0 overflow-x-auto whitespace-nowrap border-b border-neutral-200">
-              {["MÁS VENDIDOS", "BUNDLES", "HOMBRE", "MUJER", "SUSCRIPCIÓN"].map((tab) => (
+            <div className="mt-4 grid grid-cols-2 border-b border-neutral-200 md:flex md:items-end md:justify-center md:gap-0">
+              {["MÁS VENDIDOS", "BUNDLES", "PARA ÉL", "PARA ELLA"].map((tab) => (
                 <button
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`shrink-0 px-5 pb-3 pt-2 text-[11px] tracking-[0.18em] uppercase transition-colors md:px-8 ${activeTab === tab
+                  className={`px-5 pb-3 pt-2 text-[11px] tracking-[0.18em] uppercase transition-colors md:px-8 ${activeTab === tab
                       ? "border-b-[3px] border-neutral-950 font-bold text-neutral-950"
                       : "border-b-[3px] border-transparent font-normal text-[#555] hover:text-neutral-800"
                     }`}
@@ -629,31 +641,19 @@ export function TrypheLanding({
           )}
 
           {/* ── Tab: HOMBRE ── */}
-          {activeTab === "HOMBRE" && (
+          {activeTab === "PARA ÉL" && (
             hombreProducts.length > 0
               ? <ProductGrid products={hombreProducts} ctaHref={hombreHref} ctaLabel="Ver toda la colección Hombre" />
               : <CollectionCTA label="Perfumes para Él" description="Fragancias diseñadas para proyectar presencia, atracción y carácter." href={hombreHref} cta="Ver colección Hombre" />
           )}
 
           {/* ── Tab: MUJER ── */}
-          {activeTab === "MUJER" && (
+          {activeTab === "PARA ELLA" && (
             mujerProducts.length > 0
               ? <ProductGrid products={mujerProducts} ctaHref={mujerHref} ctaLabel="Ver toda la colección Mujer" />
               : <CollectionCTA label="Perfumes para Ella" description="Fragancias que se convierten en firma personal — delicadas, profundas, memorables." href={mujerHref} cta="Ver colección Mujer" />
           )}
 
-          {/* ── Tab: SUSCRIPCIÓN ── */}
-          {activeTab === "SUSCRIPCIÓN" && (
-            <div className="flex flex-col items-center justify-center rounded-sm bg-neutral-50 py-20 text-center">
-              <svg className="h-10 w-10 text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-              </svg>
-              <p className="mt-4 font-serif text-xl font-medium text-neutral-950">Próximamente</p>
-              <p className="mt-2 max-w-xs text-sm text-neutral-500">
-                Suscríbete y recibe tu fragancia favorita cada mes con beneficios exclusivos.
-              </p>
-            </div>
-          )}
         </div>
       </section>
 

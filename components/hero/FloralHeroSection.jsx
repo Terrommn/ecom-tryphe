@@ -48,11 +48,24 @@ function IconShield({ className }) {
   );
 }
 
+function IconCalendar({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+      <text x="12" y="17" textAnchor="middle" fontSize="7" fill="currentColor" stroke="none" fontWeight="bold">30</text>
+    </svg>
+  );
+}
+
 const TRUST_ITEMS = [
-  { Icon: IconRose,   label: "Flores frescas diarias" },
-  { Icon: IconTruck,  label: "Entrega en CDMX" },
-  { Icon: IconLeaf,   label: "100% naturales" },
-  { Icon: IconShield, label: "Satisfacción garantizada" },
+  { Icon: IconRose,     label: "Flores frescas diarias" },
+  { Icon: IconTruck,    label: "Entrega en CDMX" },
+  { Icon: IconLeaf,     label: "100% naturales" },
+  { Icon: IconShield,   label: "Satisfacción garantizada" },
+  { Icon: IconCalendar, label: "30 días de garantía" },
 ];
 
 /* ─────────────────────────────────────────
@@ -257,39 +270,53 @@ export function FloralHeroSection() {
 
         .floral-cta-primary:hover  { filter: brightness(1.08); }
         .floral-cta-secondary:hover { border-color: #9e8472 !important; }
+
+        @keyframes trustMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
       `}</style>
 
-      {/* ── Trust Bar ── */}
-      <div style={{ background: "#c9b99a", padding: "10px 16px" }}>
+      {/* ── Trust Bar — Marquee infinito ── */}
+      <div style={{ background: "#c9b99a", padding: "10px 0", overflow: "hidden" }}>
         <div
           style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
             display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px 32px",
+            width: "max-content",
+            animation: "trustMarquee 25s linear infinite",
           }}
         >
-          {TRUST_ITEMS.map(({ Icon, label }) => (
-            <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <Icon
-                className="h-4 w-4 shrink-0"
-                style={{ color: "#3d2b1f", opacity: 0.9 }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Jost', system-ui, sans-serif",
-                  fontWeight: 500,
-                  fontSize: "9.5px",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "#3d2b1f",
-                }}
-              >
-                {label}
-              </span>
+          {[...Array(2)].map((_, copy) => (
+            <div
+              key={copy}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0",
+                flexShrink: 0,
+              }}
+            >
+              {TRUST_ITEMS.map(({ Icon, label }) => (
+                <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px", padding: "0 24px" }}>
+                  <Icon
+                    className="h-4 w-4 shrink-0"
+                    style={{ color: "#3d2b1f", opacity: 0.9 }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: "'Jost', system-ui, sans-serif",
+                      fontWeight: 500,
+                      fontSize: "9.5px",
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: "#3d2b1f",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {label}
+                  </span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
