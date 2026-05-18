@@ -74,17 +74,11 @@ function AnnouncementBar() {
 
         {/* Countdown + CTA */}
         <div className="flex shrink-0 items-center gap-3">
-          {/* Mobile: solo HRS y MIN */}
-          <div className="flex items-center gap-2 sm:hidden">
-            <CountUnit value={hours} label="HRS" />
-            <Pipe />
-            <CountUnit value={mins} label="MIN" />
-          </div>
-          {/* Desktop: DÍA HRS MIN SEG */}
-          <div className="hidden items-center gap-2 sm:flex">
+          {/* Todos los breakpoints: DÍA HRS MIN SEG */}
+          <div className="flex items-center gap-2">
             <CountUnit value={days} label="DÍA" />
             <Pipe />
-            <CountUnit value={hours} label="HORAS" />
+            <CountUnit value={hours} label="HRS" />
             <Pipe />
             <CountUnit value={mins} label="MIN" />
             <Pipe />

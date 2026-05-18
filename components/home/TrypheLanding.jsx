@@ -202,15 +202,20 @@ export function TrypheLanding({
 
   function handleActivarSantor() {
     if (!santorVariantId) {
-      window.location.href = santorCheckoutUrl || "/products/santor-effect";
+      window.location.href = "/products/santor-inspirado-en-invictus-copia";
       return;
     }
     startSantorTransition(async () => {
-      await addLineItemAction(santorVariantId, 1);
+      const result = await addLineItemAction(santorVariantId, 1);
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("store-cart"));
       }
-      window.location.href = santorCheckoutUrl || "/cart";
+      if (result?.ok) {
+        window.location.href = "/cart";
+      } else {
+        // Si falla, manda al producto
+        window.location.href = "/products/santor-inspirado-en-invictus-copia";
+      }
     });
   }
 
@@ -269,8 +274,8 @@ export function TrypheLanding({
                   BONUS · LIMITADO A 99 PIEZAS
                 </span>
               </div>
-              {/* Barra urgencia pie imagen */}
-              <div className="absolute bottom-0 left-0 right-0 z-10 bg-white/80 px-4 py-2.5 backdrop-blur-sm">
+              {/* Barra urgencia pie imagen — solo visible en desktop dentro de la imagen */}
+              <div className="hidden md:block absolute bottom-0 left-0 right-0 z-10 bg-white/80 px-4 py-2.5 backdrop-blur-sm">
                 <p className="text-center font-serif text-[10px] italic leading-snug text-neutral-800 md:text-xs">
                   Cuando se acaben las 99 piezas, el SANTOR Pocket desaparece.
                 </p>
@@ -279,6 +284,13 @@ export function TrypheLanding({
 
             {/* ── Contenido derecho ── */}
             <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-8 md:border-t-0 md:px-10 lg:px-14 xl:px-16">
+              {/* Barra urgencia — solo mobile, fuera de la imagen */}
+              <div className="mb-4 bg-neutral-100 px-4 py-2 text-center md:hidden">
+                <p className="font-serif text-[10px] italic leading-snug text-neutral-700">
+                  Cuando se acaben las 99 piezas, el SANTOR Pocket desaparece.
+                </p>
+              </div>
+
               <div key={`b0-${heroIdx}`} className="flex flex-col gap-0">
 
                 {/* Eyebrow */}
@@ -502,17 +514,17 @@ export function TrypheLanding({
       </section>
 
       {/* Trust bar — debajo del hero */}
-      <div className="w-full bg-[#d4c4b0]">
-        <div className="mx-auto grid max-w-screen-xl grid-cols-2 divide-x divide-neutral-950/10 md:grid-cols-4">
+      <div className="w-full overflow-x-auto bg-[#d4c4b0]">
+        <div className="mx-auto flex min-w-max items-center divide-x divide-neutral-950/10 md:max-w-screen-xl md:min-w-0">
           {[
             { icon: "↩", label: "Devoluciones gratis" },
             { icon: "→", label: "Envíos sin costo" },
             { icon: "★", label: "+10,000 reseñas" },
             { icon: "⊘", label: "Pago 100% seguro" },
           ].map(({ icon, label }) => (
-            <div key={label} className="flex items-center justify-center gap-2.5 px-4 py-3.5">
-              <span className="font-serif text-base font-bold text-neutral-900">{label}</span>
-              <span className="text-sm text-neutral-700">{icon}</span>
+            <div key={label} className="flex shrink-0 items-center justify-center gap-1.5 px-4 py-2 md:flex-1 md:px-4 md:py-3">
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-900 md:text-xs">{label}</span>
+              <span className="text-xs text-neutral-700">{icon}</span>
             </div>
           ))}
         </div>

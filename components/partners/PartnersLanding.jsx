@@ -365,7 +365,7 @@ export function PartnersLanding() {
               {/* [Opcional] Sustituir por API Route con Resend/SendGrid para envío real. */}
               <form
                 className="mt-10 space-y-5"
-                action="mailto:partners@tryphe.mx"
+                action="mailto:info@tryphe.mx"
                 method="get"
                 encType="text/plain"
               >
@@ -569,10 +569,10 @@ export function PartnersLanding() {
                       Email partners
                     </p>
                     <a
-                      href="mailto:partners@tryphe.mx"
+                      href="mailto:info@tryphe.mx"
                       className="mt-2 block font-serif text-lg text-neutral-950 hover:underline underline-offset-4"
                     >
-                      partners@tryphe.mx
+                      info@tryphe.mx
                     </a>
                   </li>
                   <li>

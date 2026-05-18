@@ -4,7 +4,7 @@ import { getMarketingNavLinks } from "@/lib/marketing-nav";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { SantorCtaButton } from "./SantorCtaButton";
 
-const PRODUCT_HANDLE = "santor-effect";
+const PRODUCT_HANDLE = "santor-inspirado-en-invictus-copia";
 
 export const metadata = {
   title: "The Santor Effect — Detalles | Tryphé",
@@ -67,7 +67,7 @@ const ELEMENTOS = [
   {
     num: 4,
     color: "#C0392B",
-    nombre: "Crest Email: Primera Impresión",
+    nombre: "Cheat Sheet: Primera Impresión",
     desc: "PDF con las 8 decisiones de los primeros 7 segundos.",
     precio: "$147",
     badge: null,
@@ -98,10 +98,17 @@ export default async function OfertaIrresistiblePage() {
   const navLinks = await getMarketingNavLinks();
   const product = await getProductByHandleSafe(PRODUCT_HANDLE);
 
+  const SANTOR_FALLBACK_VARIANT_ID = "gid://shopify/ProductVariant/47178265985164";
   const variants = product?.variants?.edges?.map((e) => e.node) || [];
-  const firstVariant = variants.find((v) => v.availableForSale) || variants[0];
-  const variantId = firstVariant?.id || null;
-  const checkoutUrl = product?.onlineStoreUrl || null;
+  const variant100ml = variants.find((v) =>
+    v.selectedOptions?.some((o) => o.value?.toLowerCase().includes("100"))
+  );
+  const variantId =
+    variant100ml?.id ??
+    variants.find((v) => v.availableForSale)?.id ??
+    variants[0]?.id ??
+    SANTOR_FALLBACK_VARIANT_ID;
+  const checkoutUrl = null;
 
   return (
     <TrypheMarketingChrome shopConfigured={shopConfigured} navLinks={navLinks}>

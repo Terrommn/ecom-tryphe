@@ -108,13 +108,25 @@ export default async function Home() {
   }));
 
   const santorRaw = productsAll.find(
-    (p) => p.handle === "santor-effect" || p.handle === "santor",
+    (p) =>
+      p.handle === "santor-inspirado-en-invictus-copia" ||
+      p.handle === "santor-effect" ||
+      p.handle === "santor",
+  );
+  const SANTOR_FALLBACK_VARIANT_ID = "gid://shopify/ProductVariant/47178265985164";
+  const santorVariants = santorRaw?.variants?.edges ?? [];
+  // Buscar variante 100ml primero, luego cualquier disponible, luego la primera
+  const santor100ml = santorVariants.find((e) =>
+    e.node.selectedOptions?.some(
+      (o) => o.value?.toLowerCase().includes("100")
+    )
   );
   const santorVariantId =
-    santorRaw?.variants?.edges?.find((e) => e.node.availableForSale)?.node?.id ??
-    santorRaw?.variants?.edges?.[0]?.node?.id ??
-    null;
-  const santorCheckoutUrl = santorRaw?.onlineStoreUrl ?? null;
+    santor100ml?.node?.id ??
+    santorVariants.find((e) => e.node.availableForSale)?.node?.id ??
+    santorVariants[0]?.node?.id ??
+    SANTOR_FALLBACK_VARIANT_ID;
+  const santorCheckoutUrl = null;
 
   return (
     <TrypheLanding

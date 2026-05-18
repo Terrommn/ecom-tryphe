@@ -8,15 +8,19 @@ export function SantorCtaButton({ variantId, checkoutUrl }) {
 
   function handleClick() {
     if (!variantId) {
-      window.location.href = checkoutUrl || "/cart";
+      window.location.href = "/products/santor-inspirado-en-invictus-copia";
       return;
     }
     startTransition(async () => {
-      await addLineItemAction(variantId, 1);
+      const result = await addLineItemAction(variantId, 1);
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("store-cart"));
       }
-      window.location.href = checkoutUrl || "/cart";
+      if (result?.ok) {
+        window.location.href = "/cart";
+      } else {
+        window.location.href = "/products/santor-inspirado-en-invictus-copia";
+      }
     });
   }
 
