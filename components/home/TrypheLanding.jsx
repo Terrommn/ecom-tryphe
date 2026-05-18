@@ -535,11 +535,10 @@ export function TrypheLanding({
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`shrink-0 px-5 pb-3 pt-2 text-[11px] tracking-[0.18em] uppercase transition-colors md:px-8 ${
-                    activeTab === tab
+                  className={`shrink-0 px-5 pb-3 pt-2 text-[11px] tracking-[0.18em] uppercase transition-colors md:px-8 ${activeTab === tab
                       ? "border-b-[3px] border-neutral-950 font-bold text-neutral-950"
                       : "border-b-[3px] border-transparent font-normal text-[#555] hover:text-neutral-800"
-                  }`}
+                    }`}
                 >
                   {tab}
                 </button>

@@ -24,7 +24,7 @@ export function SantorCtaButton({ variantId, checkoutUrl }) {
     <button
       onClick={handleClick}
       disabled={pending}
-      className="inline-block bg-[#5a6e4a] text-white text-[11px] font-bold uppercase tracking-[0.25em] px-12 py-5 hover:bg-[#4d5f3f] hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      className="inline-block bg-[#5a6e4a] text-white text-[11px] font-bold uppercase tracking-[0.2em] px-10 py-4 rounded-md hover:bg-[#4a5e3a] hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
     >
       {pending ? "Activando…" : "Activar mi Santor Effect"}
     </button>

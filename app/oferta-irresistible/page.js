@@ -3,7 +3,6 @@ import { getProductByHandleSafe, isShopifyConfigured } from "@/lib/shopify";
 import { getMarketingNavLinks } from "@/lib/marketing-nav";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { SantorCtaButton } from "./SantorCtaButton";
-import { SantorTabs } from "./SantorTabs";
 
 const PRODUCT_HANDLE = "santor-effect";
 
@@ -19,10 +18,12 @@ const NOTAS_PIRAMIDE = [
   { fase: "Fondo", notas: "Cedro, cuero ahumado, papel, almizcle blanco" },
 ];
 
-const CARACTER =
-  "SANTOR es una fragancia de presencia quieta. No grita — ocupa el espacio con autoridad natural. Quienes lo usan describen la misma experiencia: las personas se acercan, preguntan, recuerdan.";
-
-const CHIPS = ["Elegante", "Proyección: Alta", "Temporada: Día", "Ideal para: Todo"];
+const CHIPS = [
+  { emoji: "🎩", label: "Elegante" },
+  { emoji: "📡", label: "Proyección: Alta" },
+  { emoji: "☀️", label: "Temporada: Día" },
+  { emoji: "🎯", label: "Ideal para: Todo" },
+];
 
 const CUANDO = [
   {
@@ -45,38 +46,59 @@ const CUANDO = [
 
 const ELEMENTOS = [
   {
-    num: "01",
-    color: "#92714a",
+    num: 1,
+    color: "#8B7355",
     nombre: "SANTOR 100 ml",
     desc: "Eau de Parfum, alta concentración. La fragancia central del sistema.",
     precio: "$649",
     badge: null,
   },
   {
-    num: "02",
-    color: "#5a6e4a",
+    num: 2,
+    color: "#6B8E5A",
     nombre: "SANTOR Pocket",
-    desc: "Antibacterial o jabón líquido 30 ml. Cuidado de manos con la misma firma olfativa. Regalo exclusivo.",
+    desc: "Antibacterial o jabón líquido 30 ml. Cuidado de manos con la misma firma olfativa.",
     precio: "$249",
     badge: "INCLUIDO",
   },
   {
-    num: "03",
-    color: "#4a6e8a",
+    num: 3,
+    color: "#5A7B8E",
     nombre: "Manual de la Presencia",
-    desc: "E-book con los 7 detalles invisibles que separan a los que son recordados de los que pasan inadvertidos.",
+    desc: "E-book con los 7 detalles invisibles que separan a los que son recordados.",
     precio: "$297",
     badge: null,
   },
   {
-    num: "04",
-    color: "#c0392b",
+    num: 4,
+    color: "#C0392B",
     nombre: "Crest Email: Primera Impresión",
-    desc: "PDF con las 8 decisiones de los primeros 7 segundos. Las que nadie te enseñó.",
+    desc: "PDF con las 8 decisiones de los primeros 7 segundos.",
     precio: "$147",
     badge: null,
   },
 ];
+
+const CIRCLED = ["①", "②", "③", "④", "⑤"];
+
+function SectionNumber({ n }) {
+  return (
+    <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e8e0d4] text-xs font-bold text-neutral-900">
+      {CIRCLED[n - 1]}
+    </span>
+  );
+}
+
+function SectionTitle({ n, children }) {
+  return (
+    <div className="flex items-center gap-3 mb-5">
+      <SectionNumber n={n} />
+      <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-[#888]">
+        {children}
+      </h2>
+    </div>
+  );
+}
 
 export default async function OfertaIrresistiblePage() {
   const shopConfigured = isShopifyConfigured();
@@ -92,9 +114,9 @@ export default async function OfertaIrresistiblePage() {
     <TrypheMarketingChrome shopConfigured={shopConfigured} navLinks={navLinks}>
       <article className="bg-white">
 
-        {/* 1. HERO */}
+        {/* ── HERO ── */}
         <section>
-          <div className="relative h-[380px] md:h-[460px] w-full overflow-hidden bg-stone-100">
+          <div className="relative h-[200px] md:h-[300px] w-full overflow-hidden bg-stone-100">
             <Image
               src="/cambiosmayo/Producto%20irresistible.png"
               alt="SANTOR — The Santor Effect"
@@ -102,151 +124,202 @@ export default async function OfertaIrresistiblePage() {
               className="object-cover object-center"
               priority
             />
-            <div className="absolute inset-0 bg-neutral-950/35" />
-            <div className="absolute inset-0 flex flex-col items-center justify-end pb-14 px-6 text-center">
-              <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/55 mb-3">
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#c9b99a] mb-3">
                 Tryphé — Colección Signature
               </p>
-              <h1 className="font-serif text-[clamp(2rem,5vw,3.25rem)] font-medium text-white leading-tight">
+              <h1 className="font-serif text-[clamp(1.75rem,5vw,3rem)] font-medium text-white leading-tight">
                 The Santor Effect
               </h1>
-              <p className="mt-3 text-sm text-white/70 max-w-sm leading-relaxed">
-                Todo lo que necesitas saber antes de decir que sí — o después de que ya lo sabes.
+              <p className="mt-2 text-sm italic text-white/70 max-w-sm leading-relaxed">
+                Todo lo que necesitas saber antes de decir que sí — o después de que ya lo sabías.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Contenido — max 720px */}
-        <div className="mx-auto max-w-[720px] px-6 md:px-8">
+        {/* ── CONTENIDO — max 680px ── */}
+        <div className="mx-auto max-w-[680px] px-5 md:px-8">
 
-          {/* 2. PERFIL OLFATIVO */}
-          <section className="py-14 border-b border-stone-200">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-stone-400 mb-6">
-              Perfil olfativo de SANTOR
+          {/* ① PERFIL OLFATIVO */}
+          <section className="py-8">
+            <SectionTitle n={1}>Perfil olfativo de SANTOR</SectionTitle>
+
+            {/* 2 columnas: Familia + Carácter */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div>
+                <div className="bg-[#5a5a42] px-4 py-2">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white">Familia olfativa</p>
+                </div>
+                <div className="bg-[#faf9f6] px-4 py-3">
+                  <p className="text-sm font-medium text-neutral-800">Amaderada aromática</p>
+                  <p className="text-xs text-stone-400 mt-1">Inspirada en: Santal 33</p>
+                </div>
+              </div>
+              <div>
+                <div className="bg-[#e8e4dc] px-4 py-2">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">Carácter</p>
+                </div>
+                <div className="bg-[#faf9f6] px-4 py-3">
+                  <p className="text-sm font-medium text-neutral-800">Elegante, magnético</p>
+                  <p className="text-xs text-stone-400 mt-1">Proyección: Alta, duradera</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pirámide olfativa */}
+            <p className="text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2">
+              Pirámide olfativa
             </p>
-            <SantorTabs piramide={NOTAS_PIRAMIDE} caracter={CARACTER} chips={CHIPS} />
+            <div className="border border-stone-200 overflow-hidden mb-5">
+              {NOTAS_PIRAMIDE.map((row, i) => (
+                <div
+                  key={row.fase}
+                  className={`flex items-center gap-4 px-4 py-3 ${i % 2 === 0 ? "bg-[#faf7f2]" : "bg-white"}`}
+                >
+                  <span className="inline-block w-[70px] shrink-0 bg-[#e8e0d4] py-1 text-center text-[10px] font-bold uppercase tracking-wide text-neutral-800">
+                    {row.fase}
+                  </span>
+                  <p className="text-sm text-neutral-700">{row.notas}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Chips */}
+            <div className="flex flex-wrap gap-2">
+              {CHIPS.map((chip) => (
+                <span
+                  key={chip.label}
+                  className="bg-[#f0ebe3] border border-stone-300 text-stone-600 text-xs px-3 py-1.5 rounded-full"
+                >
+                  {chip.emoji} {chip.label}
+                </span>
+              ))}
+            </div>
           </section>
 
-          {/* 3. CUÁNDO USARLO */}
-          <section className="py-14 border-b border-stone-200">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-stone-400 mb-8">
-              Cuándo usarlo
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {CUANDO.map((c) => (
-                <div key={c.titulo} className="bg-stone-50 px-6 py-5">
-                  <p className="text-sm font-bold text-neutral-900 mb-2">{c.titulo}</p>
-                  <p className="text-sm text-stone-500 leading-relaxed">{c.desc}</p>
+          <hr className="border-stone-200" />
+
+          {/* ② CUÁNDO USARLO */}
+          <section className="py-8">
+            <SectionTitle n={2}>Cuándo usarlo</SectionTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              {CUANDO.map((c, i) => (
+                <div
+                  key={c.titulo}
+                  className={`p-5 ${
+                    i % 2 === 0 ? "sm:border-r border-stone-200" : ""
+                  } ${i < 2 ? "border-b border-stone-200" : ""}`}
+                >
+                  <p className="text-sm font-bold text-neutral-900 mb-1.5">{c.titulo}</p>
+                  <p className="text-[13px] text-[#666] leading-relaxed">{c.desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* 4. INSPIRADO EN SANTAL 33 */}
-          <section className="py-14 border-b border-stone-200">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-stone-400 mb-6">
-              Inspirado en Santal 33
-            </p>
+          <hr className="border-stone-200" />
+
+          {/* ③ INSPIRADO EN SANTAL 33 */}
+          <section className="py-8">
+            <SectionTitle n={3}>Inspirado en Santal 33</SectionTitle>
             <div
-              className="bg-[#faf9f6] px-6 py-6"
+              className="bg-[#faf9f6] px-6 py-5"
               style={{ borderLeft: "4px solid #b8c4a0" }}
             >
-              <p className="text-sm text-stone-600 leading-relaxed mb-8">
+              <p className="text-sm text-[#444] leading-[1.75]">
                 Le Labo Santal 33 es considerada una de las fragancias más influyentes del
-                siglo. La reconoces en hoteles de lujo, en las personas que notan. SANTOR
+                siglo. La reconoces en hoteles de lujo, en las personas que notas. SANTOR
                 captura esa misma esencia — el cuero suave, el sándalo, el papel — con la
                 misma fórmula de alta concentración.
               </p>
-              <div className="flex items-center gap-8">
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">
-                    Santal 33 (Le Labo)
-                  </p>
-                  <p className="text-xl text-stone-400 line-through font-medium">$7,250</p>
-                </div>
-                <span className="text-stone-300 text-2xl">→</span>
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">
-                    SANTOR (Tryphé)
-                  </p>
-                  <p className="text-2xl font-bold text-neutral-950">$649</p>
-                </div>
+            </div>
+            <div className="flex items-center gap-6 mt-5 px-2">
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">
+                  Santal 33 (Le Labo)
+                </p>
+                <p className="text-xl text-gray-400 line-through font-medium">$7,250</p>
+              </div>
+              <span className="text-stone-300 text-xl">→</span>
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">
+                  SANTOR (Tryphé)
+                </p>
+                <p className="text-2xl font-bold text-neutral-950">$649</p>
               </div>
             </div>
           </section>
 
-          {/* 5. DETALLE DE ELEMENTOS */}
-          <section className="py-14 border-b border-stone-200">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-stone-400 mb-8">
-              Detalle de cada elemento
-            </p>
-            <div className="space-y-3">
+          <hr className="border-stone-200" />
+
+          {/* ④ DETALLE DE CADA ELEMENTO */}
+          <section className="py-8">
+            <SectionTitle n={4}>Detalle de cada elemento</SectionTitle>
+            <div className="space-y-2.5">
               {ELEMENTOS.map((el) => (
                 <div
                   key={el.num}
-                  className="flex items-start gap-4 bg-stone-50 px-5 py-5"
+                  className="flex items-start gap-3.5 bg-[#faf9f6] px-4 py-4"
                   style={{ borderLeft: `4px solid ${el.color}` }}
                 >
-                  <span className="text-xs font-bold text-stone-300 mt-0.5 shrink-0 w-6">
+                  <span
+                    className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full text-xs font-bold text-white mt-0.5"
+                    style={{ backgroundColor: el.color }}
+                  >
                     {el.num}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
                       <p className="text-sm font-bold text-neutral-900">{el.nombre}</p>
                       {el.badge && (
-                        <span className="text-[9px] font-bold uppercase tracking-wider bg-[#5a6e4a] text-white px-2 py-0.5">
+                        <span className="text-[10px] font-bold uppercase bg-[#27ae60] text-white px-2 py-0.5 rounded">
                           {el.badge}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-stone-500 leading-relaxed">{el.desc}</p>
+                    <p className="text-[13px] text-stone-500 leading-relaxed">{el.desc}</p>
                   </div>
-                  <p className="text-sm font-bold text-neutral-900 shrink-0">{el.precio}</p>
+                  <p className="text-sm font-bold text-neutral-900 shrink-0 mt-0.5">{el.precio}</p>
                 </div>
               ))}
             </div>
-            {/* Resumen */}
-            <div className="mt-3 bg-[#e8e0d4] px-5 py-4 flex flex-wrap items-center justify-between gap-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-stone-600">
-                Valor total:{" "}
-                <span className="line-through text-stone-400 font-normal">$1,342</span>
+            {/* Barra resumen */}
+            <div className="mt-2.5 bg-[#b8c4a0] px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-neutral-900">
+                Valor total del sistema:{" "}
+                <span className="line-through font-normal text-neutral-700">$1,342</span>
               </p>
-              <p className="text-sm font-bold text-[#5a6e4a] uppercase tracking-wider">
+              <p className="text-sm font-bold text-neutral-950 uppercase tracking-wider">
                 Tu inversión: $649
               </p>
             </div>
           </section>
 
-          {/* 6. GARANTÍA */}
-          <section className="py-14">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-stone-400 mb-6">
-              Cómo funciona la garantía
-            </p>
+          <hr className="border-stone-200" />
+
+          {/* ⑤ GARANTÍA */}
+          <section className="py-8">
+            <SectionTitle n={5}>Cómo funciona la garantía</SectionTitle>
             <div
-              className="bg-white px-6 py-6 ring-1 ring-stone-100"
+              className="bg-white px-5 py-5 ring-1 ring-stone-100"
               style={{ borderLeft: "4px solid #e74c3c" }}
             >
-              <p className="text-sm font-bold text-neutral-900 mb-6">
-                Garantía Santor Effect — 60 días
+              <p className="text-sm font-bold text-neutral-900 mb-5">
+                🛡️ Garantía Santor Effect — 60 días
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
                   { paso: "PASO 1", texto: "Úsalo 60 días sin prisa. Deja que el efecto ocurra." },
-                  {
-                    paso: "PASO 2",
-                    texto: "Si no recibes cumplidos ni notas diferencia, escríbenos.",
-                  },
-                  {
-                    paso: "PASO 3",
-                    texto: "Te devolvemos el 100% a info@tryphe.mx. Sin preguntas.",
-                  },
+                  { paso: "PASO 2", texto: "Si no recibes cumplidos ni notas diferencia, escríbenos." },
+                  { paso: "PASO 3", texto: "Te devolvemos el 100% a info@tryphe.mx. Sin preguntas." },
                 ].map((p) => (
-                  <div key={p.paso} className="bg-stone-50 px-4 py-5 text-center">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">
+                  <div key={p.paso} className="bg-[#f5f3ef] px-4 py-4 text-center">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#e74c3c] mb-2">
                       {p.paso}
                     </p>
-                    <p className="text-xs text-stone-600 leading-relaxed">{p.texto}</p>
+                    <p className="text-[13px] text-stone-600 leading-relaxed">{p.texto}</p>
                   </div>
                 ))}
               </div>
@@ -255,19 +328,38 @@ export default async function OfertaIrresistiblePage() {
 
         </div>
 
-        {/* 7. CTA FINAL */}
-        <section className="bg-[#faf5ef] py-20 px-6 text-center">
-          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-stone-400 mb-5">
+        {/* ── CTA FINAL ── */}
+        <section className="bg-[#faf5ef] py-14 px-6 text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#999] mb-4">
             Ya lo sabes todo
           </p>
-          <h2 className="font-serif text-[clamp(1.75rem,4vw,2.75rem)] font-medium text-neutral-950 leading-tight">
+          <h2 className="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium text-neutral-950 leading-tight">
             Pasa de invisible a inevitable.
           </h2>
-          <p className="mt-4 text-sm text-stone-500 max-w-xs mx-auto leading-relaxed">
+          <p className="mt-3 text-[15px] text-stone-500 max-w-xs mx-auto leading-relaxed">
             Solo 99 lugares. Una sola ventana.
           </p>
-          <div className="mt-10">
+          <div className="mt-8">
             <SantorCtaButton variantId={variantId} checkoutUrl={checkoutUrl} />
+          </div>
+        </section>
+
+        {/* ── TRUST BAR ── */}
+        <section className="bg-[#d4c4b0]">
+          <div className="mx-auto max-w-screen-xl px-4 py-5">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 text-center">
+              {[
+                { icon: "↩", label: "Devoluciones gratis" },
+                { icon: "📦", label: "Envíos sin costo" },
+                { icon: "⭐", label: "+10,000 reseñas" },
+                { icon: "🔒", label: "Pago 100% seguro" },
+              ].map((t) => (
+                <div key={t.label} className="flex items-center justify-center gap-2">
+                  <span className="text-lg">{t.icon}</span>
+                  <p className="text-xs font-bold text-neutral-900 tracking-wide">{t.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
