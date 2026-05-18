@@ -118,7 +118,7 @@ export default async function OfertaIrresistiblePage() {
         <section>
           <div className="relative h-[200px] md:h-[300px] w-full overflow-hidden bg-stone-100">
             <Image
-              src="/cambiosmayo/Producto%20irresistible.png"
+              src="/cambiosmayo/hero1.png"
               alt="SANTOR — The Santor Effect"
               fill
               className="object-cover object-center"
