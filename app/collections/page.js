@@ -10,22 +10,16 @@ export const metadata = {
 
 const COLLECTION_IMAGE_OVERRIDES = {
   formal: { url: "/home/col-formal.jpg", altText: "Formal" },
-  hombre: { url: "/home/col-hombre.jpg", altText: "Hombre" },
-  mujer: { url: "/home/col-mujer.jpg", altText: "Mujer" },
   casual: { url: "/home/col-casual.jpg", altText: "Casual" },
 };
 
 const CURATED_COLLECTIONS = [
   { id: "curated-formal", handle: "formal", title: "Formal", label: "Formal", displayTitle: "Formal" },
-  { id: "curated-hombre", handle: "hombre", title: "Hombre", label: "Hombre", displayTitle: "Para Él" },
-  { id: "curated-mujer", handle: "mujer", title: "Mujer", label: "Mujer", displayTitle: "Para Ella" },
   { id: "curated-casual", handle: "casual", title: "Casual", label: "Casual", displayTitle: "Casual" },
 ];
 
 const DISPLAY_TITLES = {
   formal: { label: "Formal", displayTitle: "Formal" },
-  hombre: { label: "Hombre", displayTitle: "Para Él" },
-  mujer: { label: "Mujer", displayTitle: "Para Ella" },
   casual: { label: "Casual", displayTitle: "Casual" },
 };
 

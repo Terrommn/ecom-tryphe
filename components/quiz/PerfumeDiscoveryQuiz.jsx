@@ -19,15 +19,6 @@ const IDENTITY_OPTIONS = [
   "Innovación y frescura",
 ];
 
-const FRAGRANCE_OPTIONS = [
-  "Floral",
-  "Amaderada",
-  "Cítrica",
-  "Oriental",
-  "Frutal",
-  "Especiada",
-];
-
 const EMOTION_OPTIONS = [
   "Sensualidad",
   "Energía y vitalidad",
@@ -48,12 +39,11 @@ const CONTEXT_OPTIONS = [
 
 const INITIAL = {
   identity: [],
-  fragrance: "",
   emotion: "",
   contexts: [],
 };
 
-const MOOD_CHIPS = ["Exitoso", "Conquistador", "Atractivo"];
+const MOOD_CHIPS = ["Exitoso(a)", "Conquistador(a)", "Atractivo(a)"];
 
 const STEPS = [
   {
@@ -62,13 +52,6 @@ const STEPS = [
     field: "identity",
     type: "multi",
     options: IDENTITY_OPTIONS,
-  },
-  {
-    question: "¿Qué tipo de fragancia prefieres?",
-    hint: "Elige una",
-    field: "fragrance",
-    type: "single",
-    options: FRAGRANCE_OPTIONS,
   },
   {
     question: "¿Qué emoción quieres que evoque tu fragancia?",
@@ -185,7 +168,7 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
               ¿Cómo te quieres sentir hoy?
             </h2>
             <p className="mt-3 text-sm text-[#a8a29e]">
-              4 preguntas para encontrar tu fragancia ideal.
+              3 preguntas para encontrar tu fragancia ideal.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               {MOOD_CHIPS.map((m) => (
@@ -211,7 +194,7 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
             Encuentra tu aroma
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-stone-600">
-            4 preguntas rápidas para encontrar la fragancia que se alinea contigo.
+            3 preguntas rápidas para encontrar la fragancia que se alinea contigo.
           </p>
         </div>
       )}

@@ -62,7 +62,7 @@ const REVIEWS = [
     location: "Monterrey, N.L.",
     rating: 5,
     date: "14 abr 2026",
-    product: "ASTER",
+    product: "Burberry Her (ASTER)",
     quote:
       "Llevo tres semanas con ASTER y sigue proyectando igual que el primer día. Nadie me cree que no es un perfume de $3,000.",
     avatar:
@@ -73,7 +73,7 @@ const REVIEWS = [
     location: "CDMX",
     rating: 5,
     date: "9 abr 2026",
-    product: "VICTORIUM",
+    product: "Invictus (VICTORIUM)",
     quote:
       "VICTORIUM es una bestia. Lo uso para salir los viernes y termino la noche con piropos. La estela dura horas.",
     avatar:
@@ -84,7 +84,7 @@ const REVIEWS = [
     location: "Guadalajara, Jal.",
     rating: 5,
     date: "2 abr 2026",
-    product: "MAGNA",
+    product: "Baccarat Rouge 540 (MAGNA)",
     quote:
       "El empaque ya me ganó antes de olerlo. Es un regalo dentro de otro regalo. MAGNA es mi nuevo favorito.",
     avatar:
@@ -95,7 +95,7 @@ const REVIEWS = [
     location: "Puebla, Pue.",
     rating: 5,
     date: "28 mar 2026",
-    product: "SANTOR",
+    product: "Santal 33 (SANTOR)",
     quote:
       "Compré SANTOR porque no quería gastar $5k en Santal 33. La calidad es sorprendente — huele casi idéntico y dura más.",
     avatar:
@@ -106,7 +106,7 @@ const REVIEWS = [
     location: "Querétaro, Qro.",
     rating: 5,
     date: "21 mar 2026",
-    product: "ALVUS",
+    product: "Lacoste White (ALVUS)",
     quote:
       "ALVUS es fresco sin ser básico. Mi novio me pidió uno para él. Ahora los dos somos fans.",
     avatar:
@@ -117,7 +117,7 @@ const REVIEWS = [
     location: "Tijuana, B.C.",
     rating: 5,
     date: "14 mar 2026",
-    product: "VICTORIUM",
+    product: "Invictus (VICTORIUM)",
     quote:
       "Entrega en 3 días a la frontera. El atomizador es de lujo real, no esos baratos que salpican. Ya encargué dos más.",
     avatar:
@@ -129,8 +129,8 @@ const BUNDLES = [
   {
     name: "Atracción Silenciosa",
     headline: "No persigues atención... la provocas",
-    includes: "MAGNA · ETERNA · SANTOR",
-    inspiration: "Inspirado en fragancias de Maison Francis Kurkdjian, Lancôme y Le Labo",
+    includes: "Baccarat Rouge 540 (MAGNA) · La Vie Est Belle (ETERNA) · Santal 33 (SANTOR)",
+    inspiration: "",
     marketValue: "$9,000 – $15,500",
     price: "$1,799",
     badge: "MÁS ELEGIDO",
@@ -142,8 +142,8 @@ const BUNDLES = [
   {
     name: "Lujo Inteligente",
     headline: "No gastas más... eliges mejor",
-    includes: "SANTOR · ALVUS · ELAN",
-    inspiration: "Inspirado en fragancias de Tom Ford, Dior y Chanel",
+    includes: "Santal 33 (SANTOR) · Lacoste White (ALVUS) · Le Male (ELAN)",
+    inspiration: "",
     marketValue: "$8,500 – $14,000",
     price: "$1,199",
     badge: null,
@@ -155,8 +155,8 @@ const BUNDLES = [
   {
     name: "Impacto Inmediato",
     headline: "Desde el primer momento... se nota",
-    includes: "VICTORIUM · ASTER",
-    inspiration: "Inspirado en fragancias de Paco Rabanne y Yves Saint Laurent",
+    includes: "Invictus (VICTORIUM) · Burberry Her (ASTER)",
+    inspiration: "",
     marketValue: "$6,000 – $10,500",
     price: "$1,149",
     badge: "EMPIEZA AQUÍ",
@@ -613,7 +613,7 @@ export function TrypheLanding({
                         <p className="mt-1 text-[11px] font-bold tracking-wide text-neutral-950">{b.includes}</p>
                       </div>
 
-                      <p className="mt-3 text-[10px] leading-snug text-neutral-500">{b.inspiration}</p>
+                      {b.inspiration && <p className="mt-3 text-[10px] leading-snug text-neutral-500">{b.inspiration}</p>}
 
                       <div className="mt-4">
                         <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-400">
