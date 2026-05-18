@@ -256,7 +256,7 @@ export function TrypheLanding({
             {/* ── Imagen izquierda ── */}
             <div className="relative min-h-[58vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
               <Image
-                src="/cambiosmayo/producto irresistible.png"
+                src="/cambiosmayo/hero1.png"
                 alt="SANTOR — Sistema Completo Tryphé"
                 fill
                 className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 0 ? "scale-100" : "scale-[1.06]"}`}

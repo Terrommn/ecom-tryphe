@@ -18,12 +18,7 @@ const NOTAS_PIRAMIDE = [
   { fase: "Fondo", notas: "Cedro, cuero ahumado, papel, almizcle blanco" },
 ];
 
-const CHIPS = [
-  { emoji: "🎩", label: "Elegante" },
-  { emoji: "📡", label: "Proyección: Alta" },
-  { emoji: "☀️", label: "Temporada: Día" },
-  { emoji: "🎯", label: "Ideal para: Todo" },
-];
+const CHIPS = ["Elegante", "Proyección: Alta", "Temporada: Día", "Ideal para: Todo"];
 
 const CUANDO = [
   {
@@ -79,12 +74,10 @@ const ELEMENTOS = [
   },
 ];
 
-const CIRCLED = ["①", "②", "③", "④", "⑤"];
-
 function SectionNumber({ n }) {
   return (
     <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e8e0d4] text-xs font-bold text-neutral-900">
-      {CIRCLED[n - 1]}
+      {n}
     </span>
   );
 }
@@ -190,10 +183,10 @@ export default async function OfertaIrresistiblePage() {
             <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (
                 <span
-                  key={chip.label}
+                  key={chip}
                   className="bg-[#f0ebe3] border border-stone-300 text-stone-600 text-xs px-3 py-1.5 rounded-full"
                 >
-                  {chip.emoji} {chip.label}
+                  {chip}
                 </span>
               ))}
             </div>
@@ -307,7 +300,7 @@ export default async function OfertaIrresistiblePage() {
               style={{ borderLeft: "4px solid #e74c3c" }}
             >
               <p className="text-sm font-bold text-neutral-900 mb-5">
-                🛡️ Garantía Santor Effect — 60 días
+                Garantía Santor Effect — 60 días
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
@@ -348,16 +341,10 @@ export default async function OfertaIrresistiblePage() {
         <section className="bg-[#d4c4b0]">
           <div className="mx-auto max-w-screen-xl px-4 py-5">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 text-center">
-              {[
-                { icon: "↩", label: "Devoluciones gratis" },
-                { icon: "📦", label: "Envíos sin costo" },
-                { icon: "⭐", label: "+10,000 reseñas" },
-                { icon: "🔒", label: "Pago 100% seguro" },
-              ].map((t) => (
-                <div key={t.label} className="flex items-center justify-center gap-2">
-                  <span className="text-lg">{t.icon}</span>
-                  <p className="text-xs font-bold text-neutral-900 tracking-wide">{t.label}</p>
-                </div>
+              {["Devoluciones gratis", "Envíos sin costo", "+10,000 reseñas", "Pago 100% seguro"].map((label) => (
+                <p key={label} className="text-xs font-bold text-neutral-900 tracking-wide">
+                  {label}
+                </p>
               ))}
             </div>
           </div>
