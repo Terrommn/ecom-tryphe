@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { Star } from "lucide-react";
+import { Star, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import { formatMoney } from "@/lib/money";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { PerfumeDiscoveryQuiz } from "@/components/quiz/PerfumeDiscoveryQuiz";
@@ -23,12 +23,6 @@ const IMG_BOTTLES_GRID = "/brand/bottles-grid.png";
 const IMG_BOTTLE_SOLARE = "/brand/bottle-solare.png";
 const IMG_BOTTLE_ELYSSE = "/brand/bottle-elysse.png";
 
-const HERO_SLIDES = [
-  "/home/hero-stylish-duo.png",
-  "/home/bottle-water.jpg",
-  "/home/hero-bottles-lineup.png",
-  "/home/hero-boxes-display.png",
-];
 
 const COLLECTION_IMAGE_FALLBACK = [
   IMG_BOTTLES_GRID,
@@ -147,11 +141,11 @@ export function TrypheLanding({
   const [heroIdx, setHeroIdx] = useState(0);
 
   const nextSlide = useCallback(() => {
-    setHeroIdx((i) => (i + 1) % HERO_SLIDES.length);
+    setHeroIdx((i) => (i + 1) % 3);
   }, []);
 
   const prevSlide = useCallback(() => {
-    setHeroIdx((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+    setHeroIdx((i) => (i - 1 + 3) % 3);
   }, []);
 
   useEffect(() => {
@@ -171,92 +165,304 @@ export function TrypheLanding({
 
   return (
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
-      {/* 1.1 Hero -- editorial split with slider */}
-      <section className="grid min-h-[min(88vh,920px)] md:grid-cols-2">
-        <div className="relative min-h-[42vh] overflow-hidden md:min-h-0 md:aspect-square">
-          {HERO_SLIDES.map((src, i) => (
-            <Image
-              key={src}
-              src={src}
-              alt={`Editorial Tryphé ${i + 1}`}
-              fill
-              className={`object-cover object-center transition-opacity duration-1000 ease-in-out ${
-                i === heroIdx ? "opacity-100" : "opacity-0"
+      {/* Hero Carousel — slider horizontal (no fixed height → nunca corta en mobile) */}
+      <section className="relative overflow-hidden">
+        {/* Track: 300% ancho, se desplaza 33.33% por banner */}
+        <div
+          className="flex transition-transform duration-700"
+          style={{
+            width: "300%",
+            transform: `translateX(-${(heroIdx * 100) / 3}%)`,
+            transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
+          }}
+        >
+          {/* ── Banner 1: Identidad / Marca ── */}
+          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+            <div className="relative min-h-[40vh] overflow-hidden md:min-h-0">
+              <Image
+                src="/cambiosmayo/Frasco neutro.png"
+                alt="TRYPHÉ SANTOR — fragancia editorial"
+                fill
+                className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 0 ? "scale-100" : "scale-[1.06]"}`}
+                priority
+                sizes="(max-width:768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="relative flex flex-col justify-center border-t-[3px] border-neutral-950/8 bg-[#faf9f7] px-6 py-10 md:border-t-0 md:px-12 lg:px-16 xl:px-20">
+              {/* Floating review widget */}
+              <div className="absolute right-6 top-6 hidden max-w-[178px] rounded-xl border border-neutral-100 bg-white p-3 shadow-xl lg:block">
+                <div className="mb-2 flex items-center gap-2">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-[9px] font-bold tracking-wide text-white">
+                    RZ
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold leading-tight text-neutral-800">Raúl Fabricio Z.</p>
+                    <div className="mt-0.5 flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[9px] italic leading-relaxed text-neutral-600">
+                  &ldquo;Sigo proyectando igual que el primer día.&rdquo;
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="relative h-8 w-8 shrink-0">
+                    <Image src="/brand/bottle-santor.png" alt="SANTOR" fill className="object-contain" />
+                  </div>
+                  <p className="text-[8px] font-medium text-neutral-500">SANTOR · 100ml</p>
+                </div>
+              </div>
+              {/* Text — remount key retriggers animation on each slide */}
+              <div key={`b0-${heroIdx}`} className="flex flex-col">
+                <div className="hero-enter hero-enter-d1 flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-600">
+                    +10,000 clientes felices
+                  </span>
+                </div>
+                <h2 className="hero-enter hero-enter-d2 mt-5 font-serif text-[clamp(2rem,5vw,4rem)] font-medium leading-[1.02] tracking-tight text-neutral-950">
+                  Tu nombre se olvida.
+                  <br />
+                  Tu aroma no
+                </h2>
+                <div className="hero-enter hero-enter-d3 mt-6 h-px w-12 bg-neutral-950/20" />
+                <p className="hero-enter hero-enter-d3 mt-5 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                  Hay personas que se quedan en la memoria de otros sin saber por qué.
+                  Tryphé es ese <em>por qué</em>.
+                </p>
+                <div className="hero-enter hero-enter-d4 mt-8 flex flex-wrap gap-3">
+                  <Link
+                    href="/collections"
+                    className="inline-flex min-h-[44px] items-center justify-center bg-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition hover:bg-neutral-800"
+                  >
+                    Descubre tu Firma
+                  </Link>
+                  <Link
+                    href="/acerca"
+                    className="inline-flex min-h-[44px] items-center justify-center border border-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-neutral-950 hover:text-[#faf9f7]"
+                  >
+                    Sobre Tryphé
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Banner 2: Historia / Testimonial ── */}
+          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+            <div className="relative min-h-[40vh] overflow-hidden md:min-h-0">
+              <Image
+                src="/cambiosmayo/Novios.png"
+                alt="Pareja — historia Tryphé"
+                fill
+                className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 1 ? "scale-100" : "scale-[1.06]"}`}
+                sizes="(max-width:768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-col justify-center border-t-[3px] border-neutral-950/8 bg-[#faf9f7] px-6 py-10 md:border-t-0 md:px-12 lg:px-16 xl:px-20">
+              <div key={`b1-${heroIdx}`} className="flex flex-col">
+                <div className="hero-enter hero-enter-d1 flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-600">
+                    +10,000 clientes felices
+                  </span>
+                </div>
+                <p className="hero-enter hero-enter-d1 mt-5 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
+                  La historia detrás de Tryphé
+                </p>
+                <h2 className="hero-enter hero-enter-d2 mt-3 font-serif text-[clamp(1.65rem,4vw,3.5rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
+                  Empezó como una fragancia.
+                  <br />
+                  Terminó cambiándolo todo.
+                </h2>
+                <div className="hero-enter hero-enter-d3 mt-6 h-px w-12 bg-neutral-950/20" />
+                <blockquote className="hero-enter hero-enter-d3 mt-5 font-serif text-lg italic text-neutral-800 md:text-xl">
+                  &ldquo;Mi mejor amiga ahora es mi novia&rdquo;
+                </blockquote>
+                <p className="hero-enter hero-enter-d4 mt-3 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                  Cuando creas algo que te cambia la vida, tienes que compartirlo.
+                </p>
+                <div className="hero-enter hero-enter-d5 mt-8 flex flex-wrap gap-3">
+                  <Link
+                    href="/acerca"
+                    className="inline-flex min-h-[44px] items-center justify-center bg-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition hover:bg-neutral-800"
+                  >
+                    Conoce la Historia
+                  </Link>
+                  <Link
+                    href="/collections"
+                    className="inline-flex min-h-[44px] items-center justify-center border border-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-neutral-950 hover:text-[#faf9f7]"
+                  >
+                    Explorar Fragancias
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Banner 3: Atracción / Hombre ── */}
+          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+            <div className="relative min-h-[40vh] overflow-hidden md:min-h-0">
+              <Image
+                src="/cambiosmayo/Ligue.png"
+                alt="Hombre — Tryphé Atracción Silenciosa"
+                fill
+                className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 2 ? "scale-100" : "scale-[1.06]"}`}
+                sizes="(max-width:768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-col justify-center border-t-[3px] border-neutral-950/8 bg-[#faf9f7] px-6 py-10 md:border-t-0 md:px-12 lg:px-16 xl:px-20">
+              <div key={`b2-${heroIdx}`} className="flex flex-col">
+                <p className="hero-enter hero-enter-d1 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
+                  Para los que quieren destacar
+                </p>
+                <h2 className="hero-enter hero-enter-d2 mt-5 font-serif text-[clamp(2.25rem,6vw,5rem)] font-medium leading-[1.0] tracking-tight text-neutral-950">
+                  Huele guapo.
+                </h2>
+                <div className="hero-enter hero-enter-d3 mt-6 h-px w-12 bg-neutral-950/20" />
+                <p className="hero-enter hero-enter-d3 mt-5 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                  ¿Te imaginas ser el &ldquo;es que no sé qué tiene&rdquo; en la plática con las amigas?
+                </p>
+                <div className="hero-enter hero-enter-d4 mt-8 flex flex-wrap gap-3">
+                  <Link
+                    href="/collections/hombre"
+                    className="inline-flex min-h-[44px] items-center justify-center bg-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-[#faf9f7] transition hover:bg-neutral-800"
+                  >
+                    Quiero Oler Así
+                  </Link>
+                  <Link
+                    href="/collections"
+                    className="inline-flex min-h-[44px] items-center justify-center border border-neutral-950 px-8 text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-neutral-950 hover:text-[#faf9f7]"
+                  >
+                    Ver Bundle Atracción Silenciosa
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Flechas — centradas en la imagen (top-[20vh] en mobile = mitad de 40vh imagen) */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-3 top-[20vh] z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white shadow-md backdrop-blur-sm transition hover:bg-black/60 md:left-4 md:top-1/2 md:h-10 md:w-10"
+          aria-label="Banner anterior"
+        >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-3 top-[20vh] z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white shadow-md backdrop-blur-sm transition hover:bg-black/60 md:right-auto md:top-1/2 md:left-[calc(50%-3rem)] md:h-10 md:w-10"
+          aria-label="Banner siguiente"
+        >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        {/* Dots — centrados en mobile, lado imagen en desktop */}
+        <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-2 md:left-1/4">
+          {[0, 1, 2].map((i) => (
+            <button
+              key={i}
+              onClick={() => setHeroIdx(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === heroIdx ? "w-6 bg-neutral-950" : "w-2 bg-neutral-950/30"
               }`}
-              sizes="(max-width:768px) 100vw, 50vw"
-              priority={i === 0}
+              aria-label={`Banner ${i + 1}`}
             />
           ))}
-          {/* Nav arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
-            aria-label="Anterior"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
-            aria-label="Siguiente"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          {/* Dots */}
-          <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-            {HERO_SLIDES.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setHeroIdx(i)}
-                className={`h-2 rounded-full transition-all ${
-                  i === heroIdx ? "w-6 bg-white" : "w-2 bg-white/50"
-                }`}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-        <div
-          className="flex flex-col justify-center border-neutral-950/10 bg-[#faf9f7] px-6 py-14 md:border-l md:px-12 lg:px-16 xl:px-20"
-          data-gsap="fade-up"
-          data-gsap-stagger="0.12"
-        >
-          <p className="text-[9px] font-bold tracking-[0.45em] text-neutral-500 uppercase">
-            Estetica olfativa
-          </p>
-          <h2 className="mt-6 font-serif text-[clamp(2rem,5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-neutral-950">
-            Huele a quien ya lo logró
-          </h2>
-          <p className="mt-8 max-w-md text-sm leading-[1.75] text-neutral-600 md:text-base">
-            Inspirado en perfumería de nicho.
-            <br />
-            Diseñado para proyectar presencia, no para pasar desapercibido.
-            <br />
-            Tu fragancia como firma — no como accesorio.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              href="/#encuentra-tu-aroma"
-              className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 bg-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-[#faf9f7] uppercase transition hover:bg-neutral-800"
-            >
-              Encuentra tu Aroma Ideal
-            </Link>
-            <Link
-              href="/collections"
-              className="inline-flex min-h-[48px] items-center justify-center border border-neutral-950 px-10 text-[10px] font-bold tracking-[0.25em] text-neutral-950 uppercase transition hover:bg-neutral-950 hover:text-[#faf9f7]"
-            >
-              Explorar Fragancias
-            </Link>
-          </div>
-          <p className="mt-8 font-serif text-sm italic text-neutral-700 md:text-base">
-            Porque la primera impresión no se repite.
-          </p>
         </div>
       </section>
+
+      {/* 1.1a Bestsellers */}
+      {products && products.length > 0 && (
+        <section className="bg-[#faf9f7] py-14 md:py-20">
+          <div className="mx-auto max-w-screen-xl px-4 md:px-10">
+            {/* Header */}
+            <div className="mb-10 flex items-end justify-between md:mb-12">
+              <div>
+                <p className="mb-1.5 text-[9px] font-bold tracking-[0.3em] uppercase text-[#a17952]">
+                  Colección
+                </p>
+                <h2 className="font-serif text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
+                  Los más vendidos
+                </h2>
+              </div>
+              <Link
+                href="/collections"
+                className="hidden shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase text-neutral-500 underline-offset-4 transition hover:text-neutral-950 hover:underline sm:block"
+              >
+                Ver todo
+              </Link>
+            </div>
+
+            {/* Product grid */}
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+              {products.slice(0, 4).map((p) => (
+                <a
+                  key={p.handle}
+                  href={p.href}
+                  className="group flex flex-col"
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[#f0ebe4]">
+                    {p.imageUrl ? (
+                      <Image
+                        src={p.imageUrl}
+                        alt={p.imageAlt || p.title}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 25vw"
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-[#e8e1d8]" />
+                    )}
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-neutral-950/0 transition-colors duration-500 group-hover:bg-neutral-950/8" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="mt-3.5 flex flex-col gap-1">
+                    <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-neutral-950 line-clamp-2 leading-snug">
+                      {p.title}
+                    </p>
+                    <p className="text-[11px] font-medium text-neutral-500">
+                      {p.priceCurrency === "MXN" ? "MX$" : "$"}
+                      {Number(p.priceAmount).toLocaleString("es-MX", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            {/* Mobile CTA */}
+            <div className="mt-8 text-center sm:hidden">
+              <Link
+                href="/collections"
+                className="inline-block border border-neutral-950 px-8 py-3 text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-neutral-950 hover:text-white"
+              >
+                Ver todo
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 1.1b Promos Mayo */}
       <section className="bg-neutral-950 py-16 md:py-20">
@@ -322,17 +528,22 @@ export function TrypheLanding({
         </div>
       </section>
 
-      {/* 1.1c Trust-bar — garantía 30 días */}
-      <section className="border-y border-neutral-950/10 bg-neutral-950 text-[#faf9f7]">
-        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-center gap-3 px-4 py-4 text-center md:flex-row md:gap-6 md:px-10">
-          <p className="text-[9px] font-bold tracking-[0.4em] text-[#faf9f7]/60 uppercase">
-            Garantía TRYPHÉ 30 días
-          </p>
-          <span className="hidden h-3 w-px bg-[#faf9f7]/25 md:block" />
-          <p className="font-serif text-sm leading-tight text-[#faf9f7] md:text-base">
-            Pruébalo sin riesgo. Si no conecta contigo, lo cambiamos por otra fragancia.{" "}
-            <span className="italic text-[#faf9f7]/75">Sin preguntas.</span>
-          </p>
+      {/* Trust bar */}
+      <section className="border-y border-neutral-950/10 bg-white">
+        <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-center gap-6 px-4 py-4 md:gap-12 md:px-10">
+          {[
+            { Icon: RotateCcw, label: "Devoluciones gratis" },
+            { Icon: Truck, label: "Envíos sin costo" },
+            { Icon: Star, label: "+10,000 reseñas" },
+            { Icon: ShieldCheck, label: "Pago 100% seguro" },
+          ].map(({ Icon, label }) => (
+            <div key={label} className="flex items-center gap-2">
+              <Icon className="h-4 w-4 text-neutral-500" strokeWidth={1.5} />
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-700">
+                {label}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 

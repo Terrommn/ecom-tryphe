@@ -25,41 +25,79 @@ function CartCount() {
   return <span className="ml-1 text-xs font-bold">({count})</span>;
 }
 
-const ANNOUNCEMENTS = [
-  <>
-    Envío gratis al comprar 2 o más perfumes ·{" "}
-    <Link href="/envios" className="underline underline-offset-4 hover:text-white">
-      condiciones
-    </Link>
-  </>,
-  <>
-    Mayo · Compra un perfume de 100 ml y llévate otro de 60 ml al{" "}
-    <span className="text-[#d4a574]">50% de descuento</span>
-  </>,
-  <>
-    Mayo · Compra 2 perfumes de 100 ml y el 60 ml{" "}
-    <span className="text-[#d4a574]">va por nuestra cuenta</span>
-  </>,
-];
+const PROMO_END = new Date("2026-05-31T23:59:59-06:00");
 
-function AnnouncementBar() {
-  const [idx, setIdx] = useState(0);
+function useCountdown(target) {
+  const calc = () => {
+    const diff = Math.max(0, target - Date.now());
+    return {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      mins: Math.floor((diff % 3600000) / 60000),
+      secs: Math.floor((diff % 60000) / 1000),
+    };
+  };
+  const [t, setT] = useState(calc);
   useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % ANNOUNCEMENTS.length), 4000);
+    const id = setInterval(() => setT(calc()), 1000);
     return () => clearInterval(id);
   }, []);
+  return t;
+}
+
+function CountUnit({ value, label }) {
+  const pad = (n) => String(n).padStart(2, "0");
   return (
-    <div className="relative bg-neutral-950 py-2 text-center text-[9px] font-bold tracking-[0.35em] text-[#faf9f7] uppercase sm:text-[10px] overflow-hidden h-8 flex items-center justify-center">
-      {ANNOUNCEMENTS.map((msg, i) => (
-        <span
-          key={i}
-          className={`absolute inset-x-0 px-4 transition-all duration-500 ${
-            i === idx ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          {msg}
-        </span>
-      ))}
+    <span className="flex flex-col items-center leading-none">
+      <span className="text-[13px] font-bold tabular-nums text-white">{pad(value)}</span>
+      <span className="mt-0.5 text-[6px] font-semibold tracking-[0.15em] uppercase text-white/45">{label}</span>
+    </span>
+  );
+}
+
+function Pipe() {
+  return <span className="h-5 w-px bg-white/20" />;
+}
+
+function AnnouncementBar() {
+  const { days, hours, mins, secs } = useCountdown(PROMO_END);
+
+  return (
+    <div className="w-full bg-[#3b3b26] px-4 py-2.5">
+      <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-3">
+        {/* Copy */}
+        <p className="min-w-0 shrink text-[9px] font-bold uppercase tracking-[0.18em] text-white/80 sm:text-[10px] sm:tracking-[0.22em]">
+          <span className="hidden sm:inline">Edición Mes de las Madres · Tres fragancias por el precio de dos</span>
+          <span className="sm:hidden">Mes de las Madres</span>
+        </p>
+
+        {/* Countdown + CTA */}
+        <div className="flex shrink-0 items-center gap-3">
+          {/* Mobile: solo HRS y MIN */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <CountUnit value={hours} label="HRS" />
+            <Pipe />
+            <CountUnit value={mins} label="MIN" />
+          </div>
+          {/* Desktop: DÍA HRS MIN SEG */}
+          <div className="hidden items-center gap-2 sm:flex">
+            <CountUnit value={days} label="DÍA" />
+            <Pipe />
+            <CountUnit value={hours} label="HORAS" />
+            <Pipe />
+            <CountUnit value={mins} label="MIN" />
+            <Pipe />
+            <CountUnit value={secs} label="SEG" />
+          </div>
+
+          <Link
+            href="/collections"
+            className="shrink-0 bg-[#d4b896] px-3.5 py-1.5 text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-[#c9a882] sm:px-4"
+          >
+            Shop Now
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -78,6 +116,13 @@ export function TrypheMarketingChrome({
   children,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#faf9f7] font-sans text-neutral-950 antialiased">
@@ -89,7 +134,11 @@ export function TrypheMarketingChrome({
         </div>
       ) : null}
 
-      <header className="sticky top-0 z-40 border-b border-neutral-950/10 bg-[#faf9f7]/95 backdrop-blur-sm">
+      <header
+        className={`sticky top-0 z-40 border-b border-neutral-950/10 bg-[#faf9f7]/95 backdrop-blur-sm transition-shadow duration-300 ${
+          scrolled ? "shadow-[0_2px_24px_rgba(0,0,0,0.07)]" : "shadow-none"
+        }`}
+      >
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-10">
           <div className="flex h-16 items-center justify-between sm:h-[4.5rem]">
             <Link href="/" className="shrink-0">
@@ -99,7 +148,7 @@ export function TrypheMarketingChrome({
                 width={320}
                 height={64}
                 sizes="(max-width: 640px) 180px, 280px"
-                className="h-16 w-auto max-w-[300px] sm:h-[4.5rem]"
+                className="h-14 w-auto max-w-[260px] sm:h-[4.5rem] sm:max-w-[300px]"
                 priority
               />
             </Link>
@@ -107,31 +156,38 @@ export function TrypheMarketingChrome({
             <form
               action="/search"
               method="get"
-              className="relative mx-6 hidden max-w-md flex-1 md:flex"
+              className="relative mx-6 hidden max-w-xs flex-1 lg:flex xl:max-w-md"
             >
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-400" />
               <input
                 type="search"
                 name="q"
                 placeholder="Buscar fragancias…"
-                className="w-full border border-neutral-950/15 bg-white py-2 pl-10 pr-4 text-xs outline-none transition-colors focus:border-neutral-950"
+                className="w-full border border-neutral-950/12 bg-neutral-50 py-2 pl-9 pr-4 text-[11px] outline-none transition-colors focus:border-neutral-950 focus:bg-white"
               />
             </form>
 
-            <div className="flex items-center gap-5 sm:gap-8">
-              <div className="hidden items-center gap-6 text-[9px] font-bold tracking-[0.2em] text-neutral-800 lg:flex">
-                <Link href="/contacto" className="hover:opacity-60" aria-label="Contacto">
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="hidden items-center gap-5 lg:flex">
+                <Link
+                  href="/contacto"
+                  className="text-neutral-500 transition-colors hover:text-neutral-950"
+                  aria-label="Contacto"
+                >
                   <Mail className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/account"
-                  className="hidden hover:opacity-60 sm:flex sm:items-center sm:gap-2"
+                  className="flex items-center gap-1.5 text-neutral-500 transition-colors hover:text-neutral-950"
                 >
                   <User className="h-4 w-4" />
-                  <span className="max-w-[10rem] truncate">CUENTA</span>
+                  <span className="text-[9px] font-bold tracking-[0.2em] uppercase">Cuenta</span>
                 </Link>
               </div>
-              <Link href="/cart" className="flex items-center hover:opacity-60">
+              <Link
+                href="/cart"
+                className="flex items-center gap-1 text-neutral-700 transition-colors hover:text-neutral-950"
+              >
                 <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
                 <CartCount />
               </Link>
@@ -146,14 +202,15 @@ export function TrypheMarketingChrome({
             </div>
           </div>
 
-          <nav className="hidden justify-center gap-x-8 border-t border-neutral-950/5 py-3 lg:flex xl:gap-x-12">
+          <nav className="hidden justify-center gap-x-7 border-t border-neutral-950/5 py-2.5 lg:flex xl:gap-x-10">
             {navLinks.map((item) => (
               <Link
                 key={`${item.href}-${item.label}`}
                 href={item.href}
-                className="text-[9px] font-bold tracking-[0.25em] text-neutral-800 uppercase transition hover:text-neutral-500"
+                className="group relative text-[9px] font-bold tracking-[0.25em] text-neutral-700 uppercase transition-colors hover:text-neutral-950"
               >
                 {item.label}
+                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-neutral-950 transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
