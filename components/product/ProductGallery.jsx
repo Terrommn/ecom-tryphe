@@ -26,7 +26,7 @@ export function ProductGallery({ images, title }) {
               key={img.id || i}
               type="button"
               onClick={() => setActive(i)}
-              className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden transition-all duration-200 ${
+              className={`relative h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden transition-all duration-200 ${
                 i === active
                   ? "ring-2 ring-neutral-950 ring-offset-2 ring-offset-[#faf9f7] opacity-100"
                   : "opacity-50 hover:opacity-80"
@@ -37,7 +37,7 @@ export function ProductGallery({ images, title }) {
                 alt=""
                 fill
                 className="object-cover"
-                sizes="80px"
+                sizes="96px"
               />
             </button>
           ))}
@@ -45,7 +45,7 @@ export function ProductGallery({ images, title }) {
       )}
 
       {/* Main image */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-100">
         <Image
           src={main.url}
           alt={main.altText || title}

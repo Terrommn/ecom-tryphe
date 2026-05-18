@@ -76,7 +76,7 @@ export function ProductPurchase({ product }) {
   }
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-9">
       {/* Kicker + Title */}
       <div>
         {product.productType && (

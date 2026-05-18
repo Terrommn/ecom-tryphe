@@ -101,9 +101,9 @@ export default async function ProductPage({ params }) {
 
         {/* ── Product hero: gallery + purchase ── */}
         <section className="bg-[#faf9f7]">
-          <div className="mx-auto max-w-screen-2xl px-4 pb-16 md:pb-20 lg:px-10">
+          <div className="mx-auto max-w-screen-2xl px-4 pt-10 pb-20 md:pt-14 md:pb-28 lg:px-10">
             <div
-              className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_420px] lg:gap-16 xl:gap-20"
+              className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_460px] lg:gap-20 xl:gap-28"
               data-gsap="fade-up"
             >
               <ProductGallery images={images} title={product.title} />

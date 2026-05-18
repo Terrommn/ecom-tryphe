@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, Mail, User, ShoppingBag, Menu, X } from "lucide-react";
+import { TrypheFooter } from "@/components/layout/TrypheFooter";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Tryphé";
 const tagline = process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() || "RAW — ESENCIAL";
@@ -242,6 +243,7 @@ export function TrypheMarketingChrome({
       ) : null}
 
       {children}
+      <TrypheFooter />
     </div>
   );
 }

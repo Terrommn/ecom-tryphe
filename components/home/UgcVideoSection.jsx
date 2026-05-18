@@ -12,8 +12,8 @@ const VIDEOS = [
 const UnmuteContext = createContext();
 
 function VideoCard({ src, poster, index }) {
-  const [loaded, setLoaded] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const ref = useRef(null);
   const { unmutedIndex, requestUnmute } = useContext(UnmuteContext);
   const isMuted = unmutedIndex !== index;
@@ -34,11 +34,10 @@ function VideoCard({ src, poster, index }) {
         } else {
           video.pause();
           setPlaying(false);
-          // Auto-mute when leaving viewport
           if (!isMuted) requestUnmute(-1);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
     observer.observe(video);
     return () => observer.disconnect();
@@ -61,9 +60,6 @@ function VideoCard({ src, poster, index }) {
 
   return (
     <div className="group relative aspect-[9/16] overflow-hidden bg-neutral-200">
-      {!loaded && (
-        <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-neutral-200 via-neutral-300 to-neutral-200" />
-      )}
       <video
         ref={ref}
         src={src}
@@ -71,13 +67,11 @@ function VideoCard({ src, poster, index }) {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         onLoadedData={() => setLoaded(true)}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
-        className={`h-full w-full object-cover transition-opacity duration-500 ${
-          loaded ? "opacity-100" : "opacity-0"
-        }`}
+        className="h-full w-full object-cover"
       />
 
       {/* Controls overlay — visible on hover / tap */}

@@ -1,0 +1,158 @@
+ORDEN DE LA HOME PAGE — TRYPHE.MX
+==================================
+Archivo fuente: components/home/TrypheLanding.jsx
+Actualizado: Mayo 2026
+
+
+ESTRUCTURA COMPLETA (de arriba a abajo)
+-----------------------------------------
+
+0. ANNOUNCEMENT BAR (sticky top)
+   - Fondo oliva oscuro #3b3b26
+   - Texto: "Edición Mes de las Madres · Tres fragancias por el precio de dos"
+   - Countdown en vivo hasta 31 mayo 2026
+   - CTA "Shop Now" → /collections
+   - Componente: TrypheMarketingChrome.jsx > AnnouncementBar
+
+0b. HEADER / NAVEGACIÓN (sticky)
+   - Logo, barra de búsqueda, íconos cuenta + carrito
+   - Nav links con animación underline en hover
+   - Scroll-aware shadow
+   - Componente: TrypheMarketingChrome.jsx
+
+------------------------------------------
+1. HERO CAROUSEL (3 banners, auto-avance 8s)
+------------------------------------------
+
+   BANNER 1 — SANTOR EFFECT (Conversión)
+   - Imagen izq: /cambiosmayo/producto-irresistible.png
+   - Badge verde salvia: "BONUS · LIMITADO A 99 PIEZAS"
+   - Barra urgencia al pie imagen: "Cuando se acaben las 99 piezas..."
+   - Contenido der (fondo blanco):
+       · Eyebrow: "NO LO DEJES IR"
+       · Headline serif: "Tu nombre se olvida. / Tu aroma no"
+       · Subtítulo: "THE SANTOR EFFECT hace que te volteen a oler."
+       · Caja Inspirado en: Santal 33 $7,250 tachado → SANTOR $649
+       · Caja Sistema completo (4 items con checkmarks)
+       · Precio: $649 / Valor total $7,500 tachado
+       · CTAs: "ACTIVAR MI SANTOR EFFECT" (negro) + "VER DETALLES" (borde)
+
+   BANNER 2 — HISTORIA / TESTIMONIAL
+   - Imagen: /cambiosmayo/Novios.png
+   - Headline: "Empezó como una fragancia. / Terminó cambiándolo todo."
+   - Quote: "Mi mejor amiga ahora es mi novia"
+   - CTAs: "Conoce la Historia" + "Explorar Fragancias"
+
+   BANNER 3 — ATRACCIÓN / HOMBRE
+   - Imagen: /cambiosmayo/Ligue.png
+   - Headline: "Huele guapo."
+   - Subtítulo: "¿Te imaginas ser el 'es que no sé qué tiene'...?"
+   - CTAs: "Quiero Oler Así" + "Ver Bundle Atracción Silenciosa"
+
+------------------------------------------
+2. TRUST BAR (debajo del hero)
+------------------------------------------
+   - Fondo beige arena #d4c4b0
+   - 4 columnas: Devoluciones gratis | Envíos sin costo | +10,000 reseñas | Pago 100% seguro
+   - Tipografía serif bold
+
+------------------------------------------
+3. BESTSELLERS / MÁS VENDIDOS
+------------------------------------------
+   - Fondo crema #faf9f7
+   - Título "Los más vendidos" + eyebrow "Colección"
+   - Grid 2 col mobile / 4 col desktop
+   - Primeros 4 productos del feed de Shopify
+   - Imagen aspect 3:4, hover scale + overlay
+   - Link "Ver todo" → /collections
+
+------------------------------------------
+4. PROMOS MAYO (edición especial)
+------------------------------------------
+   - Fondo negro #neutral-950
+   - Eyebrow dorado: "Mayo exclusivo"
+   - Headline: "Elige tu firma. Complementa tu presencia."
+   - Cards de productos Mayo con precio y CTA
+
+------------------------------------------
+5. TRUST BAR (segunda, blanca)
+------------------------------------------
+   - Fondo blanco con borde
+   - 4 iconos: devoluciones, envío, reseñas, pago seguro
+   - Mismos ítems, diseño más minimalista
+
+------------------------------------------
+6. QUIZ INTERACTIVO
+------------------------------------------
+   - Componente: PerfumeDiscoveryQuiz
+   - Preguntas guiadas → recomendación de fragancia personalizada
+   - Integrado en la home como sección embebida
+
+------------------------------------------
+7. COLECCIONES DESTACADAS (4 tiles)
+------------------------------------------
+   - Fondo crema #faf9f7
+   - Grid 2x2: Mujer / Formal / Hombre / Casual
+   - Imagen editorial + título uppercase + CTA hover
+
+------------------------------------------
+8. COLLECTIONS PREVIEW (oscura)
+------------------------------------------
+   - Fondo negro
+   - Vista previa de productos por colección
+   - Layout editorial con imágenes grandes
+
+------------------------------------------
+9. UGC VIDEOS
+------------------------------------------
+   - Sección de videos de clientes (componente UgcVideoSection)
+   - (Actualmente en desarrollo / placeholder)
+
+------------------------------------------
+10. LOVE BY CELEBRITIES — Editorial
+------------------------------------------
+   - Fondo crema #faf9f7
+   - Layout tipo revista: 1 feature grande (7/12) + 2 apilados + 1 banda horizontal
+   - Citas de prensa/editorial sobre Tryphé
+
+------------------------------------------
+11. CONFIANZA Y CALIDAD
+------------------------------------------
+   - Fondo negro, texto crema
+   - Propuestas de valor de la marca
+
+------------------------------------------
+12. REVIEWS — PRUEBA SOCIAL
+------------------------------------------
+   - Fondo crema #faf9f7
+   - 6 reseñas verificadas de clientes reales
+   - Nombre, ciudad, producto, fecha, quote
+   - Círculo con iniciales (sin foto)
+
+------------------------------------------
+13. BESTSELLERS (segunda instancia, blanca)
+------------------------------------------
+   - Fondo blanco
+   - Grid de productos más vendidos
+   - Nota: evaluar si esta sección se consolida con la #3
+
+------------------------------------------
+14. DISTRIBUIDORES / PARTNER TRYPHÉ
+------------------------------------------
+   - Fondo negro
+   - Sección para distribuidores interesados
+
+------------------------------------------
+15. FOOTER
+------------------------------------------
+   - Fondo blanco
+   - Links, info de contacto, redes sociales
+
+
+NOTAS TÉCNICAS
+--------------
+- Componente principal: components/home/TrypheLanding.jsx
+- Chrome (header + announcement): components/home/TrypheMarketingChrome.jsx
+- Datos de productos vienen de Shopify via app/page.js (ISR revalidate: 120s)
+- Animaciones hero: CSS keyframes heroFadeUp en globals.css
+- Ken Burns en imágenes del carousel via transition-transform 4000ms
