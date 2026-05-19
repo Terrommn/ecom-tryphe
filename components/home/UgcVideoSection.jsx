@@ -4,9 +4,9 @@ import { useState, useRef, useEffect, useCallback, createContext, useContext } f
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 const VIDEOS = [
-  { src: "/videos/ugc-01.mp4", poster: "/videos/ugc-01-poster.jpg" },
-  { src: "/videos/ugc-02.mp4", poster: "/videos/ugc-02-poster.jpg" },
-  { src: "/videos/ugc-03.mp4", poster: "/videos/ugc-03-poster.jpg" },
+  { src: "/ugcmayo/1.mov", poster: "/videos/ugc-01-poster.jpg" },
+  { src: "/ugcmayo/2.mov", poster: "/videos/ugc-02-poster.jpg" },
+  { src: "/ugcmayo/3.mov", poster: "/videos/ugc-03-poster.jpg" },
 ];
 
 const UnmuteContext = createContext();

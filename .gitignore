@@ -40,5 +40,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Large video files (too big for GitHub)
-public/ugcmayo/*.MOV
