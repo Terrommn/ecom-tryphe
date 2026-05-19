@@ -4,14 +4,14 @@ import { useState, useRef, useEffect, useCallback, createContext, useContext } f
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 const VIDEOS = [
-  { src: "/ugcmayo/1.MOV" },
-  { src: "/ugcmayo/2.MOV" },
-  { src: "/ugcmayo/3.MOV" },
+  { src: "/videos/ugc-01.mp4", poster: "/videos/ugc-01-poster.jpg" },
+  { src: "/videos/ugc-02.mp4", poster: "/videos/ugc-02-poster.jpg" },
+  { src: "/videos/ugc-03.mp4", poster: "/videos/ugc-03-poster.jpg" },
 ];
 
 const UnmuteContext = createContext();
 
-function VideoCard({ src, index }) {
+function VideoCard({ src, poster, index }) {
   const [playing, setPlaying] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const ref = useRef(null);
@@ -63,6 +63,7 @@ function VideoCard({ src, index }) {
       <video
         ref={ref}
         src={src}
+        poster={poster}
         muted
         loop
         playsInline
@@ -119,7 +120,7 @@ export function UgcVideoSection() {
             data-gsap-stagger="0.1"
           >
             {VIDEOS.map((v, i) => (
-              <VideoCard key={i} src={v.src} index={i} />
+              <VideoCard key={i} src={v.src} poster={v.poster} index={i} />
             ))}
           </div>
         </div>
