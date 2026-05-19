@@ -21,6 +21,8 @@ const CURATED_COLLECTIONS = [
 const DISPLAY_TITLES = {
   formal: { label: "Formal", displayTitle: "Formal" },
   casual: { label: "Casual", displayTitle: "Casual" },
+  hombre: { label: "Para Él", displayTitle: "Para Él" },
+  mujer: { label: "Para Ella", displayTitle: "Para Ella" },
 };
 
 export default async function CollectionsIndexPage() {
@@ -53,7 +55,7 @@ export default async function CollectionsIndexPage() {
             </p>
           ) : (
             <div
-              className="grid grid-cols-2 gap-px bg-neutral-950/10 md:grid-cols-4"
+              className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
               data-gsap="scale-in"
               data-gsap-stagger="0.1"
             >
