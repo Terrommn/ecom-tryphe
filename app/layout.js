@@ -25,6 +25,10 @@ export const metadata = {
   description: siteName
     ? `Compra en ${siteName}. Catálogo y checkout con Shopify.`
     : "Headless commerce con Next.js y Shopify. Configura marca y contenido en .env.local.",
+  icons: {
+    icon: "/favicon-tryphe.png",
+    apple: "/favicon-tryphe.png",
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -277,7 +277,7 @@ export function TrypheLanding({
               {/* Barra urgencia pie imagen — solo visible en desktop dentro de la imagen */}
               <div className="hidden md:block absolute bottom-0 left-0 right-0 z-10 bg-white/80 px-4 py-2.5 backdrop-blur-sm">
                 <p className="text-center font-serif text-[10px] italic leading-snug text-neutral-800 md:text-xs">
-                  Cuando se acaben las 99 piezas, el SANTOR Pocket desaparece.
+                  Jabon de manos o gel antibacterial con aroma a SANTAL 33  COMPLETAMENTE GRATIS
                 </p>
               </div>
             </div>
@@ -287,7 +287,7 @@ export function TrypheLanding({
               {/* Barra urgencia — solo mobile, fuera de la imagen */}
               <div className="mb-4 bg-neutral-100 px-4 py-2 text-center md:hidden">
                 <p className="font-serif text-[10px] italic leading-snug text-neutral-700">
-                  Cuando se acaben las 99 piezas, el SANTOR Pocket desaparece.
+                  Jabon de manos o gel antibacterial con aroma a SANTAL 33  COMPLETAMENTE GRATIS
                 </p>
               </div>
 
@@ -404,9 +404,6 @@ export function TrypheLanding({
                     +10,000 clientes felices
                   </span>
                 </div>
-                <p className="hero-enter hero-enter-d1 mt-1 md:mt-5 text-[9px] font-bold tracking-[0.4em] uppercase text-neutral-500">
-                  El resultado
-                </p>
                 <h2 className="hero-enter hero-enter-d2 mt-0.5 md:mt-3 font-serif text-[clamp(1.65rem,4vw,3.5rem)] font-bold leading-[1.05] tracking-tight text-neutral-950">
                   &ldquo;Mi mejor amiga ahora es mi novia&rdquo;
                 </h2>
@@ -560,8 +557,8 @@ export function TrypheLanding({
                   type="button"
                   onClick={() => setActiveTab(tab)}
                   className={`px-5 pb-3 pt-2 text-[11px] tracking-[0.18em] uppercase transition-colors md:px-8 ${activeTab === tab
-                      ? "border-b-[3px] border-neutral-950 font-bold text-neutral-950"
-                      : "border-b-[3px] border-transparent font-normal text-[#555] hover:text-neutral-800"
+                    ? "border-b-[3px] border-neutral-950 font-bold text-neutral-950"
+                    : "border-b-[3px] border-transparent font-normal text-[#555] hover:text-neutral-800"
                     }`}
                 >
                   {tab}
