@@ -306,7 +306,9 @@ export function TrypheLanding({
                   <span className="block text-[clamp(2rem,4.2vw,3.5rem)] font-bold">
                     Tu aroma no
                   </span>
-                  <span className="mt-1.5 block h-0.5 w-[60px] bg-neutral-950" />
+                  <span className="mt-2 block text-[clamp(0.75rem,1.2vw,1rem)] font-normal not-italic tracking-[0.25em] uppercase text-neutral-500">
+                    Santal 33
+                  </span>
                 </h2>
 
                 {/* Subtítulo */}
