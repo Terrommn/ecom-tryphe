@@ -86,8 +86,8 @@ function AnnouncementBar() {
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-3">
         {/* Copy */}
         <p className="min-w-0 shrink text-[9px] font-bold uppercase tracking-[0.18em] text-white/80 sm:text-[10px] sm:tracking-[0.22em]">
-          <span className="hidden sm:inline">⚡ Oferta Relámpago · {product.full} · 25% OFF</span>
-          <span className="sm:hidden">⚡ {product.name} · 25% OFF</span>
+          <span className="hidden sm:inline">⚡ Oferta Relámpago · {product.full} · 25% OFF · Código: RELAMPAGOMAYO26</span>
+          <span className="sm:hidden">⚡ {product.name} · 25% OFF · RELAMPAGOMAYO26</span>
         </p>
 
         {/* Countdown + CTA */}
