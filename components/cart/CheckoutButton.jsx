@@ -14,7 +14,7 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
   }
 
   function handleCheckout() {
-    let url = checkoutUrl.replace("vh3sx0-jz.myshopify.com", "tryphe.mx");
+    let url = checkoutUrl;
     try {
       const code = localStorage.getItem("pending_discount");
       if (code) {
