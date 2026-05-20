@@ -101,7 +101,7 @@ function AnnouncementBar() {
           </div>
 
           <Link
-            href={`/products/${product.handle}`}
+            href={`/products/${product.handle}?discount=relampagomayo26`}
             className="shrink-0 bg-[#d4b896] px-3.5 py-1.5 text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-[#c9a882] sm:px-4"
           >
             Ver oferta
