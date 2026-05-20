@@ -26,14 +26,32 @@ function CartCount() {
   return <span className="ml-1 text-xs font-bold">({count})</span>;
 }
 
-const PROMO_END = new Date("2026-05-31T23:59:59-06:00");
+/* ── Flash Sale — 5 productos rotan cada 9 horas ── */
+const FLASH_PRODUCTS = [
+  { name: "ETERNA", full: "ETERNA (La Vie Est Belle)", handle: "noxor-inspirado-en-212-vip-copia" },
+  { name: "ASTER",  full: "ASTER (Burberry HER)",      handle: "aster-burberry-her" },
+  { name: "AZUR",   full: "AZUR (Polo Blue)",           handle: "azur-inspirado-en-bleu-de-channel" },
+  { name: "CROWN",  full: "CROWN (One Million)",        handle: "crown-inspirado-en-one-million-de-paco-rabanne" },
+  { name: "LYRIA",  full: "LYRIA (Ari de Ariana Grande)", handle: "lyria-100ml-inspirado-en-ari-de-ariana-grande" },
+];
+const SLOT_HOURS = 9;
 
-function useCountdown(target) {
+function getFlashSlot() {
+  // Slot based on elapsed hours since epoch, cycles every SLOT_HOURS * 5
+  const slotIndex = Math.floor(Date.now() / (SLOT_HOURS * 3600 * 1000)) % FLASH_PRODUCTS.length;
+  // End time = start of next slot
+  const slotStart = Math.floor(Date.now() / (SLOT_HOURS * 3600 * 1000)) * (SLOT_HOURS * 3600 * 1000);
+  const slotEnd = slotStart + SLOT_HOURS * 3600 * 1000;
+  return { product: FLASH_PRODUCTS[slotIndex], end: slotEnd };
+}
+
+function useFlashCountdown() {
   const calc = () => {
-    const diff = Math.max(0, target - Date.now());
+    const { product, end } = getFlashSlot();
+    const diff = Math.max(0, end - Date.now());
     return {
-      days: Math.floor(diff / 86400000),
-      hours: Math.floor((diff % 86400000) / 3600000),
+      product,
+      hours: Math.floor(diff / 3600000),
       mins: Math.floor((diff % 3600000) / 60000),
       secs: Math.floor((diff % 60000) / 1000),
     };
@@ -61,23 +79,20 @@ function Pipe() {
 }
 
 function AnnouncementBar() {
-  const { days, hours, mins, secs } = useCountdown(PROMO_END);
+  const { product, hours, mins, secs } = useFlashCountdown();
 
   return (
     <div className="w-full bg-[#3b3b26] px-4 py-2.5">
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-3">
         {/* Copy */}
         <p className="min-w-0 shrink text-[9px] font-bold uppercase tracking-[0.18em] text-white/80 sm:text-[10px] sm:tracking-[0.22em]">
-          <span className="hidden sm:inline">Edición Mes de las Madres · Tres fragancias por el precio de dos</span>
-          <span className="sm:hidden">Mes de las Madres</span>
+          <span className="hidden sm:inline">⚡ Oferta Relámpago · {product.full} · 25% OFF</span>
+          <span className="sm:hidden">⚡ {product.name} · 25% OFF</span>
         </p>
 
         {/* Countdown + CTA */}
         <div className="flex shrink-0 items-center gap-3">
-          {/* Todos los breakpoints: DÍA HRS MIN SEG */}
           <div className="flex items-center gap-2">
-            <CountUnit value={days} label="DÍA" />
-            <Pipe />
             <CountUnit value={hours} label="HRS" />
             <Pipe />
             <CountUnit value={mins} label="MIN" />
@@ -86,10 +101,10 @@ function AnnouncementBar() {
           </div>
 
           <Link
-            href="/collections"
+            href={`/products/${product.handle}`}
             className="shrink-0 bg-[#d4b896] px-3.5 py-1.5 text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-[#c9a882] sm:px-4"
           >
-            Shop Now
+            Ver oferta
           </Link>
         </div>
       </div>
