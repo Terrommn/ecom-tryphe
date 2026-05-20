@@ -259,7 +259,7 @@ export function TrypheLanding({
           <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
 
             {/* ── Imagen izquierda ── */}
-            <div className="relative min-h-[58vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
+            <div className="relative min-h-[80vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
               <Image
                 src="/cambiosmayo/hero1.png"
                 alt="SANTOR — Sistema Completo Tryphé"
