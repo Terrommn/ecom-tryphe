@@ -11,7 +11,7 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
     );
   }
 
-  const href = checkoutUrl.replace("tryphe.mx", "vh3sx0-jz.myshopify.com");
+  const href = checkoutUrl.replace("vh3sx0-jz.myshopify.com", "tryphe.mx");
 
   return (
     <a
