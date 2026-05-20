@@ -101,12 +101,8 @@ function AnnouncementBar() {
           </div>
 
           <button
-            onClick={async () => {
-              await fetch("/api/apply-discount", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ code: "relampagomayo26" }),
-              }).catch(() => {});
+            onClick={() => {
+              try { localStorage.setItem("pending_discount", "relampagomayo26"); } catch {}
               window.location.href = `/products/${product.handle}`;
             }}
             className="shrink-0 bg-[#d4b896] px-3.5 py-1.5 text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-950 transition hover:bg-[#c9a882] sm:px-4"
