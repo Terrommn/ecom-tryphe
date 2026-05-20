@@ -37,6 +37,15 @@ export default async function CartPage() {
               </div>
               <div className="lg:col-span-1">
                 <div className="sticky top-28 rounded-lg border border-neutral-200 bg-neutral-100/40 p-6 space-y-6">
+                  {/* Código de descuento relámpago */}
+                  <div className="rounded-md border border-dashed border-[#c9a87c] bg-[#fdf6ec] px-4 py-3">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a07840] mb-1">⚡ Oferta Relámpago · 25% OFF</p>
+                    <p className="text-[11px] text-neutral-600 mb-2">Aplica este código en el checkout:</p>
+                    <div className="flex items-center justify-between gap-2 bg-white border border-[#e0c9a0] rounded px-3 py-2">
+                      <span className="font-mono font-bold text-sm tracking-widest text-neutral-950">RELAMPAGOMAYO26</span>
+                      <span className="text-[9px] text-neutral-400">← cópialo</span>
+                    </div>
+                  </div>
                   <CheckoutButton checkoutUrl={cart?.checkoutUrl} disabled={!cart?.lines?.edges?.length} />
                   <p className="text-xs text-neutral-500">
                     Serás redirigido al checkout seguro de Shopify para completar el pago, envío y
