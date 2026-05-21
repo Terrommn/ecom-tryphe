@@ -1,4 +1,4 @@
-import { isShopifyConfigured, getProductsFirst } from "@/lib/shopify";
+import { isShopifyConfigured, getCollectionProductsFirst } from "@/lib/shopify";
 import { getMarketingNavLinks } from "@/lib/marketing-nav";
 import { TrypheMarketingChrome } from "@/components/home/TrypheMarketingChrome";
 import { CollectionLanding } from "@/components/collection/CollectionLanding";
@@ -18,12 +18,8 @@ export default async function HombrePage() {
 
   let products = placeholderHombre;
   if (shopConfigured) {
-    const all = await getProductsFirst(48);
-    const tagged = all.filter((p) =>
-      (p.tags ?? []).some((t) => /hombre|him|homme|masculin/i.test(t)),
-    );
-    if (tagged.length > 0) products = tagged;
-    else if (all.length > 0) products = all.slice(0, 8);
+    const fetched = await getCollectionProductsFirst("perfumes-para-hombre", 48);
+    if (fetched.length > 0) products = fetched;
   }
 
   return (
