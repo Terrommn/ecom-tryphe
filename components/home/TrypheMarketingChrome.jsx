@@ -26,7 +26,7 @@ function CartCount() {
   return <span className="ml-1 text-xs font-bold">({count})</span>;
 }
 
-/* ── Flash Sale — 5 productos rotan cada 9 horas ── */
+/* ── Flash Sale — 5 productos rotan cada 3 horas ── */
 const FLASH_PRODUCTS = [
   { name: "ETERNA", full: "ETERNA (La Vie Est Belle)", handle: "noxor-inspirado-en-212-vip-copia" },
   { name: "ASTER",  full: "ASTER (Burberry HER)",      handle: "aster-burberry-her" },
@@ -34,7 +34,7 @@ const FLASH_PRODUCTS = [
   { name: "CROWN",  full: "CROWN (One Million)",        handle: "crown-inspirado-en-one-million-de-paco-rabanne" },
   { name: "LYRIA",  full: "LYRIA (Ari de Ariana Grande)", handle: "lyria-100ml-inspirado-en-ari-de-ariana-grande" },
 ];
-const SLOT_HOURS = 9;
+const SLOT_HOURS = 3;
 
 function getFlashSlot() {
   // Slot based on elapsed hours since epoch, cycles every SLOT_HOURS * 5
@@ -136,6 +136,7 @@ export function TrypheMarketingChrome({
 
   return (
     <div className="min-h-screen bg-[#faf9f7] font-sans text-neutral-950 antialiased">
+      <div className="sticky top-0 z-40">
       <AnnouncementBar />
 
       {!shopConfigured ? (
@@ -145,7 +146,7 @@ export function TrypheMarketingChrome({
       ) : null}
 
       <header
-        className={`sticky top-0 z-40 border-b border-neutral-950/10 bg-[#faf9f7]/95 backdrop-blur-sm transition-shadow duration-300 ${
+        className={`border-b border-neutral-950/10 bg-[#faf9f7]/95 backdrop-blur-sm transition-shadow duration-300 ${
           scrolled ? "shadow-[0_2px_24px_rgba(0,0,0,0.07)]" : "shadow-none"
         }`}
       >
@@ -226,6 +227,7 @@ export function TrypheMarketingChrome({
           </nav>
         </div>
       </header>
+      </div>
 
       {isMenuOpen ? (
         <div className="fixed inset-0 z-50 flex flex-col bg-[#faf9f7] p-6 lg:hidden">

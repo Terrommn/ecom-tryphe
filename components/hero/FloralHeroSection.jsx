@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 /* ─────────────────────────────────────────
    SVG ICONS — línea delicada
@@ -504,7 +505,15 @@ export function FloralHeroSection() {
 
           {/* ── DERECHA: Imagen 55% ── */}
           <div className="f-img w-full md:w-[55%] md:pl-8 lg:pl-12">
-            <ProductImagePlaceholder />
+            <div className="relative mx-auto overflow-hidden" style={{ maxWidth: "480px", aspectRatio: "3 / 4" }}>
+              <Image
+                src="/trypheBanner.png"
+                alt="Tryphé"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
 

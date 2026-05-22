@@ -228,7 +228,7 @@ export function TrypheLanding({
   }, []);
 
   useEffect(() => {
-    const id = setInterval(nextSlide, 12000);
+    const id = setInterval(nextSlide, 30000);
     return () => clearInterval(id);
   }, [nextSlide]);
 
@@ -261,7 +261,7 @@ export function TrypheLanding({
             {/* ── Imagen izquierda ── */}
             <div className="relative min-h-[80vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
               <Image
-                src="/cambiosmayo/hero1.png"
+                src="/trypheBanner.png"
                 alt="SANTOR — Sistema Completo Tryphé"
                 fill
                 className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 0 ? "scale-100" : "scale-[1.06]"}`}
@@ -271,7 +271,7 @@ export function TrypheLanding({
               {/* Badge sobre imagen */}
               <div className="absolute left-2 top-2 z-10 md:left-4 md:top-4">
                 <span className="inline-block bg-[#a9b989] px-2 py-1 text-[7px] font-bold tracking-[0.18em] uppercase text-neutral-950 shadow-sm md:px-4 md:py-1.5 md:text-[9px] md:tracking-[0.22em]">
-                  BONUS · LIMITADO A 99 PIEZAS
+                  BONUS · LIMITADO A 30 PIEZAS
                 </span>
               </div>
               {/* Barra urgencia pie imagen — solo visible en desktop dentro de la imagen */}
@@ -294,31 +294,31 @@ export function TrypheLanding({
               <div key={`b0-${heroIdx}`} className="flex flex-col gap-0">
 
                 {/* Eyebrow */}
-                <p className="hero-enter hero-enter-d1 text-[9px] font-bold tracking-[0.35em] uppercase text-[#888]">
+                <p className="hero-enter hero-enter-d1 text-[9px] md:text-[11px] font-bold tracking-[0.35em] uppercase text-[#888]">
                   No lo dejes ir
                 </p>
 
                 {/* Headline */}
                 <h2 className="hero-enter hero-enter-d2 mt-3 font-serif leading-[1.0] tracking-tight text-neutral-950">
                   <span className="block text-[clamp(1.6rem,3vw,2.5rem)] font-bold">
-                    Tu nombre se olvida.
+                    Haz que
                   </span>
                   <span className="block text-[clamp(2rem,4.2vw,3.5rem)] font-bold">
-                    Tu aroma no
+                    te volteen a oler
                   </span>
                   <span className="mt-2 block text-[clamp(0.75rem,1.2vw,1rem)] font-normal not-italic tracking-[0.25em] uppercase text-neutral-500">
-                    Santal 33
+                    THE SANTOR EFFECT
                   </span>
                 </h2>
 
                 {/* Subtítulo */}
-                <p className="hero-enter hero-enter-d2 mt-3 text-[1.05rem] leading-[1.6] text-neutral-900">
-                  THE SANTOR EFFECT hace que te volteen a oler.
+                <p className="hero-enter hero-enter-d2 mt-3 text-[1.05rem] md:text-[1.15rem] leading-[1.6] text-neutral-900">
+                  Inspirado en Santal 33 — la fragancia que hace que te recuerden.
                 </p>
 
                 {/* Inspirado en */}
                 <div className="hero-enter hero-enter-d3 mt-4 border-l-4 border-neutral-950 bg-[#f5f3ef] px-4 py-3">
-                  <p className="text-[9px] font-bold tracking-[0.25em] uppercase text-neutral-500">
+                  <p className="text-[9px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-neutral-500">
                     Inspirado en
                   </p>
                   <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
@@ -335,7 +335,7 @@ export function TrypheLanding({
 
                 {/* Sistema completo */}
                 <div className="hero-enter hero-enter-d3 mt-3 bg-[#a9b989]/20 px-4 py-3">
-                  <p className="text-[9px] font-bold tracking-[0.22em] uppercase text-neutral-700">
+                  <p className="text-[9px] md:text-[11px] font-bold tracking-[0.22em] uppercase text-neutral-700">
                     Qué incluye el sistema completo
                   </p>
                   <ul className="mt-2 flex flex-col gap-1.5">
@@ -345,7 +345,7 @@ export function TrypheLanding({
                       "Manual de la Presencia (e-book)",
                       "60 días de garantía Tryphé",
                     ].map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-[13px] leading-snug text-neutral-800">
+                      <li key={item} className="flex items-start gap-2 text-[13px] md:text-[15px] leading-snug text-neutral-800">
                         <span className="mt-0.5 font-bold text-[#6b8c52]">✓</span>
                         {item}
                       </li>
@@ -367,13 +367,13 @@ export function TrypheLanding({
                   <button
                     onClick={handleActivarSantor}
                     disabled={santorPending}
-                    className="inline-flex flex-1 min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="inline-flex flex-1 min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {santorPending ? "Activando…" : "Activar mi Santor Effect"}
                   </button>
                   <Link
                     href="/oferta-irresistible"
-                    className="inline-flex flex-1 min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
+                    className="inline-flex flex-1 min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
                   >
                     Ver Detalles
                   </Link>

@@ -10,6 +10,10 @@ import { scoreQuiz } from "@/lib/quiz-recommendation";
 
 /* ── Options ── */
 
+const GENDER_OPTIONS = ["Hombre", "Mujer"];
+
+const AGE_OPTIONS = ["18-24", "25-34", "35-44", "45 o más"];
+
 const IDENTITY_OPTIONS = [
   "Elegancia discreta",
   "Poder y presencia",
@@ -38,6 +42,8 @@ const CONTEXT_OPTIONS = [
 ];
 
 const INITIAL = {
+  gender: "",
+  age: "",
   identity: [],
   emotion: "",
   contexts: [],
@@ -46,6 +52,11 @@ const INITIAL = {
 const MOOD_CHIPS = ["Exitoso(a)", "Conquistador(a)", "Atractivo(a)"];
 
 const STEPS = [
+  {
+    question: "Cuéntanos un poco sobre ti",
+    hint: null,
+    type: "profile",
+  },
   {
     question: "¿Qué idea quieres proyectar?",
     hint: "Elige una o varias",
@@ -133,6 +144,7 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
   const canAdvance = useMemo(() => {
     if (step >= STEPS.length) return false;
     const s = STEPS[step];
+    if (s.type === "profile") return Boolean(answers.gender) && Boolean(answers.age);
     if (s.type === "multi") return answers[s.field]?.length > 0;
     return Boolean(answers[s.field]);
   }, [step, answers]);
@@ -168,7 +180,7 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
               ¿Cómo te quieres sentir hoy?
             </h2>
             <p className="mt-3 text-sm text-[#a8a29e]">
-              3 preguntas para encontrar tu fragancia ideal.
+              4 preguntas para encontrar tu fragancia ideal.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               {MOOD_CHIPS.map((m) => (
@@ -194,7 +206,7 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
             Encuentra tu aroma
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-stone-600">
-            3 preguntas rápidas para encontrar la fragancia que se alinea contigo.
+            4 preguntas rápidas para encontrar la fragancia que se alinea contigo.
           </p>
         </div>
       )}
@@ -232,45 +244,102 @@ export function PerfumeDiscoveryQuiz({ products = [], variant = "page" }) {
         {/* Questions */}
         {!showResult && (
           <section ref={stepRef} className="quiz-step">
-            <fieldset>
-              <legend className="mb-1 text-sm font-medium text-stone-800">
-                {step + 1}. {STEPS[step].question}
-              </legend>
-              <p className="mb-4 text-xs text-stone-400">{STEPS[step].hint}</p>
-              <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-                {STEPS[step].options.map((opt) => {
-                  const isMulti = STEPS[step].type === "multi";
-                  const field = STEPS[step].field;
-                  const isSelected = isMulti
-                    ? answers[field]?.includes(opt)
-                    : answers[field] === opt;
-
-                  return (
-                    <label
-                      key={opt}
-                      className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-sm transition-all duration-150 ${
-                        isSelected
-                          ? "border-gray-900 bg-gray-50"
-                          : "border-stone-200 hover:border-stone-400"
-                      }`}
-                    >
-                      <input
-                        type={isMulti ? "checkbox" : "radio"}
-                        name={field}
-                        className={`h-4 w-4 border-stone-400 accent-stone-900 ${isMulti ? "rounded" : ""}`}
-                        checked={isSelected}
-                        onChange={() =>
-                          isMulti
-                            ? toggleMulti(field, opt)
-                            : setSingle(field, opt)
-                        }
-                      />
-                      {opt}
-                    </label>
-                  );
-                })}
+            {STEPS[step].type === "profile" ? (
+              <div className="flex flex-col gap-6">
+                <fieldset>
+                  <legend className="mb-3 text-sm font-medium text-stone-800">
+                    {step + 1}a. ¿Con qué género te identificas?
+                  </legend>
+                  <div className="grid gap-3 grid-cols-2">
+                    {GENDER_OPTIONS.map((opt) => (
+                      <label
+                        key={opt}
+                        className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-sm transition-all duration-150 ${
+                          answers.gender === opt
+                            ? "border-gray-900 bg-gray-50"
+                            : "border-stone-200 hover:border-stone-400"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="gender"
+                          className="h-4 w-4 border-stone-400 accent-stone-900"
+                          checked={answers.gender === opt}
+                          onChange={() => setSingle("gender", opt)}
+                        />
+                        {opt}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend className="mb-3 text-sm font-medium text-stone-800">
+                    {step + 1}b. ¿Cuál es tu rango de edad?
+                  </legend>
+                  <div className="grid gap-3 grid-cols-2">
+                    {AGE_OPTIONS.map((opt) => (
+                      <label
+                        key={opt}
+                        className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-sm transition-all duration-150 ${
+                          answers.age === opt
+                            ? "border-gray-900 bg-gray-50"
+                            : "border-stone-200 hover:border-stone-400"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="age"
+                          className="h-4 w-4 border-stone-400 accent-stone-900"
+                          checked={answers.age === opt}
+                          onChange={() => setSingle("age", opt)}
+                        />
+                        {opt}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
               </div>
-            </fieldset>
+            ) : (
+              <fieldset>
+                <legend className="mb-1 text-sm font-medium text-stone-800">
+                  {step + 1}. {STEPS[step].question}
+                </legend>
+                <p className="mb-4 text-xs text-stone-400">{STEPS[step].hint}</p>
+                <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
+                  {STEPS[step].options.map((opt) => {
+                    const isMulti = STEPS[step].type === "multi";
+                    const field = STEPS[step].field;
+                    const isSelected = isMulti
+                      ? answers[field]?.includes(opt)
+                      : answers[field] === opt;
+
+                    return (
+                      <label
+                        key={opt}
+                        className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-sm transition-all duration-150 ${
+                          isSelected
+                            ? "border-gray-900 bg-gray-50"
+                            : "border-stone-200 hover:border-stone-400"
+                        }`}
+                      >
+                        <input
+                          type={isMulti ? "checkbox" : "radio"}
+                          name={field}
+                          className={`h-4 w-4 border-stone-400 accent-stone-900 ${isMulti ? "rounded" : ""}`}
+                          checked={isSelected}
+                          onChange={() =>
+                            isMulti
+                              ? toggleMulti(field, opt)
+                              : setSingle(field, opt)
+                          }
+                        />
+                        {opt}
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            )}
           </section>
         )}
 

@@ -46,7 +46,7 @@ export function ProductCard({ product }) {
         )}
       </Link>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-medium text-neutral-950 line-clamp-2 group-hover:opacity-60 transition-opacity">
+        <h3 className="font-medium text-neutral-950 group-hover:opacity-60 transition-opacity">
           <Link href={href}>{product.title}</Link>
         </h3>
         {amount != null ? (
