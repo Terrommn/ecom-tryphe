@@ -232,6 +232,7 @@ export function TrypheLanding({
     return () => clearInterval(id);
   }, [nextSlide]);
 
+
   const featuredTiles = useMemo(() => {
     const labels = ["Perfumes para El", "Perfumes para Ella", "Los mas vendidos"];
     return featuredCollections.slice(0, 3).map((c, i) => ({
@@ -246,17 +247,10 @@ export function TrypheLanding({
     <TrypheMarketingChrome navLinks={navLinks} shopConfigured={shopConfigured}>
       {/* Hero Carousel — slider horizontal (no fixed height → nunca corta en mobile) */}
       <section className="relative overflow-hidden">
-        {/* Track: 300% ancho, se desplaza 33.33% por banner */}
-        <div
-          className="flex transition-transform duration-700"
-          style={{
-            width: "300%",
-            transform: `translateX(-${(heroIdx * 100) / 3}%)`,
-            transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
-          }}
-        >
+        {/* Track: solo el banner activo está en flujo, los demás ocultos */}
+        <div className="relative">
           {/* ── Banner 1: SANTOR EFFECT — Conversión ── */}
-          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+          <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 0 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
 
             {/* ── Imagen izquierda ── */}
             <div className="relative min-h-[80vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
@@ -268,12 +262,6 @@ export function TrypheLanding({
                 priority
                 sizes="(max-width:768px) 100vw, 50vw"
               />
-              {/* Badge sobre imagen */}
-              <div className="absolute left-2 top-2 z-10 md:left-4 md:top-4">
-                <span className="inline-block bg-[#a9b989] px-2 py-1 text-[7px] font-bold tracking-[0.18em] uppercase text-neutral-950 shadow-sm md:px-4 md:py-1.5 md:text-[9px] md:tracking-[0.22em]">
-                  BONUS · LIMITADO A 30 PIEZAS
-                </span>
-              </div>
               {/* Barra urgencia pie imagen — solo visible en desktop dentro de la imagen */}
               <div className="hidden md:block absolute bottom-0 left-0 right-0 z-10 bg-white/80 px-4 py-2.5 backdrop-blur-sm">
                 <p className="text-center font-serif text-[10px] italic leading-snug text-neutral-800 md:text-xs">
@@ -283,9 +271,9 @@ export function TrypheLanding({
             </div>
 
             {/* ── Contenido derecho ── */}
-            <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-8 md:border-t-0 md:px-10 lg:px-14 xl:px-16">
+            <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-4 md:border-t-0 md:px-10 md:py-8 lg:px-14 xl:px-16">
               {/* Barra urgencia — solo mobile, fuera de la imagen */}
-              <div className="mb-4 bg-neutral-100 px-4 py-2 text-center md:hidden">
+              <div className="mb-2 bg-neutral-100 px-4 py-2 text-center md:hidden">
                 <p className="font-serif text-[10px] italic leading-snug text-neutral-700">
                   Jabon de manos o gel antibacterial con aroma a SANTAL 33  COMPLETAMENTE GRATIS
                 </p>
@@ -316,22 +304,10 @@ export function TrypheLanding({
                   Inspirado en Santal 33 — la fragancia que hace que te recuerden.
                 </p>
 
-                {/* Inspirado en */}
-                <div className="hero-enter hero-enter-d3 mt-4 border-l-4 border-neutral-950 bg-[#f5f3ef] px-4 py-3">
-                  <p className="text-[9px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-neutral-500">
-                    Inspirado en
-                  </p>
-                  <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-                    <span className="text-[12px] text-neutral-500 line-through">Santal 33 — $7,250</span>
-                    <span className="text-[12px] text-neutral-700">
-                      SANTOR —{" "}
-                      <span className="text-[1.25rem] font-bold text-neutral-950">$649</span>
-                    </span>
-                  </div>
-                  <p className="mt-1 font-serif text-[11px] italic text-neutral-500">
-                    Mismo carácter. Misma presencia.
-                  </p>
-                </div>
+                {/* Limitado */}
+                <p className="hero-enter hero-enter-d3 mt-4 text-[2.6rem] font-bold leading-none text-neutral-950">
+                  Limitado a 39 piezas
+                </p>
 
                 {/* Sistema completo */}
                 <div className="hero-enter hero-enter-d3 mt-3 bg-[#a9b989]/20 px-4 py-3">
@@ -384,7 +360,7 @@ export function TrypheLanding({
           </div>
 
           {/* ── Banner 2: Historia / Testimonial ── */}
-          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+          <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 1 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
             <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Novios.png"
@@ -435,7 +411,7 @@ export function TrypheLanding({
           </div>
 
           {/* ── Banner 3: Atracción / Hombre ── */}
-          <div style={{ width: "33.333%" }} className="grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px]">
+          <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 2 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
             <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Ligue.png"
