@@ -129,7 +129,7 @@ const BUNDLES = [
   {
     name: "Atracción Silenciosa",
     headline: "No persigues atención... la provocas",
-    includes: "Baccarat Rouge 540 (MAGNA) · La Vie Est Belle (ETERNA) · Santal 33 (SANTOR)",
+    includes: "Santal 33 (SANTOR) · Baccarat Rouge 540 (MAGNA) · Amber Oud (ARGENTUM)",
     inspiration: "",
     marketValue: "$9,000 – $15,500",
     price: "$1,799",
@@ -137,12 +137,12 @@ const BUNDLES = [
     badgeColor: "bg-[#5a6e4a]",
     cta: "Quiero provocar atracción",
     href: "/products/atraccion-silenciosa-100-ml",
-    image: "/home/bundle-atraccion-silenciosa.webp",
+    image: "/bundles/atraccion-silenciosa.jpg",
   },
   {
     name: "Lujo Inteligente",
     headline: "No gastas más... eliges mejor",
-    includes: "Santal 33 (SANTOR) · Lacoste White (ALVUS) · Le Male (ELAN)",
+    includes: "Invictus (VICTORIUM) · Bad Boy (IGNIS)",
     inspiration: "",
     marketValue: "$8,500 – $14,000",
     price: "$1,199",
@@ -150,20 +150,20 @@ const BUNDLES = [
     badgeColor: null,
     cta: "Quiero elegir mejor",
     href: "/products/lujo-inteligente-100-ml",
-    image: "/home/bundle-lujo-inteligente.webp",
+    image: "/bundles/lujo-inteligente.jpg",
   },
   {
     name: "Impacto Inmediato",
     headline: "Desde el primer momento... se nota",
-    includes: "Invictus (VICTORIUM) · Burberry Her (ASTER)",
+    includes: "Versace Eros (NOXOR) · Armani Code (NORIUM)",
     inspiration: "",
     marketValue: "$6,000 – $10,500",
     price: "$1,149",
     badge: "EMPIEZA AQUÍ",
     badgeColor: "bg-[#5a6e4a]",
     cta: "Quiero causar impacto",
-    href: "/products/impacto-inmediato-60-ml",
-    image: "/home/bundle-impacto-inmediato.png",
+    href: "/products/impacto-inmediato-100-ml",
+    image: "/bundles/impacto-inmediato.jpg",
   },
 ];
 
@@ -253,7 +253,7 @@ export function TrypheLanding({
           <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 0 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
 
             {/* ── Imagen izquierda ── */}
-            <div className="relative min-h-[80vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
+            <div className="relative min-h-[95vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
               <Image
                 src="/trypheBanner.png"
                 alt="SANTOR — Sistema Completo Tryphé"
@@ -361,7 +361,7 @@ export function TrypheLanding({
 
           {/* ── Banner 2: Historia / Testimonial ── */}
           <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 1 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
-            <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
+            <div className="relative min-h-[95vw] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Novios.png"
                 alt="Pareja — historia Tryphé"
@@ -412,7 +412,7 @@ export function TrypheLanding({
 
           {/* ── Banner 3: Atracción / Hombre ── */}
           <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 2 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
-            <div className="relative min-h-[32vh] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
+            <div className="relative min-h-[95vw] overflow-hidden md:min-h-0 mb-[-2rem] md:mb-0">
               <Image
                 src="/cambiosmayo/Ligue.png"
                 alt="Hombre — Tryphé Atracción Silenciosa"

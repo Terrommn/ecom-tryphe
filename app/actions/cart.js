@@ -134,3 +134,19 @@ export async function getCartForPage() {
   if (!cartId) return null;
   return getCart(cartId);
 }
+
+export async function getSantorFreeVariantId() {
+  if (!isShopifyConfigured()) return null;
+  const { getProductByHandle } = await import("@/lib/shopify");
+  const product = await getProductByHandle("santor-inspirado-en-invictus-copia");
+  if (!product) return null;
+  const variants = product.variants?.edges ?? [];
+  const v60 = variants.find(
+    (e) =>
+      e.node.title?.toLowerCase().includes("60") ||
+      e.node.selectedOptions?.some(
+        (o) => o.name?.toLowerCase() === "size" && o.value?.toLowerCase().includes("60")
+      )
+  );
+  return v60?.node?.id ?? null;
+}

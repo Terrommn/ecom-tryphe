@@ -86,8 +86,8 @@ function AnnouncementBar() {
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-3">
         {/* Copy */}
         <p className="min-w-0 shrink text-[9px] font-bold uppercase tracking-[0.18em] text-white/80 sm:text-[10px] sm:tracking-[0.22em]">
-          <span className="hidden sm:inline">⚡ Oferta Relámpago · {product.full} · 25% OFF · Código: RELAMPAGOMAYO26</span>
-          <span className="sm:hidden">⚡ {product.name} · 25% OFF · RELAMPAGOMAYO26</span>
+          <span className="hidden sm:inline">⚡ Oferta Relámpago · {product.full} · 25% OFF</span>
+          <span className="sm:hidden">⚡ {product.name} · 25% OFF</span>
         </p>
 
         {/* Countdown + CTA */}
@@ -137,8 +137,6 @@ export function TrypheMarketingChrome({
   return (
     <div className="min-h-screen bg-[#faf9f7] font-sans text-neutral-950 antialiased">
       <div className="sticky top-0 z-40">
-      <AnnouncementBar />
-
       {!shopConfigured ? (
         <div className="border-b border-neutral-200 bg-[#f5f0e8] px-3 py-2 text-center text-[10px] leading-snug text-neutral-800 sm:text-[11px]">
           <strong>Solo falta pasar clave de acceso a Neil.</strong>

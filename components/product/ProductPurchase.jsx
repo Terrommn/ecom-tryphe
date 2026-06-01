@@ -161,16 +161,12 @@ export function ProductPurchase({ product }) {
 
       {msg && <p className="text-sm text-red-500">{msg}</p>}
 
-      {/* May promos callout */}
+      {/* Promo callout */}
       <div className="border border-neutral-200 bg-neutral-950 p-5">
         <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#a17952] mb-2">
-          Mayo exclusivo
+          Promoción activa
         </p>
         <p className="text-[13px] text-[#faf9f7] leading-relaxed">
-          Compra un perfume de 100 ml y llévate otro de 60 ml al{" "}
-          <span className="font-semibold text-[#d4a574]">50% de descuento</span>.
-        </p>
-        <p className="mt-1 text-[13px] text-[#faf9f7] leading-relaxed">
           Compra 2 perfumes de 100 ml y el 60 ml{" "}
           <span className="font-semibold text-[#d4a574]">va por nuestra cuenta</span>.
         </p>

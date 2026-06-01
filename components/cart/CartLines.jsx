@@ -3,19 +3,53 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProductHref } from "@/lib/product-href";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   updateLineQuantityAction,
   removeLineAction,
   applyDiscountFormAction,
+  addLineItemAction,
+  applyDiscountAction,
+  getSantorFreeVariantId,
 } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
+
+const SANTOR_HANDLE = "santor-inspirado-en-invictus-copia";
 
 export function CartLines({ cart }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [giftPending, startGiftTransition] = useTransition();
+  const [giftMsg, setGiftMsg] = useState(null);
   const lines = cart?.lines?.edges ?? [];
+
+  // Promo: 2× SANTOR 100ml → 60ml gratis
+  const santor100qty = lines.reduce((sum, { node: line }) => {
+    const handle = line.merchandise?.product?.handle ?? "";
+    const title = (line.merchandise?.title ?? "").toLowerCase();
+    if (handle === SANTOR_HANDLE && title.includes("100")) return sum + line.quantity;
+    return sum;
+  }, 0);
+  const hasSantor60 = lines.some(({ node: line }) => {
+    const handle = line.merchandise?.product?.handle ?? "";
+    const title = (line.merchandise?.title ?? "").toLowerCase();
+    return handle === SANTOR_HANDLE && title.includes("60");
+  });
+  const showGiftBanner = santor100qty >= 2 && !hasSantor60;
+  const giftAlreadyAdded = santor100qty >= 2 && hasSantor60;
+
+  function addFreeGift() {
+    startGiftTransition(async () => {
+      const variantId = await getSantorFreeVariantId();
+      if (!variantId) { setGiftMsg("No encontramos el producto. Contáctanos."); return; }
+      const result = await addLineItemAction(variantId, 1);
+      if (!result.ok) { setGiftMsg(result.error); return; }
+      // Aplicar código de descuento para dejarlo en $0
+      await applyDiscountAction("SANTOR60GRATIS");
+      router.refresh();
+    });
+  }
 
   function updateQty(lineId, qty) {
     startTransition(async () => {
@@ -48,6 +82,32 @@ export function CartLines({ cart }) {
 
   return (
     <div className="space-y-8">
+      {/* ── Banner promo 2×100ml → 60ml gratis ── */}
+      {showGiftBanner && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded border border-[#c9a87c] bg-[#fdf6ec] px-5 py-4">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a07840]">🎁 Regalo incluido</p>
+            <p className="mt-1 text-sm text-neutral-800">
+              Tienes <strong>2× SANTOR 100ml</strong> — tu <strong>SANTOR 60ml va gratis</strong>.
+            </p>
+          </div>
+          <button
+            type="button"
+            disabled={giftPending}
+            onClick={addFreeGift}
+            className="shrink-0 bg-neutral-950 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-neutral-700 disabled:opacity-50"
+          >
+            {giftPending ? "Agregando…" : "Agregar mi regalo"}
+          </button>
+          {giftMsg && <p className="text-xs text-red-500">{giftMsg}</p>}
+        </div>
+      )}
+      {giftAlreadyAdded && (
+        <div className="rounded border border-green-200 bg-green-50 px-5 py-3 text-sm text-green-800">
+          🎁 Tu <strong>SANTOR 60ml gratis</strong> está en tu carrito.
+        </div>
+      )}
+
       <ul className="divide-y divide-neutral-200 border border-neutral-200 overflow-hidden">
         {lines.map(({ node: line }) => {
           const v = line.merchandise;

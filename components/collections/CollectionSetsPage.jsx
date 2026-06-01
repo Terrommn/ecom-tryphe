@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -15,10 +16,34 @@ const INSPIRATIONS = {
   ASTER: "Burberry Her",
   VICTORIUM: "Invictus",
   ALVUS: "Lacoste White",
+  ARGENTUM: "Amber Oud",
+  IGNIS: "Bad Boy",
+  NOXOR: "Versace Eros",
+  NORIUM: "Armani Code",
 };
 
 const COLLECTIONS = {
   "100ml": [
+    {
+      id: "atraccion-silenciosa-100",
+      name: "Atracción Silenciosa",
+      price: 1799,
+      compareAt: 1947,
+      headline: "No persigues atención... la provocas",
+      subheadline:
+        "Una combinación diseñada para generar interés, conexión y magnetismo sin esfuerzo.",
+      includes: ["SANTOR", "MAGNA", "ARGENTUM"],
+      usage: [
+        { occasion: "Primera impresión", fragrance: "MAGNA" },
+        { occasion: "Cercanía / citas", fragrance: "ARGENTUM" },
+        { occasion: "Momentos clave", fragrance: "SANTOR" },
+      ],
+      cta: "Quiero provocar atracción",
+      badge: "Más elegido",
+      featured: true,
+      image: "/bundles/atraccion-silenciosa.jpg",
+      shopifyHandle: "atraccion-silenciosa-100-ml",
+    },
     {
       id: "lujo-inteligente-100",
       name: "Lujo Inteligente",
@@ -27,14 +52,33 @@ const COLLECTIONS = {
       headline: "No gastas más... eliges mejor",
       subheadline:
         "Dos fragancias que representan el equilibrio entre estatus, criterio y percepción.",
-      includes: ["MAGNA", "SANTOR"],
+      includes: ["VICTORIUM", "IGNIS"],
       usage: [
-        { occasion: "Impacto", fragrance: "MAGNA" },
-        { occasion: "Presencia constante", fragrance: "SANTOR" },
+        { occasion: "Impacto / presencia", fragrance: "VICTORIUM" },
+        { occasion: "Día / trabajo", fragrance: "IGNIS" },
       ],
       cta: "Quiero elegir mejor",
       badge: null,
+      image: "/bundles/lujo-inteligente.jpg",
       shopifyHandle: "lujo-inteligente-100-ml",
+    },
+    {
+      id: "impacto-inmediato-100",
+      name: "Impacto Inmediato",
+      price: 1149,
+      compareAt: 1298,
+      headline: "Desde el primer momento... se nota",
+      subheadline:
+        "Una combinación diseñada para generar impresión, presencia y atención instantánea.",
+      includes: ["NOXOR", "NORIUM"],
+      usage: [
+        { occasion: "Primera impresión", fragrance: "NOXOR" },
+        { occasion: "Noche / salidas", fragrance: "NORIUM" },
+      ],
+      cta: "Quiero causar impacto",
+      badge: null,
+      image: "/bundles/impacto-inmediato.jpg",
+      shopifyHandle: "impacto-inmediato-100-ml",
     },
     {
       id: "presencia-impecable-100",
@@ -52,26 +96,8 @@ const COLLECTIONS = {
       ],
       cta: "Quiero proyectar presencia",
       badge: null,
+      image: null,
       shopifyHandle: "presencia-impecable-100-ml",
-    },
-    {
-      id: "atraccion-silenciosa-100",
-      name: "Atracción Silenciosa",
-      price: 1799,
-      compareAt: 1947,
-      headline: "No persigues atención... la provocas",
-      subheadline:
-        "Una combinación diseñada para generar interés, conexión y magnetismo sin esfuerzo.",
-      includes: ["MAGNA", "ETERNA", "SANTOR"],
-      usage: [
-        { occasion: "Primera impresión", fragrance: "MAGNA" },
-        { occasion: "Cercanía / citas", fragrance: "ETERNA" },
-        { occasion: "Momentos clave", fragrance: "SANTOR" },
-      ],
-      cta: "Quiero provocar atracción",
-      badge: "Más elegido",
-      featured: true,
-      shopifyHandle: "atraccion-silenciosa-100-ml",
     },
     {
       id: "nivel-superior-100",
@@ -89,24 +115,8 @@ const COLLECTIONS = {
       ],
       cta: "Quiero subir de nivel",
       badge: null,
+      image: null,
       shopifyHandle: "nivel-superior-100-ml",
-    },
-    {
-      id: "impacto-inmediato-100",
-      name: "Impacto Inmediato",
-      price: 1149,
-      compareAt: 1298,
-      headline: "Desde el primer momento... se nota",
-      subheadline:
-        "Una combinación diseñada para generar impresión, presencia y atención instantánea.",
-      includes: ["MAGNA", "AZUR"],
-      usage: [
-        { occasion: "Primera impresión", fragrance: "MAGNA" },
-        { occasion: "Uso diario", fragrance: "AZUR" },
-      ],
-      cta: "Quiero causar impacto",
-      badge: null,
-      shopifyHandle: "impacto-inmediato-100-ml",
     },
   ],
   "60ml": [
@@ -226,6 +236,18 @@ function CollectionCard({ collection }) {
           <span className="inline-block bg-[#a17952] px-4 py-1 text-[10px] font-bold tracking-[0.3em] uppercase text-white">
             {collection.badge}
           </span>
+        </div>
+      )}
+
+      {collection.image && (
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
+          <Image
+            src={collection.image}
+            alt={collection.name}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
       )}
 

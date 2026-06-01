@@ -12,7 +12,7 @@ import {
 } from "@/lib/collection-params";
 import { TrypheShell } from "@/components/layout/TrypheShell";
 
-const HANDLE = "casual";
+const HANDLE = "amaderados";
 
 export const metadata = {
   title: "Casual | Tryphé",
