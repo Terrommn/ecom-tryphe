@@ -27,11 +27,15 @@ const COLLECTIONS = {
     {
       id: "atraccion-silenciosa-100",
       name: "Atracción Silenciosa",
+      unisex: true,
       price: 1799,
       compareAt: 1947,
       headline: "No persigues atención... la provocas",
       subheadline:
         "Una combinación diseñada para generar interés, conexión y magnetismo sin esfuerzo.",
+      includesBold: "Santal 33, Baccarat Rouge 540 y Amber Oud",
+      includesItalic: "(Santor, Magna y Argentum)",
+      marketValue: "$9,000 – $15,500",
       includes: ["SANTOR", "MAGNA", "ARGENTUM"],
       usage: [
         { occasion: "Primera impresión", fragrance: "MAGNA" },
@@ -47,11 +51,15 @@ const COLLECTIONS = {
     {
       id: "lujo-inteligente-100",
       name: "Lujo Inteligente",
+      unisex: false,
       price: 1199,
       compareAt: 1298,
       headline: "No gastas más... eliges mejor",
       subheadline:
         "Dos fragancias que representan el equilibrio entre estatus, criterio y percepción.",
+      includesBold: "Invictus y Bad Boy",
+      includesItalic: "(Victorium e Ignis)",
+      marketValue: "$8,500 – $14,000",
       includes: ["VICTORIUM", "IGNIS"],
       usage: [
         { occasion: "Impacto / presencia", fragrance: "VICTORIUM" },
@@ -65,11 +73,15 @@ const COLLECTIONS = {
     {
       id: "impacto-inmediato-100",
       name: "Impacto Inmediato",
+      unisex: false,
       price: 1149,
       compareAt: 1298,
       headline: "Desde el primer momento... se nota",
       subheadline:
         "Una combinación diseñada para generar impresión, presencia y atención instantánea.",
+      includesBold: "Versace Eros y Armani Code",
+      includesItalic: "(Noxor y Noirum)",
+      marketValue: "$6,000 – $10,500",
       includes: ["NOXOR", "NORIUM"],
       usage: [
         { occasion: "Primera impresión", fragrance: "NOXOR" },
@@ -255,6 +267,9 @@ function CollectionCard({ collection }) {
         {/* Name */}
         <h3 className="font-serif text-2xl font-medium tracking-tight text-neutral-950 md:text-3xl">
           {collection.name}
+          {collection.unisex && (
+            <em className="ml-2 font-serif text-base font-normal italic text-[#a17952]">unisex</em>
+          )}
         </h3>
 
         {/* Headline */}
@@ -272,16 +287,33 @@ function CollectionCard({ collection }) {
           <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-neutral-400 mb-2">
             Incluye
           </p>
-          <p className="text-sm font-medium text-neutral-800 tracking-wide">
-            {collection.includes
-              .map((name) =>
-                INSPIRATIONS[name]
-                  ? `${name} (insp. ${INSPIRATIONS[name]})`
-                  : name
-              )
-              .join(" · ")}
-          </p>
+          {collection.includesBold ? (
+            <p className="text-sm font-bold text-[#6b5ce7] tracking-wide">
+              {collection.includesBold}{" "}
+              <em className="font-normal italic">{collection.includesItalic}</em>
+            </p>
+          ) : (
+            <p className="text-sm font-medium text-neutral-800 tracking-wide">
+              {collection.includes
+                .map((name) =>
+                  INSPIRATIONS[name]
+                    ? `${name} (insp. ${INSPIRATIONS[name]})`
+                    : name
+                )
+                .join(" · ")}
+            </p>
+          )}
         </div>
+
+        {/* Market value */}
+        {collection.marketValue && (
+          <div className="mt-4">
+            <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-neutral-400 mb-1">
+              Valor de mercado equivalente
+            </p>
+            <p className="text-sm text-neutral-400 line-through">{collection.marketValue}</p>
+          </div>
+        )}
 
         {/* Usage */}
         <div className="mt-5">
@@ -312,13 +344,16 @@ function CollectionCard({ collection }) {
         <div className="flex-1" />
 
         {/* Price */}
-        <div className="mt-8 flex items-baseline gap-3">
-          <span className="font-serif text-2xl font-medium text-neutral-950">
-            {formatPrice(collection.price)}
-          </span>
-          <span className="text-sm text-neutral-400 line-through">
-            {formatPrice(collection.compareAt)}
-          </span>
+        <div className="mt-6">
+          <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-neutral-500 mb-1">
+            Tu inversión:
+          </p>
+          <div className="flex items-baseline gap-3">
+            <span className="font-serif text-2xl font-medium text-neutral-950">
+              {formatPrice(collection.price)}
+            </span>
+            <span className="text-xs text-neutral-400">MXN</span>
+          </div>
         </div>
 
         {/* CTA */}

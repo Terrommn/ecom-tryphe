@@ -128,9 +128,10 @@ const REVIEWS = [
 const BUNDLES = [
   {
     name: "Atracción Silenciosa",
+    unisex: true,
     headline: "No persigues atención... la provocas",
-    includes: "Santal 33 (SANTOR) · Baccarat Rouge 540 (MAGNA) · Amber Oud (ARGENTUM)",
-    inspiration: "",
+    includesBold: "Santal 33, Baccarat Rouge 540 y Amber Oud",
+    includesItalic: "(Santor, Magna y Argentum)",
     marketValue: "$9,000 – $15,500",
     price: "$1,799",
     badge: "MÁS ELEGIDO",
@@ -141,9 +142,10 @@ const BUNDLES = [
   },
   {
     name: "Lujo Inteligente",
+    unisex: false,
     headline: "No gastas más... eliges mejor",
-    includes: "Invictus (VICTORIUM) · Bad Boy (IGNIS)",
-    inspiration: "",
+    includesBold: "Invictus y Bad Boy",
+    includesItalic: "(Victorium e Ignis)",
     marketValue: "$8,500 – $14,000",
     price: "$1,199",
     badge: null,
@@ -154,9 +156,10 @@ const BUNDLES = [
   },
   {
     name: "Impacto Inmediato",
+    unisex: false,
     headline: "Desde el primer momento... se nota",
-    includes: "Versace Eros (NOXOR) · Armani Code (NORIUM)",
-    inspiration: "",
+    includesBold: "Versace Eros y Armani Code",
+    includesItalic: "(Noxor y Noirum)",
     marketValue: "$6,000 – $10,500",
     price: "$1,149",
     badge: "EMPIEZA AQUÍ",
@@ -580,15 +583,18 @@ export function TrypheLanding({
                       />
                     </div>
                     <div className="flex flex-1 flex-col p-6">
-                      <h4 className="text-base font-bold text-neutral-950">{b.name}</h4>
+                      <h4 className="text-base font-bold text-neutral-950">
+                        {b.name}{b.unisex && <em className="ml-2 font-serif text-sm font-normal not-italic text-[#a17952] italic">unisex</em>}
+                      </h4>
                       <p className="mt-0.5 font-serif text-sm italic text-neutral-500">{b.headline}</p>
 
                       <div className="mt-4 border-t border-neutral-100 pt-4">
                         <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-500">Incluye:</p>
-                        <p className="mt-1 text-[11px] font-bold tracking-wide text-neutral-950">{b.includes}</p>
+                        <p className="mt-1 text-[11px] font-bold tracking-wide text-[#6b5ce7]">
+                          {b.includesBold}{" "}
+                          <em className="font-normal not-italic text-[#6b5ce7]">{b.includesItalic}</em>
+                        </p>
                       </div>
-
-                      {b.inspiration && <p className="mt-3 text-[10px] leading-snug text-neutral-500">{b.inspiration}</p>}
 
                       <div className="mt-4">
                         <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-400">
