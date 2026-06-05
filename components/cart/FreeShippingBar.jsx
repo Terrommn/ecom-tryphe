@@ -1,8 +1,10 @@
-/** Envío gratis al comprar 2 o más perfumes. */
-export function FreeShippingBar({ totalQuantity }) {
-  const qty = Number(totalQuantity) || 0;
-  const hasFreeShipping = qty >= 2;
-  const pct = hasFreeShipping ? 100 : qty >= 1 ? 50 : 0;
+/** Envío gratis en pedidos superiores a $1,000 MXN. */
+export function FreeShippingBar({ subtotalAmount }) {
+  const subtotal = Number(subtotalAmount) || 0;
+  const threshold = 1000;
+  const hasFreeShipping = subtotal >= threshold;
+  const pct = hasFreeShipping ? 100 : Math.min(99, Math.round((subtotal / threshold) * 100));
+  const remaining = threshold - subtotal;
 
   return (
     <div className="mb-8 border border-neutral-200 bg-neutral-100/40 p-4">
@@ -10,14 +12,15 @@ export function FreeShippingBar({ totalQuantity }) {
         <p className="text-sm text-neutral-950 font-medium">
           ¡Tienes envío gratis en este pedido!
         </p>
-      ) : qty >= 1 ? (
+      ) : subtotal > 0 ? (
         <p className="text-sm text-neutral-950">
-          Agrega un perfume más y obtén{" "}
-          <span className="font-serif font-medium">envío gratis</span>.
+          Te faltan{" "}
+          <span className="font-serif font-medium">${Math.ceil(remaining).toLocaleString("es-MX")}</span>{" "}
+          para obtener <span className="font-serif font-medium">envío gratis</span>.
         </p>
       ) : (
         <p className="text-sm text-neutral-950">
-          Envío gratis al comprar 2 o más perfumes.
+          Envío gratis en pedidos arriba de $1,000.
         </p>
       )}
       <div className="mt-3 h-1.5 w-full overflow-hidden bg-[#faf9f7]">

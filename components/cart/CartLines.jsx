@@ -12,41 +12,73 @@ import {
   addLineItemAction,
   applyDiscountAction,
   getSantorFreeVariantId,
+  getSantorPocketVariantId,
 } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
-
-const SANTOR_HANDLE = "santor-inspirado-en-invictus-copia";
 
 export function CartLines({ cart }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [giftPending, startGiftTransition] = useTransition();
   const [giftMsg, setGiftMsg] = useState(null);
+  const [santorEffectDismissed, setSantorEffectDismissed] = useState(false);
   const lines = cart?.lines?.edges ?? [];
 
-  // Promo: 2× SANTOR 100ml → 60ml gratis
-  const santor100qty = lines.reduce((sum, { node: line }) => {
-    const handle = line.merchandise?.product?.handle ?? "";
-    const title = (line.merchandise?.title ?? "").toLowerCase();
-    if (handle === SANTOR_HANDLE && title.includes("100")) return sum + line.quantity;
-    return sum;
+  // ── SANTOR Effect: 2+ perfumes de 100ml a precio regular desbloquea 60ml + jabón gratis ──
+  const regular100mlQty = lines.reduce((sum, { node: line }) => {
+    const varTitle = (line.merchandise?.title ?? "").toLowerCase();
+    const is100 = varTitle.includes("100");
+    const isFlashSale = (line.attributes ?? []).some(
+      (a) => a.key === "_source" && a.value === "flash_sale"
+    );
+    return is100 && !isFlashSale ? sum + line.quantity : sum;
   }, 0);
+  const has2x100mlRegular = regular100mlQty >= 2;
+
   const hasSantor60 = lines.some(({ node: line }) => {
     const handle = line.merchandise?.product?.handle ?? "";
     const title = (line.merchandise?.title ?? "").toLowerCase();
-    return handle === SANTOR_HANDLE && title.includes("60");
+    return handle === "santor-inspirado-en-invictus-copia" && title.includes("60");
   });
-  const showGiftBanner = santor100qty >= 2 && !hasSantor60;
-  const giftAlreadyAdded = santor100qty >= 2 && hasSantor60;
 
-  function addFreeGift() {
+  const hasSantorPocket = lines.some(({ node: line }) => {
+    const handle = line.merchandise?.product?.handle ?? "";
+    const title = (line.merchandise?.title ?? "").toLowerCase();
+    return handle === "santor-inspirado-en-invictus-copia" && (title.includes("30") || title.includes("pocket"));
+  });
+
+  const santorEffectUnlocked = has2x100mlRegular;
+  const santorEffectItemsAdded = hasSantor60 && hasSantorPocket;
+  const showSantorEffect = santorEffectUnlocked && !santorEffectItemsAdded && !santorEffectDismissed;
+  const showSantorEffectConfirm = santorEffectUnlocked && santorEffectItemsAdded;
+
+  async function addSantorEffectGifts() {
     startGiftTransition(async () => {
-      const variantId = await getSantorFreeVariantId();
-      if (!variantId) { setGiftMsg("No encontramos el producto. Contáctanos."); return; }
-      const result = await addLineItemAction(variantId, 1);
-      if (!result.ok) { setGiftMsg(result.error); return; }
-      // Aplicar código de descuento para dejarlo en $0
-      await applyDiscountAction("SANTOR60GRATIS");
+      const [v60, v30] = await Promise.all([
+        getSantorFreeVariantId(),
+        getSantorPocketVariantId(),
+      ]);
+
+      if (!v60 && !v30) {
+        setGiftMsg("No encontramos los productos. Contáctanos.");
+        return;
+      }
+
+      const results = [];
+      if (v60 && !hasSantor60) {
+        results.push(await addLineItemAction(v60, 1));
+      }
+      if (v30 && !hasSantorPocket) {
+        results.push(await addLineItemAction(v30, 1));
+      }
+
+      const failed = results.find((r) => !r.ok);
+      if (failed) {
+        setGiftMsg(failed.error);
+        return;
+      }
+
+      await applyDiscountAction("SANTOREFFECT");
       router.refresh();
     });
   }
@@ -82,29 +114,84 @@ export function CartLines({ cart }) {
 
   return (
     <div className="space-y-8">
-      {/* ── Banner promo 2×100ml → 60ml gratis ── */}
-      {showGiftBanner && (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded border border-[#c9a87c] bg-[#fdf6ec] px-5 py-4">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a07840]">🎁 Regalo incluido</p>
-            <p className="mt-1 text-sm text-neutral-800">
-              Tienes <strong>2× SANTOR 100ml</strong> — tu <strong>SANTOR 60ml va gratis</strong>.
+      {/* ── SANTOR Effect Unlock — UI de urgencia ── */}
+      {showSantorEffect && (
+        <div className="relative overflow-hidden border-2 border-[#d4a574] bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 p-6 sm:p-8">
+          {/* Glow decorativo */}
+          <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-[#d4a574]/20 blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#a17952]/15 blur-2xl" />
+
+          <div className="relative z-10">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#d4a574]/20 px-4 py-1.5 mb-4">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d4a574] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d4a574]" />
+              </span>
+              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#d4a574]">
+                SANTOR Effect Desbloqueado
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h3 className="font-serif text-2xl sm:text-3xl font-medium text-white leading-tight">
+              Has desbloqueado un regalo exclusivo
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/70 max-w-lg">
+              Por comprar 2 perfumes de 100ml a precio completo, te has ganado el{" "}
+              <span className="font-semibold text-[#d4a574]">SANTOR Effect</span>:
             </p>
+
+            {/* Items incluidos */}
+            <div className="mt-5 flex flex-col gap-3">
+              <div className="flex items-center gap-3 bg-white/5 rounded px-4 py-3">
+                <span className="text-lg">🧴</span>
+                <div>
+                  <p className="text-sm font-semibold text-white">SANTOR 60ml</p>
+                  <p className="text-[11px] text-white/50">Eau de Parfum — GRATIS</p>
+                </div>
+                <span className="ml-auto text-xs font-bold text-[#d4a574]">$0</span>
+              </div>
+              <div className="flex items-center gap-3 bg-white/5 rounded px-4 py-3">
+                <span className="text-lg">🧼</span>
+                <div>
+                  <p className="text-sm font-semibold text-white">Jabón SANTOR Pocket 30ml</p>
+                  <p className="text-[11px] text-white/50">Aroma Santal 33 — GRATIS</p>
+                </div>
+                <span className="ml-auto text-xs font-bold text-[#d4a574]">$0</span>
+              </div>
+            </div>
+
+            {/* Urgencia */}
+            <div className="mt-5 flex items-start gap-2 bg-red-500/10 border border-red-500/20 rounded px-4 py-3">
+              <span className="text-red-400 text-sm mt-0.5">⏳</span>
+              <p className="text-[12px] leading-relaxed text-red-300">
+                <strong>Esta promoción no la encontrarás en línea</strong> y desaparecerá al cerrar esta venta. Agrégala ahora.
+              </p>
+            </div>
+
+            {/* CTA */}
+            <button
+              type="button"
+              disabled={giftPending}
+              onClick={addSantorEffectGifts}
+              className="mt-6 w-full sm:w-auto px-8 py-4 bg-[#d4a574] text-neutral-950 text-[10px] font-bold uppercase tracking-[0.25em] transition hover:bg-[#c9955f] disabled:opacity-50"
+            >
+              {giftPending ? "Agregando regalos…" : "Agregar SANTOR Effect a mi carrito"}
+            </button>
+            {giftMsg && <p className="text-xs text-red-400 mt-2">{giftMsg}</p>}
           </div>
-          <button
-            type="button"
-            disabled={giftPending}
-            onClick={addFreeGift}
-            className="shrink-0 bg-neutral-950 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-neutral-700 disabled:opacity-50"
-          >
-            {giftPending ? "Agregando…" : "Agregar mi regalo"}
-          </button>
-          {giftMsg && <p className="text-xs text-red-500">{giftMsg}</p>}
         </div>
       )}
-      {giftAlreadyAdded && (
-        <div className="rounded border border-green-200 bg-green-50 px-5 py-3 text-sm text-green-800">
-          🎁 Tu <strong>SANTOR 60ml gratis</strong> está en tu carrito.
+
+      {/* Confirmación SANTOR Effect ya agregado */}
+      {showSantorEffectConfirm && (
+        <div className="flex items-center gap-3 rounded border border-[#d4a574]/30 bg-[#fdf6ec] px-5 py-4">
+          <span className="text-xl">✨</span>
+          <div>
+            <p className="text-sm font-semibold text-neutral-900">SANTOR Effect activado</p>
+            <p className="text-[11px] text-neutral-600">Tu SANTOR 60ml y Jabón Pocket van gratis con tu pedido.</p>
+          </div>
         </div>
       )}
 
@@ -119,6 +206,9 @@ export function CartLines({ cart }) {
             price && line.quantity
               ? (Number(price.amount) * line.quantity).toFixed(2)
               : null;
+          const isFlashSale = (line.attributes ?? []).some(
+            (a) => a.key === "_source" && a.value === "flash_sale"
+          );
 
           return (
             <li
@@ -149,6 +239,11 @@ export function CartLines({ cart }) {
                 {v.title && v.title !== "Default Title" ? (
                   <p className="text-sm text-neutral-500 mt-1">{v.title}</p>
                 ) : null}
+                {isFlashSale && (
+                  <span className="inline-block mt-1 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-black rounded" style={{ backgroundColor: "#39FF14" }}>
+                    Oferta Relámpago
+                  </span>
+                )}
                 <div className="mt-3 flex flex-wrap items-center gap-4">
                   <label className="text-xs text-neutral-500 flex items-center gap-2">
                     Cantidad

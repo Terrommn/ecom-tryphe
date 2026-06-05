@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { subscribeAction } from "@/app/actions/subscribe";
 
 const STORE_LINKS = [
   { href: "/collections/mujer", label: "Mujer" },
@@ -66,10 +67,22 @@ function IconPaypal() {
 
 export function TrypheFooter() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setEmail("");
+    setError(null);
+    setLoading(true);
+    const result = await subscribeAction(email);
+    setLoading(false);
+    if (result.ok) {
+      setSuccess(true);
+      setEmail("");
+    } else {
+      setError(result.error);
+    }
   }
 
   return (
@@ -98,22 +111,30 @@ export function TrypheFooter() {
               Entérate de nuevos lanzamientos, promociones e información sobre
               los beneficios y usos de nuestros productos.
             </p>
-            <form onSubmit={handleSubmit} className="mt-4 flex">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Correo electrónico"
-                required
-                className="h-11 flex-1 border border-neutral-600 bg-[#222] px-3 text-[13px] text-white placeholder-neutral-500 focus:border-neutral-400 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="h-11 bg-white px-5 text-[11px] font-bold uppercase tracking-wider text-neutral-950 transition-colors hover:bg-neutral-200"
-              >
-                Enviar
-              </button>
-            </form>
+            {success ? (
+              <p className="mt-4 text-[13px] text-green-400">¡Gracias por suscribirte!</p>
+            ) : (
+              <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
+                <div className="flex">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Correo electrónico"
+                    required
+                    className="h-11 flex-1 border border-neutral-600 bg-[#222] px-3 text-[13px] text-white placeholder-neutral-500 focus:border-neutral-400 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="h-11 bg-white px-5 text-[11px] font-bold uppercase tracking-wider text-neutral-950 transition-colors hover:bg-neutral-200 disabled:opacity-50"
+                  >
+                    {loading ? "..." : "Enviar"}
+                  </button>
+                </div>
+                {error && <p className="text-xs text-red-400">{error}</p>}
+              </form>
+            )}
 
             {/* Redes */}
             <div className="mt-5 flex gap-3">

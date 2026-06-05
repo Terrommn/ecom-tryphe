@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { isShopifyConfigured, getProductByHandleSafe } from "@/lib/shopify";
 import { getMarketingNavLinks } from "@/lib/marketing-nav";
@@ -109,7 +110,9 @@ export default async function ProductPage({ params }) {
               <ProductGallery images={images} title={product.title} />
 
               <div className="lg:sticky lg:top-28 lg:self-start">
-                <ProductPurchase product={product} />
+                <Suspense fallback={null}>
+                  <ProductPurchase product={product} />
+                </Suspense>
               </div>
             </div>
           </div>

@@ -52,7 +52,7 @@ export async function ensureCartServer() {
   return { cart, error: null };
 }
 
-export async function addLineItemAction(merchandiseId, quantity = 1) {
+export async function addLineItemAction(merchandiseId, quantity = 1, attributes = []) {
   if (!isShopifyConfigured()) {
     return { ok: false, error: "Shopify no configurado" };
   }
@@ -61,9 +61,9 @@ export async function addLineItemAction(merchandiseId, quantity = 1) {
     return { ok: false, error: e1 || "No se pudo crear el carrito" };
   }
   const cartId = ensured.id;
-  const { cart, userErrors } = await addToCart(cartId, [
-    { merchandiseId, quantity: Math.max(1, Number(quantity) || 1) },
-  ]);
+  const lineItem = { merchandiseId, quantity: Math.max(1, Number(quantity) || 1) };
+  if (attributes.length) lineItem.attributes = attributes;
+  const { cart, userErrors } = await addToCart(cartId, [lineItem]);
   if (userErrors?.length) {
     return { ok: false, error: userErrors.map((u) => u.message).join(", ") };
   }
@@ -149,4 +149,21 @@ export async function getSantorFreeVariantId() {
       )
   );
   return v60?.node?.id ?? null;
+}
+
+export async function getSantorPocketVariantId() {
+  if (!isShopifyConfigured()) return null;
+  const { getProductByHandle } = await import("@/lib/shopify");
+  const product = await getProductByHandle("santor-inspirado-en-invictus-copia");
+  if (!product) return null;
+  const variants = product.variants?.edges ?? [];
+  const v30 = variants.find(
+    (e) =>
+      e.node.title?.toLowerCase().includes("30") ||
+      e.node.title?.toLowerCase().includes("pocket") ||
+      e.node.selectedOptions?.some(
+        (o) => o.name?.toLowerCase() === "size" && o.value?.toLowerCase().includes("30")
+      )
+  );
+  return v30?.node?.id ?? null;
 }

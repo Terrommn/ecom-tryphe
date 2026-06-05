@@ -258,100 +258,60 @@ export function TrypheLanding({
             {/* ── Imagen izquierda ── */}
             <div className="relative min-h-[95vw] overflow-hidden bg-[#e8e2d8] md:min-h-0">
               <Image
-                src="/trypheBanner.png"
-                alt="SANTOR — Sistema Completo Tryphé"
+                src="/herojun.png"
+                alt="Compra 2 perfumes de 100ml y llévate 1 de 60ml GRATIS"
                 fill
                 className={`object-cover object-center transition-transform duration-[4000ms] ease-out ${heroIdx === 0 ? "scale-100" : "scale-[1.06]"}`}
                 priority
                 sizes="(max-width:768px) 100vw, 50vw"
               />
-              {/* Barra urgencia pie imagen — solo visible en desktop dentro de la imagen */}
-              <div className="hidden md:block absolute bottom-0 left-0 right-0 z-10 bg-white/80 px-4 py-2.5 backdrop-blur-sm">
-                <p className="text-center font-serif text-[10px] italic leading-snug text-neutral-800 md:text-xs">
-                  Jabon de manos o gel antibacterial con aroma a SANTAL 33  COMPLETAMENTE GRATIS
-                </p>
-              </div>
             </div>
 
             {/* ── Contenido derecho ── */}
-            <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-4 md:border-t-0 md:px-10 md:py-8 lg:px-14 xl:px-16">
-              {/* Barra urgencia — solo mobile, fuera de la imagen */}
-              <div className="mb-2 bg-neutral-100 px-4 py-2 text-center md:hidden">
-                <p className="font-serif text-[10px] italic leading-snug text-neutral-700">
-                  Jabon de manos o gel antibacterial con aroma a SANTAL 33  COMPLETAMENTE GRATIS
-                </p>
-              </div>
+            <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-6 md:border-t-0 md:px-10 md:py-8 lg:px-14 xl:px-16">
 
               <div key={`b0-${heroIdx}`} className="flex flex-col gap-0">
 
                 {/* Eyebrow */}
                 <p className="hero-enter hero-enter-d1 text-[9px] md:text-[11px] font-bold tracking-[0.35em] uppercase text-[#888]">
-                  No lo dejes ir
+                  Oferta especial
                 </p>
 
                 {/* Headline */}
-                <h2 className="hero-enter hero-enter-d2 mt-3 font-serif leading-[1.0] tracking-tight text-neutral-950">
-                  <span className="block text-[clamp(1.6rem,3vw,2.5rem)] font-bold">
-                    Haz que
+                <h2 className="hero-enter hero-enter-d2 mt-4 font-serif leading-[1.10] tracking-tight text-neutral-950">
+                  <span className="block text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold">
+                    Compra 2 perfumes de 100 ml
                   </span>
-                  <span className="block text-[clamp(2rem,4.2vw,3.5rem)] font-bold">
-                    te volteen a oler
+                  <span className="block text-[clamp(1.3rem,2.5vw,2rem)] font-normal text-neutral-600 mt-1">
+                    y llévate 1 de 60 ml
                   </span>
-                  <span className="mt-2 block text-[clamp(0.75rem,1.2vw,1rem)] font-normal not-italic tracking-[0.25em] uppercase text-neutral-500">
-                    THE SANTOR EFFECT
+                  <span className="block text-[clamp(2rem,4vw,3.2rem)] font-bold mt-1">
+                    GRATIS
                   </span>
                 </h2>
 
-                {/* Subtítulo */}
-                <p className="hero-enter hero-enter-d2 mt-3 text-[1.05rem] md:text-[1.15rem] leading-[1.6] text-neutral-900">
-                  Inspirado en Santal 33 — la fragancia que hace que te recuerden.
-                </p>
-
-                {/* Limitado */}
-                <p className="hero-enter hero-enter-d3 mt-4 text-[2.6rem] font-bold leading-none text-neutral-950">
-                  Limitado a 39 piezas
-                </p>
-
-                {/* Sistema completo */}
-                <div className="hero-enter hero-enter-d3 mt-3 bg-[#a9b989]/20 px-4 py-3">
-                  <p className="text-[9px] md:text-[11px] font-bold tracking-[0.22em] uppercase text-neutral-700">
-                    Qué incluye el sistema completo
-                  </p>
-                  <ul className="mt-2 flex flex-col gap-1.5">
-                    {[
-                      "SANTOR 100ml · Eau de Parfum",
-                      "SANTOR Pocket · antibacterial o hand soap 30ml",
-                      "Manual de la Presencia (e-book)",
-                      "60 días de garantía Tryphé",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-[13px] md:text-[15px] leading-snug text-neutral-800">
-                        <span className="mt-0.5 font-bold text-[#6b8c52]">✓</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Separador */}
+                <div className="hero-enter hero-enter-d3 mt-5 h-[2px] w-14 bg-neutral-950/15" />
 
                 {/* Precio */}
-                <div className="hero-enter hero-enter-d4 mt-4 flex items-baseline gap-3">
-                  <span className="text-[2.6rem] font-bold leading-none text-neutral-950">$649</span>
+                <div className="hero-enter hero-enter-d4 mt-6 flex items-baseline gap-3">
+                  <span className="text-[2.6rem] font-bold leading-none text-neutral-950">$1,298</span>
                   <div className="flex flex-col leading-tight">
                     <span className="text-[10px] text-neutral-400 uppercase tracking-wide">Valor total</span>
-                    <span className="text-[0.95rem] text-neutral-400 line-through">$7,500</span>
+                    <span className="text-[0.95rem] text-neutral-400 line-through">$17,000</span>
                   </div>
                 </div>
 
                 {/* CTAs */}
-                <div className="hero-enter hero-enter-d5 mt-5 flex flex-col gap-2 sm:flex-row">
-                  <button
-                    onClick={handleActivarSantor}
-                    disabled={santorPending}
-                    className="inline-flex flex-1 min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100 disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {santorPending ? "Activando…" : "Activar mi Santor Effect"}
-                  </button>
+                <div className="hero-enter hero-enter-d5 mt-7 flex flex-col gap-2 sm:flex-row">
                   <Link
-                    href="/oferta-irresistible"
+                    href="/collections/sets"
+                    className="inline-flex flex-1 min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100"
+                  >
+                    Aprovechar oferta
+                  </Link>
+                  <Link
+                    href="/collections"
                     className="inline-flex flex-1 min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
                   >
                     Ver Detalles

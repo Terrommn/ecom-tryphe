@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { addLineItemAction } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { WishlistButton } from "@/components/wishlist/WishlistButton";
 
 function flattenVariants(product) {
@@ -23,6 +23,8 @@ function initialSelection(variants) {
 
 export function ProductPurchase({ product }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isFlashSale = searchParams.get("oferta") === "relampago";
   const variants = useMemo(() => flattenVariants(product), [product]);
 
   const [selected, setSelected] = useState(() => initialSelection(variants));
@@ -37,6 +39,18 @@ export function ProductPurchase({ product }) {
 
   const displayPrice = activeVariant?.price;
   const compareAt = activeVariant?.compareAtPrice;
+
+  // Flash sale: calcular precio con 15% OFF
+  const flashPrice = useMemo(() => {
+    if (!isFlashSale || !displayPrice?.amount) return null;
+    return (Number(displayPrice.amount) * 0.85).toFixed(2);
+  }, [isFlashSale, displayPrice]);
+
+  // Detectar si la variante seleccionada es 100ml
+  const is100ml = useMemo(() => {
+    const title = (activeVariant?.title ?? "").toLowerCase();
+    return title.includes("100");
+  }, [activeVariant]);
 
   function setOption(name, value) {
     setSelected((prev) => {
@@ -63,7 +77,10 @@ export function ProductPurchase({ product }) {
     if (!activeVariant?.id) return;
     setMsg(null);
     startTransition(async () => {
-      const res = await addLineItemAction(activeVariant.id, 1);
+      const attrs = isFlashSale
+        ? [{ key: "_source", value: "flash_sale" }]
+        : [];
+      const res = await addLineItemAction(activeVariant.id, 1, attrs);
       if (!res.ok) {
         setMsg(res.error || "No se pudo añadir");
         return;
@@ -77,6 +94,18 @@ export function ProductPurchase({ product }) {
 
   return (
     <div className="space-y-9">
+      {/* Flash sale banner */}
+      {isFlashSale && (
+        <div className="border-2 px-5 py-4 text-center" style={{ borderColor: "#39FF14", backgroundColor: "rgba(57,255,20,0.06)" }}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: "#39FF14" }}>
+            ⚡ Oferta Relámpago — 15% OFF
+          </p>
+          <p className="mt-1 text-xs text-neutral-600">
+            Este descuento desaparece cuando termine el cronómetro.
+          </p>
+        </div>
+      )}
+
       {/* Kicker + Title */}
       <div>
         {product.productType && (
@@ -91,17 +120,30 @@ export function ProductPurchase({ product }) {
 
       {/* Price */}
       <div className="flex flex-wrap items-baseline gap-3">
-        {displayPrice && (
-          <span className="font-serif text-2xl font-medium text-neutral-950">
-            {formatMoney(displayPrice.amount, displayPrice.currencyCode)}
-          </span>
+        {isFlashSale && flashPrice ? (
+          <>
+            <span className="font-serif text-2xl font-medium" style={{ color: "#22c55e" }}>
+              {formatMoney(flashPrice, displayPrice.currencyCode)}
+            </span>
+            <span className="text-sm text-neutral-400 line-through">
+              {formatMoney(displayPrice.amount, displayPrice.currencyCode)}
+            </span>
+          </>
+        ) : (
+          <>
+            {displayPrice && (
+              <span className="font-serif text-2xl font-medium text-neutral-950">
+                {formatMoney(displayPrice.amount, displayPrice.currencyCode)}
+              </span>
+            )}
+            {compareAt?.amount &&
+            Number(compareAt.amount) > Number(displayPrice?.amount || 0) ? (
+              <span className="text-sm text-neutral-400 line-through">
+                {formatMoney(compareAt.amount, compareAt.currencyCode)}
+              </span>
+            ) : null}
+          </>
         )}
-        {compareAt?.amount &&
-        Number(compareAt.amount) > Number(displayPrice?.amount || 0) ? (
-          <span className="text-sm text-neutral-400 line-through">
-            {formatMoney(compareAt.amount, compareAt.currencyCode)}
-          </span>
-        ) : null}
       </div>
 
       <div className="h-px bg-neutral-950/10" />
@@ -148,32 +190,54 @@ export function ProductPurchase({ product }) {
           type="button"
           disabled={pending || !activeVariant?.availableForSale}
           onClick={handleAdd}
-          className="w-full py-4 text-[10px] font-bold uppercase tracking-[0.25em] bg-neutral-950 text-[#faf9f7] transition-colors hover:bg-neutral-800 disabled:opacity-40 disabled:cursor-not-allowed"
+          className={`w-full py-4 text-[10px] font-bold uppercase tracking-[0.25em] transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+            isFlashSale
+              ? "text-black hover:brightness-110"
+              : "bg-neutral-950 text-[#faf9f7] hover:bg-neutral-800"
+          }`}
+          style={isFlashSale ? { backgroundColor: "#39FF14" } : undefined}
         >
           {pending
             ? "Añadiendo…"
             : activeVariant && !activeVariant.availableForSale
               ? "Agotado"
-              : "Agregar al carrito"}
+              : isFlashSale
+                ? "Agregar con 15% OFF"
+                : "Agregar al carrito"}
         </button>
         <WishlistButton handle={product.handle} title={product.title} />
       </div>
 
       {msg && <p className="text-sm text-red-500">{msg}</p>}
 
-      {/* Promo callout */}
-      <div className="border border-neutral-200 bg-neutral-950 p-5">
-        <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#a17952] mb-2">
-          Promoción activa
-        </p>
-        <p className="text-[13px] text-[#faf9f7] leading-relaxed">
-          Compra 2 perfumes de 100 ml y el 60 ml{" "}
-          <span className="font-semibold text-[#d4a574]">va por nuestra cuenta</span>.
-        </p>
-      </div>
+      {/* SANTOR Effect promo — solo si es 100ml y NO es oferta relámpago */}
+      {is100ml && !isFlashSale && (
+        <div className="border border-neutral-200 bg-neutral-950 p-5">
+          <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#a17952] mb-2">
+            Desbloquea el SANTOR Effect
+          </p>
+          <p className="text-[13px] text-[#faf9f7] leading-relaxed">
+            Compra 2 perfumes de 100ml y{" "}
+            <span className="font-semibold text-[#d4a574]">
+              llévate 1 de 60ml + Jabón GRATIS
+            </span>
+            . Revisa tu carrito para activarlo.
+          </p>
+        </div>
+      )}
+
+      {/* Flash sale: aviso de que no aplica SANTOR Effect */}
+      {is100ml && isFlashSale && (
+        <div className="border border-amber-200 bg-amber-50 px-5 py-3">
+          <p className="text-[11px] text-amber-800">
+            <strong>Nota:</strong> La Oferta Relámpago no es acumulable con el SANTOR Effect.
+          </p>
+        </div>
+      )}
 
       {/* Shipping info */}
       <div className="pt-2 text-[11px] text-neutral-400 space-y-1.5">
+        <p>Envío gratis en pedidos arriba de $1,000.</p>
         <p>
           <a
             href="/envios"

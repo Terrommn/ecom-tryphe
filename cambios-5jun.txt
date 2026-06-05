@@ -1,0 +1,71 @@
+CAMBIOS 5 DE JUNIO 2026 — TRYPHE ECOMMERCE
+============================================
+
+1. ENVIO GRATIS — UMBRAL $1,000 MXN
+   - Archivo: components/cart/FreeShippingBar.jsx
+   - Antes: envio gratis con 2+ perfumes (por cantidad)
+   - Ahora: envio gratis en pedidos arriba de $1,000 MXN (por subtotal)
+   - Archivo: app/cart/page.js — pasa subtotalAmount en vez de totalQuantity
+   - Archivo: components/product/ProductPurchase.jsx — texto actualizado
+
+2. OFERTA RELAMPAGO — 15% OFF PERMANENTE + VERDE NEON
+   - Archivo: components/home/TrypheMarketingChrome.jsx
+   - Descuento cambiado de 25% a 15%
+   - Sin referencia a ningun mes (permanente todo el ano)
+   - Colores: fondo negro (#0a0a0a), texto y cronometro verde neon (#39FF14)
+   - Boton "Click aqui" en verde neon
+   - Barra se achica al hacer scroll (compact mode)
+   - Links llevan a /products/{handle}?oferta=relampago
+   - AnnouncementBar ahora se renderiza (antes estaba definida pero no usada)
+   - 5 productos rotan cada 3 horas: ETERNA, ASTER, AZUR, CROWN, LYRIA
+
+3. SANTOR EFFECT — CONDICIONAL COMPLETO
+   a) Deteccion en producto (components/product/ProductPurchase.jsx):
+      - Detecta ?oferta=relampago via useSearchParams
+      - Si es flash sale: muestra precio con 15% OFF visual + banner verde neon
+      - Si es 100ml a precio regular: muestra promo "Desbloquea el SANTOR Effect"
+      - Si es 100ml en oferta relampago: aviso "no aplica SANTOR Effect"
+      - Al agregar desde flash sale: marca item con atributo _source: flash_sale
+
+   b) Logica en carrito (components/cart/CartLines.jsx):
+      - Busca cualquier linea con variante 100ml SIN atributo _source: flash_sale
+      - Si encuentra → muestra UI de desbloqueo SANTOR Effect
+      - SANTOR Effect incluye: SANTOR 60ml + Jabon Pocket 30ml GRATIS
+      - Mensaje de urgencia: "Esta promocion no la encontraras en linea y desaparecera al cerrar esta venta"
+      - Diseno premium: fondo oscuro, badge animado, gradiente dorado
+      - Items de flash sale muestran badge verde "Oferta Relampago" en el carrito
+
+   c) Candado: 100ml comprado en oferta relampago NO desbloquea SANTOR Effect
+
+4. CAMBIOS BACKEND
+   - Archivo: lib/shopify.js
+     - Cart fragment: agrega attributes { key value } a line items
+     - addToCart: soporta atributos opcionales en lineas
+   - Archivo: app/actions/cart.js
+     - addLineItemAction: acepta parametro attributes[]
+     - Nueva funcion: getSantorPocketVariantId() para obtener variante del jabon 30ml
+   - Archivo: app/products/[handle]/page.js
+     - ProductPurchase envuelto en Suspense (requerido por useSearchParams)
+
+5. ARCHIVOS MODIFICADOS (resumen)
+   - lib/shopify.js
+   - app/actions/cart.js
+   - components/cart/FreeShippingBar.jsx
+   - app/cart/page.js
+   - components/home/TrypheMarketingChrome.jsx
+   - components/product/ProductPurchase.jsx
+   - components/cart/CartLines.jsx
+   - app/products/[handle]/page.js
+
+6. NEWSLETTER FOOTER — CONECTADO A SHOPIFY
+   - Archivo: components/layout/TrypheFooter.jsx
+   - Antes: el formulario de newsletter del footer no hacia nada (solo limpiaba el campo)
+   - Ahora: llama a subscribeAction() → crea customer en Shopify (igual que el popup de bienvenida)
+   - Agrega estados de carga, exito ("Gracias por suscribirte!") y error
+   - Import agregado: subscribeAction desde app/actions/subscribe.js
+
+PENDIENTES:
+   - Nuevo banner HERO desde Canva (esperando imagen)
+   - Bundles: revisar segunda foto y originales a detalle
+   - Crear codigo de descuento SANTOREFFECT en Shopify Admin (para dejar 60ml+jabon en $0)
+   - Crear codigo de descuento para flash sale 15% en Shopify Admin (si se quiere aplicar descuento real en checkout)
