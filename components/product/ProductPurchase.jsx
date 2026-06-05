@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { addLineItemAction } from "@/app/actions/cart";
+import { addLineItemAction, applyDiscountAction } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
 import { useRouter, useSearchParams } from "next/navigation";
 import { WishlistButton } from "@/components/wishlist/WishlistButton";
@@ -84,6 +84,10 @@ export function ProductPurchase({ product }) {
       if (!res.ok) {
         setMsg(res.error || "No se pudo añadir");
         return;
+      }
+      // Auto-aplicar código RELAMPAGO si viene de oferta relámpago
+      if (isFlashSale) {
+        await applyDiscountAction("RELAMPAGO");
       }
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("store-cart"));
