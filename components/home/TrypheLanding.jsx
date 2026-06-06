@@ -280,7 +280,7 @@ export function TrypheLanding({
                 {/* Headline */}
                 <h2 className="hero-enter hero-enter-d2 mt-4 font-serif leading-[1.10] tracking-tight text-neutral-950">
                   <span className="block text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold">
-                    Compra 2 perfumes de 100 ml
+                    Compra 2 perfumes<br /> de 100 ml
                   </span>
                   <span className="block text-[clamp(1.3rem,2.5vw,2rem)] font-normal text-neutral-600 mt-1">
                     y llévate 1 de 60 ml

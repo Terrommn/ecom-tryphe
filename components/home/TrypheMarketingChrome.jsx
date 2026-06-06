@@ -68,30 +68,30 @@ function CountUnit({ value, label, compact }) {
   const pad = (n) => String(n).padStart(2, "0");
   return (
     <span className="flex flex-col items-center leading-none">
-      <span className={`font-black tabular-nums transition-all duration-300 ${compact ? "text-sm sm:text-base" : "text-xl sm:text-2xl"}`} style={{ color: "#39FF14" }}>{pad(value)}</span>
-      {!compact && <span className="mt-1 text-[7px] sm:text-[8px] font-bold tracking-[0.2em] uppercase" style={{ color: "rgba(57,255,20,0.5)" }}>{label}</span>}
+      <span className={`font-bold tabular-nums text-white transition-all duration-300 ${compact ? "text-base" : "text-xl sm:text-2xl"}`}>{pad(value)}</span>
+      <span className={`font-semibold tracking-[0.15em] uppercase text-white/45 transition-all duration-300 ${compact ? "mt-0.5 text-[5px]" : "mt-1 text-[7px] sm:text-[8px]"}`}>{label}</span>
     </span>
   );
 }
 
 function Pipe({ compact }) {
-  return <span className={`font-bold mx-1 transition-all duration-300 ${compact ? "text-sm" : "text-lg sm:text-xl"}`} style={{ color: "rgba(57,255,20,0.4)" }}>:</span>;
+  return <span className={`font-bold mx-1 text-white/25 transition-all duration-300 ${compact ? "text-sm" : "text-lg sm:text-xl"}`}>:</span>;
 }
 
 function AnnouncementBar({ compact }) {
   const { product, hours, mins, secs } = useFlashCountdown();
 
   return (
-    <div className={`w-full bg-[#0a0a0a] px-4 transition-all duration-300 ${compact ? "py-1.5" : "py-3.5 sm:py-4"}`}>
-      <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-4">
+    <div className={`w-full bg-[#3b3b26] px-3 sm:px-4 transition-all duration-300 ${compact ? "py-1.5" : "py-2.5 sm:py-3.5"}`}>
+      <div className="mx-auto flex max-w-screen-2xl items-center justify-between gap-2 sm:gap-4">
         {/* Copy */}
-        <p className={`min-w-0 shrink font-bold uppercase sm:tracking-[0.22em] transition-all duration-300 ${compact ? "" : ""}`} style={{ color: "#39FF14" }}>
-          <span className={`hidden sm:inline tracking-[0.15em] ${compact ? "text-[10px]" : "text-sm"}`}>⚡ Oferta Relámpago · {product.full} · 15% OFF</span>
-          <span className={`sm:hidden tracking-[0.12em] ${compact ? "text-[9px]" : "text-xs"}`}>⚡ {product.name} · 15% OFF</span>
+        <p className="min-w-0 shrink font-bold uppercase text-white/80 transition-all duration-300">
+          <span className={`hidden sm:inline tracking-[0.15em] ${compact ? "text-[10px]" : "text-xs"}`}>⚡ Oferta Relámpago · {product.full} · 15% OFF</span>
+          <span className={`sm:hidden tracking-[0.08em] leading-tight ${compact ? "text-[8px]" : "text-[10px]"}`}>⚡ {product.name} · 15% OFF</span>
         </p>
 
         {/* Countdown + CTA */}
-        <div className="flex shrink-0 items-center gap-4 sm:gap-5">
+        <div className="flex shrink-0 items-center gap-2.5 sm:gap-4">
           <div className="flex items-center">
             <CountUnit value={hours} label="HRS" compact={compact} />
             <Pipe compact={compact} />
@@ -102,10 +102,9 @@ function AnnouncementBar({ compact }) {
 
           <button
             onClick={() => { window.location.href = `/products/${product.handle}?oferta=relampago`; }}
-            className={`shrink-0 font-black tracking-[0.2em] uppercase text-black transition-all duration-300 hover:brightness-110 ${compact ? "px-4 py-1.5 text-[9px] sm:px-5 sm:py-2" : "px-5 py-2.5 text-[11px] sm:text-xs sm:px-7 sm:py-3"}`}
-            style={{ backgroundColor: "#39FF14" }}
+            className={`shrink-0 font-bold tracking-[0.2em] uppercase text-neutral-950 bg-[#d4b896] transition hover:bg-[#c9a882] ${compact ? "px-3 py-1 text-[8px] sm:px-4 sm:py-1.5" : "px-3.5 py-2 text-[9px] sm:px-5 sm:py-2.5 sm:text-[11px]"}`}
           >
-            Click aquí
+            Shop now
           </button>
         </div>
       </div>
