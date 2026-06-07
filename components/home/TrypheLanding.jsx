@@ -278,24 +278,24 @@ export function TrypheLanding({
                 </p>
 
                 {/* Headline */}
-                <h2 className="hero-enter hero-enter-d2 mt-3 md:mt-4 font-serif leading-[1.10] tracking-tight text-neutral-950">
-                  <span className="block text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold">
+                <h2 className="hero-enter hero-enter-d2 mt-3 md:mt-4 font-serif leading-[1.08] tracking-tight text-neutral-950">
+                  <span className="block text-[2rem] md:text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold">
                     Compra 2 perfumes de 100 ml
                   </span>
-                  <span className="block text-[clamp(1.15rem,2.5vw,2rem)] font-normal text-neutral-600 mt-0.5 md:mt-1">
+                  <span className="block text-[1.35rem] md:text-[clamp(1.3rem,2.5vw,2rem)] font-normal text-neutral-600 mt-1">
                     y llévate 1 de 60 ml
                   </span>
-                  <span className="block text-[clamp(1.8rem,4vw,3.2rem)] font-bold mt-0.5 md:mt-1">
+                  <span className="block text-[2.4rem] md:text-[clamp(2rem,4vw,3.2rem)] font-bold mt-1">
                     GRATIS
                   </span>
                 </h2>
 
                 {/* Separador */}
-                <div className="hero-enter hero-enter-d3 mt-3 md:mt-5 h-[2px] w-14 bg-neutral-950/15" />
+                <div className="hero-enter hero-enter-d3 mt-4 md:mt-5 h-[2px] w-14 bg-neutral-950/15" />
 
                 {/* Precio */}
                 <div className="hero-enter hero-enter-d4 mt-4 md:mt-6 flex items-baseline gap-3">
-                  <span className="text-[2rem] md:text-[2.6rem] font-bold leading-none text-neutral-950">$1,298</span>
+                  <span className="text-[2.4rem] md:text-[2.6rem] font-bold leading-none text-neutral-950">$1,298</span>
                   <div className="flex flex-col leading-tight">
                     <span className="text-[10px] text-neutral-400 uppercase tracking-wide">Valor total</span>
                     <span className="text-[0.95rem] text-neutral-400 line-through">$17,000</span>
