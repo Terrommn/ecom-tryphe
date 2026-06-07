@@ -268,7 +268,7 @@ export function TrypheLanding({
             </div>
 
             {/* ── Contenido derecho ── */}
-            <div className="flex flex-col justify-center overflow-y-auto border-t-[3px] border-neutral-200 bg-white px-6 py-6 md:border-t-0 md:px-10 md:py-8 lg:px-14 xl:px-16">
+            <div className="flex flex-col justify-center overflow-y-auto bg-white px-5 py-5 md:border-t-0 md:px-10 md:py-8 lg:px-14 xl:px-16">
 
               <div key={`b0-${heroIdx}`} className="flex flex-col gap-0">
 
@@ -278,24 +278,24 @@ export function TrypheLanding({
                 </p>
 
                 {/* Headline */}
-                <h2 className="hero-enter hero-enter-d2 mt-4 font-serif leading-[1.10] tracking-tight text-neutral-950">
-                  <span className="block text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold">
-                    Compra 2 perfumes<br /> de 100 ml
+                <h2 className="hero-enter hero-enter-d2 mt-3 md:mt-4 font-serif leading-[1.10] tracking-tight text-neutral-950">
+                  <span className="block text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold">
+                    Compra 2 perfumes de 100 ml
                   </span>
-                  <span className="block text-[clamp(1.3rem,2.5vw,2rem)] font-normal text-neutral-600 mt-1">
+                  <span className="block text-[clamp(1.15rem,2.5vw,2rem)] font-normal text-neutral-600 mt-0.5 md:mt-1">
                     y llévate 1 de 60 ml
                   </span>
-                  <span className="block text-[clamp(2rem,4vw,3.2rem)] font-bold mt-1">
+                  <span className="block text-[clamp(1.8rem,4vw,3.2rem)] font-bold mt-0.5 md:mt-1">
                     GRATIS
                   </span>
                 </h2>
 
                 {/* Separador */}
-                <div className="hero-enter hero-enter-d3 mt-5 h-[2px] w-14 bg-neutral-950/15" />
+                <div className="hero-enter hero-enter-d3 mt-3 md:mt-5 h-[2px] w-14 bg-neutral-950/15" />
 
                 {/* Precio */}
-                <div className="hero-enter hero-enter-d4 mt-6 flex items-baseline gap-3">
-                  <span className="text-[2.6rem] font-bold leading-none text-neutral-950">$1,298</span>
+                <div className="hero-enter hero-enter-d4 mt-4 md:mt-6 flex items-baseline gap-3">
+                  <span className="text-[2rem] md:text-[2.6rem] font-bold leading-none text-neutral-950">$1,298</span>
                   <div className="flex flex-col leading-tight">
                     <span className="text-[10px] text-neutral-400 uppercase tracking-wide">Valor total</span>
                     <span className="text-[0.95rem] text-neutral-400 line-through">$17,000</span>
@@ -303,16 +303,16 @@ export function TrypheLanding({
                 </div>
 
                 {/* CTAs */}
-                <div className="hero-enter hero-enter-d5 mt-7 flex flex-col gap-2 sm:flex-row">
+                <div className="hero-enter hero-enter-d5 mt-4 md:mt-7 flex flex-col gap-2 sm:flex-row">
                   <Link
                     href="/collections/sets"
-                    className="inline-flex flex-1 min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100"
+                    className="inline-flex flex-1 min-h-[44px] md:min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100"
                   >
                     Aprovechar oferta
                   </Link>
                   <Link
                     href="/collections"
-                    className="inline-flex flex-1 min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
+                    className="inline-flex flex-1 min-h-[44px] md:min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
                   >
                     Ver Detalles
                   </Link>

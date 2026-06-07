@@ -87,7 +87,7 @@ function AnnouncementBar({ compact }) {
         {/* Copy */}
         <p className="min-w-0 shrink font-bold uppercase text-white/80 transition-all duration-300">
           <span className={`hidden sm:inline tracking-[0.15em] ${compact ? "text-[10px]" : "text-xs"}`}>⚡ Oferta Relámpago · {product.full} · 15% OFF</span>
-          <span className={`sm:hidden tracking-[0.08em] leading-tight ${compact ? "text-[8px]" : "text-[10px]"}`}>⚡ {product.name} · 15% OFF</span>
+          <span className={`sm:hidden tracking-[0.08em] leading-tight ${compact ? "text-[8px]" : "text-[10px]"}`}>⚡ {product.full} · 15% OFF</span>
         </p>
 
         {/* Countdown + CTA */}
