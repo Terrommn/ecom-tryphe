@@ -303,18 +303,12 @@ export function TrypheLanding({
                 </div>
 
                 {/* CTAs */}
-                <div className="hero-enter hero-enter-d5 mt-4 md:mt-7 flex flex-col gap-2 sm:flex-row">
-                  <Link
-                    href="/collections/sets"
-                    className="inline-flex flex-1 min-h-[44px] md:min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100"
-                  >
-                    Aprovechar oferta
-                  </Link>
+                <div className="hero-enter hero-enter-d5 mt-4 md:mt-7">
                   <Link
                     href="/collections"
-                    className="inline-flex flex-1 min-h-[44px] md:min-h-[46px] items-center justify-center border-2 border-neutral-950 px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-neutral-950 transition hover:bg-neutral-100"
+                    className="inline-flex w-full min-h-[44px] md:min-h-[46px] items-center justify-center bg-[#1a1a1a] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-neutral-800 active:scale-100"
                   >
-                    Ver Detalles
+                    Aprovechar oferta
                   </Link>
                 </div>
 
