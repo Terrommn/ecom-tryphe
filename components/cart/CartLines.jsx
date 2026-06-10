@@ -3,85 +3,75 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProductHref } from "@/lib/product-href";
-import { useTransition, useState } from "react";
+import { useTransition, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   updateLineQuantityAction,
   removeLineAction,
   applyDiscountFormAction,
-  addLineItemAction,
-  applyDiscountAction,
-  getSantorFreeVariantId,
-  getSantorPocketVariantId,
 } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
+
+const PROMO_CODE = "DOSPERFUMES60ML";
+
+function Confetti() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const colors = ["#d4a574", "#c9955f", "#fbbf24", "#f59e0b", "#a17952", "#34d399", "#f472b6"];
+    const pieces = Array.from({ length: 50 }, () => {
+      const d = document.createElement("div");
+      const size = Math.random() * 8 + 4;
+      Object.assign(d.style, {
+        position: "absolute",
+        width: `${size}px`,
+        height: `${size}px`,
+        backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+        borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+        left: `${Math.random() * 100}%`,
+        top: "-10px",
+        opacity: "1",
+        pointerEvents: "none",
+        zIndex: "20",
+        transition: `all ${1.5 + Math.random()}s cubic-bezier(.25,.46,.45,.94)`,
+      });
+      el.appendChild(d);
+      return d;
+    });
+    requestAnimationFrame(() => {
+      pieces.forEach((d) => {
+        d.style.top = `${70 + Math.random() * 50}%`;
+        d.style.left = `${parseFloat(d.style.left) + (Math.random() - 0.5) * 40}%`;
+        d.style.opacity = "0";
+        d.style.transform = `rotate(${Math.random() * 720}deg)`;
+      });
+    });
+    const t = setTimeout(() => pieces.forEach((d) => d.remove()), 3000);
+    return () => { clearTimeout(t); pieces.forEach((d) => d.remove()); };
+  }, []);
+  return <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none" />;
+}
 
 export function CartLines({ cart }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [giftPending, startGiftTransition] = useTransition();
-  const [giftMsg, setGiftMsg] = useState(null);
-  const [santorEffectDismissed, setSantorEffectDismissed] = useState(false);
   const lines = cart?.lines?.edges ?? [];
 
-  // ── SANTOR Effect: 2+ perfumes de 100ml a precio regular desbloquea 60ml + jabón gratis ──
-  const regular100mlQty = lines.reduce((sum, { node: line }) => {
+  // ── Promo: 2+ perfumes de 100ml a precio regular → cualquier 60ml gratis ──
+  let regular100mlQty = 0;
+  let has60ml = false;
+  for (const { node: line } of lines) {
     const varTitle = (line.merchandise?.title ?? "").toLowerCase();
-    const is100 = varTitle.includes("100");
     const isFlashSale = (line.attributes ?? []).some(
       (a) => a.key === "_source" && a.value === "flash_sale"
     );
-    return is100 && !isFlashSale ? sum + line.quantity : sum;
-  }, 0);
-  const has2x100mlRegular = regular100mlQty >= 2;
-
-  const hasSantor60 = lines.some(({ node: line }) => {
-    const handle = line.merchandise?.product?.handle ?? "";
-    const title = (line.merchandise?.title ?? "").toLowerCase();
-    return handle === "santor-inspirado-en-invictus-copia" && title.includes("60");
-  });
-
-  const hasSantorPocket = lines.some(({ node: line }) => {
-    const handle = line.merchandise?.product?.handle ?? "";
-    const title = (line.merchandise?.title ?? "").toLowerCase();
-    return handle === "santor-inspirado-en-invictus-copia" && (title.includes("30") || title.includes("pocket"));
-  });
-
-  const santorEffectUnlocked = has2x100mlRegular;
-  const santorEffectItemsAdded = hasSantor60 && hasSantorPocket;
-  const showSantorEffect = santorEffectUnlocked && !santorEffectItemsAdded && !santorEffectDismissed;
-  const showSantorEffectConfirm = santorEffectUnlocked && santorEffectItemsAdded;
-
-  async function addSantorEffectGifts() {
-    startGiftTransition(async () => {
-      const [v60, v30] = await Promise.all([
-        getSantorFreeVariantId(),
-        getSantorPocketVariantId(),
-      ]);
-
-      if (!v60 && !v30) {
-        setGiftMsg("No encontramos los productos. Contáctanos.");
-        return;
-      }
-
-      const results = [];
-      if (v60 && !hasSantor60) {
-        results.push(await addLineItemAction(v60, 1));
-      }
-      if (v30 && !hasSantorPocket) {
-        results.push(await addLineItemAction(v30, 1));
-      }
-
-      const failed = results.find((r) => !r.ok);
-      if (failed) {
-        setGiftMsg(failed.error);
-        return;
-      }
-
-      await applyDiscountAction("SANTOREFFECT");
-      router.refresh();
-    });
+    if (varTitle.includes("100") && !isFlashSale) regular100mlQty += line.quantity;
+    if (varTitle.includes("60")) has60ml = true;
   }
+  const promoUnlocked = regular100mlQty >= 2;
+  const showPromo = promoUnlocked && !has60ml;
+  const showPromoConfirm = promoUnlocked && has60ml;
 
   function updateQty(lineId, qty) {
     startTransition(async () => {
@@ -114,83 +104,70 @@ export function CartLines({ cart }) {
 
   return (
     <div className="space-y-8">
-      {/* ── SANTOR Effect Unlock — UI de urgencia ── */}
-      {showSantorEffect && (
-        <div className="relative overflow-hidden border-2 border-[#d4a574] bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 p-6 sm:p-8">
-          {/* Glow decorativo */}
-          <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-[#d4a574]/20 blur-3xl" />
-          <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#a17952]/15 blur-2xl" />
-
+      {/* ── Promo: 2 de 100ml → cualquier 60ml gratis ── */}
+      {showPromo && (
+        <div className="relative overflow-hidden border border-neutral-200 bg-white p-6 sm:p-8 rounded-lg shadow-sm">
+          <Confetti />
           <div className="relative z-10">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#d4a574]/20 px-4 py-1.5 mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#d4a574]/15 px-4 py-1.5 mb-4">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d4a574] opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d4a574]" />
               </span>
-              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#d4a574]">
-                SANTOR Effect Desbloqueado
+              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a17952]">
+                Promoción Desbloqueada
               </span>
             </div>
 
-            {/* Headline */}
-            <h3 className="font-serif text-2xl sm:text-3xl font-medium text-white leading-tight">
+            <h3 className="font-serif text-2xl sm:text-3xl font-medium text-neutral-950 leading-tight">
               Has desbloqueado un regalo exclusivo
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-white/70 max-w-lg">
-              Por comprar 2 perfumes de 100ml a precio completo, te has ganado el{" "}
-              <span className="font-semibold text-[#d4a574]">SANTOR Effect</span>:
+            <p className="mt-3 text-sm leading-relaxed text-neutral-600 max-w-lg">
+              Por comprar 2 perfumes de 100ml a precio completo, te has ganado{" "}
+              <strong className="text-neutral-950">cualquier perfume de 60ml totalmente gratis</strong>.
             </p>
 
-            {/* Items incluidos */}
-            <div className="mt-5 flex flex-col gap-3">
-              <div className="flex items-center gap-3 bg-white/5 rounded px-4 py-3">
-                <span className="text-lg">🧴</span>
+            <div className="mt-5">
+              <div className="flex items-center gap-3 bg-neutral-50 border border-neutral-200 rounded px-4 py-3">
+                <span className="text-lg">🎁</span>
                 <div>
-                  <p className="text-sm font-semibold text-white">SANTOR 60ml</p>
-                  <p className="text-[11px] text-white/50">Eau de Parfum — GRATIS</p>
+                  <p className="text-sm font-semibold text-neutral-950">Perfume de 60ml a tu elección</p>
+                  <p className="text-[11px] text-neutral-500">Agrega cualquier perfume en presentación de 60ml a tu carrito</p>
                 </div>
-                <span className="ml-auto text-xs font-bold text-[#d4a574]">$0</span>
-              </div>
-              <div className="flex items-center gap-3 bg-white/5 rounded px-4 py-3">
-                <span className="text-lg">🧼</span>
-                <div>
-                  <p className="text-sm font-semibold text-white">Jabón SANTOR Pocket 30ml</p>
-                  <p className="text-[11px] text-white/50">Aroma Santal 33 — GRATIS</p>
-                </div>
-                <span className="ml-auto text-xs font-bold text-[#d4a574]">$0</span>
+                <span className="ml-auto text-xs font-bold text-[#d4a574]">GRATIS</span>
               </div>
             </div>
 
-            {/* Urgencia */}
-            <div className="mt-5 flex items-start gap-2 bg-red-500/10 border border-red-500/20 rounded px-4 py-3">
-              <span className="text-red-400 text-sm mt-0.5">⏳</span>
-              <p className="text-[12px] leading-relaxed text-red-300">
-                <strong>Esta promoción no la encontrarás en línea</strong> y desaparecerá al cerrar esta venta. Agrégala ahora.
+            <div className="mt-4 flex items-center gap-3 bg-[#fdf6ec] border border-[#d4a574]/30 rounded px-4 py-3">
+              <span className="text-sm">🏷️</span>
+              <p className="text-[12px] leading-relaxed text-neutral-700">
+                Aplica el código{" "}
+                <strong className="font-mono bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded text-neutral-950 select-all">
+                  {PROMO_CODE}
+                </strong>{" "}
+                en el checkout para hacer válida tu promoción.
               </p>
             </div>
 
-            {/* CTA */}
-            <button
-              type="button"
-              disabled={giftPending}
-              onClick={addSantorEffectGifts}
-              className="mt-6 w-full sm:w-auto px-8 py-4 bg-[#d4a574] text-neutral-950 text-[10px] font-bold uppercase tracking-[0.25em] transition hover:bg-[#c9955f] disabled:opacity-50"
+            <Link
+              href="/collections"
+              className="mt-6 inline-block w-full sm:w-auto text-center px-8 py-4 bg-neutral-950 text-white text-[10px] font-bold uppercase tracking-[0.25em] transition hover:bg-neutral-800"
             >
-              {giftPending ? "Agregando regalos…" : "Agregar SANTOR Effect a mi carrito"}
-            </button>
-            {giftMsg && <p className="text-xs text-red-400 mt-2">{giftMsg}</p>}
+              Elegir mi perfume de 60ml gratis
+            </Link>
           </div>
         </div>
       )}
 
-      {/* Confirmación SANTOR Effect ya agregado */}
-      {showSantorEffectConfirm && (
-        <div className="flex items-center gap-3 rounded border border-[#d4a574]/30 bg-[#fdf6ec] px-5 py-4">
-          <span className="text-xl">✨</span>
+      {showPromoConfirm && (
+        <div className="flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 px-5 py-4">
+          <span className="text-xl">✅</span>
           <div>
-            <p className="text-sm font-semibold text-neutral-900">SANTOR Effect activado</p>
-            <p className="text-[11px] text-neutral-600">Tu SANTOR 60ml y Jabón Pocket van gratis con tu pedido.</p>
+            <p className="text-sm font-semibold text-neutral-900">Promoción activada</p>
+            <p className="text-[11px] text-neutral-600">
+              Tu perfume de 60ml va gratis con tu pedido. Aplica el código{" "}
+              <strong className="font-mono">{PROMO_CODE}</strong> en el checkout.
+            </p>
           </div>
         </div>
       )}
