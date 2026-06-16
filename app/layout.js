@@ -5,6 +5,7 @@ import { ConditionalChrome } from "@/components/layout/ConditionalChrome";
 import { GsapScrollSetup } from "@/components/gsap/GsapScrollSetup";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { WelcomePopup } from "@/components/layout/WelcomePopup";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 
 const inter = Inter({
   variable: "--font-body",
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${display.variable} antialiased min-h-dvh flex flex-col overflow-x-hidden`}
       >
         <GsapScrollSetup />
+        <PageViewTracker />
         <ConditionalChrome>{children}</ConditionalChrome>
         <WhatsAppFab />
         <WelcomePopup />

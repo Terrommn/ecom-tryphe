@@ -61,13 +61,17 @@ export function CartLines({ cart }) {
   // ── Promo: 2+ perfumes de 100ml a precio regular → cualquier 60ml gratis ──
   let regular100mlQty = 0;
   let has60ml = false;
+  let price60ml = null;
   for (const { node: line } of lines) {
     const varTitle = (line.merchandise?.title ?? "").toLowerCase();
     const isFlashSale = (line.attributes ?? []).some(
       (a) => a.key === "_source" && a.value === "flash_sale"
     );
     if (varTitle.includes("100") && !isFlashSale) regular100mlQty += line.quantity;
-    if (varTitle.includes("60")) has60ml = true;
+    if (varTitle.includes("60")) {
+      has60ml = true;
+      if (!price60ml) price60ml = line.merchandise?.price;
+    }
   }
   const promoUnlocked = regular100mlQty >= 2;
   const showPromo = promoUnlocked && !has60ml;
@@ -123,7 +127,7 @@ export function CartLines({ cart }) {
               Has desbloqueado un regalo exclusivo
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600 max-w-lg">
-              Por comprar 2 perfumes de 100ml a precio completo, te has ganado{" "}
+              Por comprar 2 perfumes de 100ml a precio regular, te has ganado{" "}
               <strong className="text-neutral-950">cualquier perfume de 60ml totalmente gratis</strong>.
             </p>
 
@@ -290,6 +294,12 @@ export function CartLines({ cart }) {
       ) : null}
 
       <div className="border-t border-neutral-200 pt-6 space-y-2 text-sm">
+        {showPromoConfirm && price60ml ? (
+          <div className="flex justify-between text-neutral-400">
+            <span>Perfume 60ml <span className="text-[#d4a574] font-medium">(gratis con tu promo)</span></span>
+            <span className="line-through">{formatMoney(price60ml.amount, price60ml.currencyCode)}</span>
+          </div>
+        ) : null}
         {subtotal ? (
           <div className="flex justify-between text-neutral-500">
             <span>Subtotal</span>
