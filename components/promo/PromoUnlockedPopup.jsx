@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { X } from "lucide-react";
 import { Free60mlGallery } from "./Free60mlGallery";
-import { getAll60mlProducts } from "@/app/actions/cart";
+import { getAll60mlProducts, checkCartPromoStatus } from "@/app/actions/cart";
 
 function Confetti() {
   const ref = useRef(null);
@@ -49,36 +49,48 @@ export function PromoUnlockedPopup() {
   const [visible, setVisible] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [products60ml, setProducts60ml] = useState([]);
+  const [dismissed, setDismissed] = useState(false);
+
+  const tryShowPopup = useCallback(async () => {
+    // Si el usuario ya eligio su 60ml en esta sesion, no molestar
+    try {
+      if (sessionStorage.getItem("promo_2x100_chose")) return;
+    } catch {}
+    // Si ya lo cerro manualmente, no volver a mostrar en esta sesion
+    if (dismissed) return;
+
+    // Verificar directamente con el carrito (fuente de verdad)
+    try {
+      const status = await checkCartPromoStatus();
+      if (status.unlocked && !status.has60) {
+        setVisible(true);
+        // Pre-cargar productos 60ml
+        getAll60mlProducts().then(setProducts60ml).catch(() => {});
+      }
+    } catch {}
+  }, [dismissed]);
 
   useEffect(() => {
-    function handlePromoUnlocked() {
-      console.log("[PROMO POPUP] Event received!");
-      try {
-        // Solo bloquear si ya se mostro Y el usuario eligio su 60ml
-        const alreadyShown = sessionStorage.getItem("promo_2x100_shown");
-        const alreadyChose = sessionStorage.getItem("promo_2x100_chose");
-        if (alreadyShown && alreadyChose) {
-          console.log("[PROMO POPUP] Already shown AND chose, skipping");
-          return;
-        }
-      } catch {}
-      console.log("[PROMO POPUP] Showing popup!");
-      setVisible(true);
-      try {
-        sessionStorage.setItem("promo_2x100_shown", "1");
-      } catch {}
-      // Pre-cargar productos 60ml
-      getAll60mlProducts().then((p) => {
-        console.log("[PROMO POPUP] Loaded 60ml products:", p.length);
-        setProducts60ml(p);
-      }).catch((err) => {
-        console.error("[PROMO POPUP] Error loading products:", err);
-      });
+    // 1. Verificar al montar (por si ya tiene 2x100ml)
+    tryShowPopup();
+
+    // 2. Verificar en cada cambio del carrito
+    function handleCartChange() {
+      tryShowPopup();
     }
 
-    window.addEventListener("promo-2x100-unlocked", handlePromoUnlocked);
-    return () => window.removeEventListener("promo-2x100-unlocked", handlePromoUnlocked);
-  }, []);
+    // 3. Escuchar evento directo (feedback inmediato desde ProductPurchase)
+    function handlePromoEvent() {
+      tryShowPopup();
+    }
+
+    window.addEventListener("store-cart", handleCartChange);
+    window.addEventListener("promo-2x100-unlocked", handlePromoEvent);
+    return () => {
+      window.removeEventListener("store-cart", handleCartChange);
+      window.removeEventListener("promo-2x100-unlocked", handlePromoEvent);
+    };
+  }, [tryShowPopup]);
 
   function handleChoose() {
     setVisible(false);
@@ -87,6 +99,7 @@ export function PromoUnlockedPopup() {
 
   function dismiss() {
     setVisible(false);
+    setDismissed(true);
   }
 
   if (showGallery && products60ml.length > 0) {

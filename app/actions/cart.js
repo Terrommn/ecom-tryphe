@@ -146,6 +146,26 @@ export async function getCartForPage() {
   return getCart(cartId);
 }
 
+export async function checkCartPromoStatus() {
+  if (!isShopifyConfigured()) return { unlocked: false, has60: false };
+  const cartId = await getCartCookieId();
+  if (!cartId) return { unlocked: false, has60: false };
+  const cart = await getCart(cartId);
+  if (!cart) return { unlocked: false, has60: false };
+  const lines = cart.lines?.edges ?? [];
+  let count100 = 0;
+  let has60 = false;
+  for (const { node: line } of lines) {
+    const vTitle = (line.merchandise?.title ?? "").toLowerCase();
+    const isFlash = (line.attributes ?? []).some(
+      (a) => a.key === "_source" && a.value === "flash_sale"
+    );
+    if (vTitle.includes("100") && !isFlash) count100 += line.quantity;
+    if (vTitle.includes("60")) has60 = true;
+  }
+  return { unlocked: count100 >= 2, has60 };
+}
+
 export async function getSantorFreeVariantId() {
   if (!isShopifyConfigured()) return null;
   const { getProductByHandle } = await import("@/lib/shopify");
