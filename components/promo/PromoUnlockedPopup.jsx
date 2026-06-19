@@ -52,15 +52,28 @@ export function PromoUnlockedPopup() {
 
   useEffect(() => {
     function handlePromoUnlocked() {
+      console.log("[PROMO POPUP] Event received!");
       try {
-        if (sessionStorage.getItem("promo_2x100_shown")) return;
+        // Solo bloquear si ya se mostro Y el usuario eligio su 60ml
+        const alreadyShown = sessionStorage.getItem("promo_2x100_shown");
+        const alreadyChose = sessionStorage.getItem("promo_2x100_chose");
+        if (alreadyShown && alreadyChose) {
+          console.log("[PROMO POPUP] Already shown AND chose, skipping");
+          return;
+        }
       } catch {}
+      console.log("[PROMO POPUP] Showing popup!");
       setVisible(true);
       try {
         sessionStorage.setItem("promo_2x100_shown", "1");
       } catch {}
       // Pre-cargar productos 60ml
-      getAll60mlProducts().then(setProducts60ml).catch(() => {});
+      getAll60mlProducts().then((p) => {
+        console.log("[PROMO POPUP] Loaded 60ml products:", p.length);
+        setProducts60ml(p);
+      }).catch((err) => {
+        console.error("[PROMO POPUP] Error loading products:", err);
+      });
     }
 
     window.addEventListener("promo-2x100-unlocked", handlePromoUnlocked);

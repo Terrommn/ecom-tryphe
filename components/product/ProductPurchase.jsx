@@ -102,12 +102,17 @@ export function ProductPurchase({ product }) {
             const isFlash = (line.attributes ?? []).some(
               (a) => a.key === "_source" && a.value === "flash_sale"
             );
+            console.log("[PROMO DEBUG] line:", vTitle, "qty:", line.quantity, "isFlash:", isFlash);
             if (vTitle.includes("100") && !isFlash) count100 += line.quantity;
             if (vTitle.includes("60")) has60 = true;
           }
+          console.log("[PROMO DEBUG] count100:", count100, "has60:", has60);
           if (count100 >= 2 && !has60) {
+            console.log("[PROMO DEBUG] FIRING promo-2x100-unlocked event");
             window.dispatchEvent(new Event("promo-2x100-unlocked"));
           }
+        } else {
+          console.log("[PROMO DEBUG] skipped — isFlashSale:", isFlashSale, "res.cart:", !!res.cart);
         }
       }
       router.refresh();

@@ -56,8 +56,10 @@ function useFlashCountdown() {
       secs: Math.floor((diff % 60000) / 1000),
     };
   };
-  const [t, setT] = useState(calc);
+  // Iniciar con el primer producto y 0s para evitar hydration mismatch
+  const [t, setT] = useState({ product: FLASH_PRODUCTS[0], hours: 0, mins: 0, secs: 0 });
   useEffect(() => {
+    setT(calc());
     const id = setInterval(() => setT(calc()), 1000);
     return () => clearInterval(id);
   }, []);

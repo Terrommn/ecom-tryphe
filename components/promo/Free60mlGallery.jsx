@@ -22,6 +22,7 @@ export function Free60mlGallery({ products, onClose }) {
       await applyDiscountAction("DOSPERFUMES60ML");
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("store-cart"));
+        try { sessionStorage.setItem("promo_2x100_chose", "1"); } catch {}
       }
       onClose();
       router.push("/cart");

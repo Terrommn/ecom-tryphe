@@ -23,16 +23,37 @@ export function CartExitIntent({ hasItems }) {
     } catch {}
   }, [hasItems]);
 
+  // Forzar popup al regresar del checkout (ignora exit_intent_shown)
+  const forceShowFromCheckout = useCallback(() => {
+    if (!hasItems) return;
+    setVisible(true);
+    try {
+      sessionStorage.setItem("exit_intent_shown", "1");
+    } catch {}
+  }, [hasItems]);
+
   useEffect(() => {
     if (!hasItems) return;
 
-    // Si el usuario fue al checkout y regreso (back button), mostrar popup inmediatamente
+    // Verificar al montar si viene de checkout
     try {
       if (sessionStorage.getItem("went_to_checkout")) {
         sessionStorage.removeItem("went_to_checkout");
-        showPopup();
+        forceShowFromCheckout();
       }
     } catch {}
+
+    // Detectar regreso via bfcache (back button desde checkout externo)
+    function handlePageShow(e) {
+      if (e.persisted) {
+        try {
+          if (sessionStorage.getItem("went_to_checkout")) {
+            sessionStorage.removeItem("went_to_checkout");
+            forceShowFromCheckout();
+          }
+        } catch {}
+      }
+    }
 
     // Desktop: mouse sale del viewport por arriba
     function handleMouseLeave(e) {
@@ -41,11 +62,13 @@ export function CartExitIntent({ hasItems }) {
       }
     }
 
+    window.addEventListener("pageshow", handlePageShow);
     document.documentElement.addEventListener("mouseleave", handleMouseLeave);
     return () => {
+      window.removeEventListener("pageshow", handlePageShow);
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [hasItems, showPopup]);
+  }, [hasItems, showPopup, forceShowFromCheckout]);
 
   async function handleApply() {
     setApplying(true);
