@@ -25,6 +25,14 @@ export function CartExitIntent({ hasItems }) {
   useEffect(() => {
     if (!hasItems) return;
 
+    // Si el usuario fue al checkout y regreso (back button), mostrar popup inmediatamente
+    try {
+      if (sessionStorage.getItem("went_to_checkout")) {
+        sessionStorage.removeItem("went_to_checkout");
+        showPopup();
+      }
+    } catch {}
+
     // Desktop: mouse sale del viewport por arriba
     function handleMouseLeave(e) {
       if (e.clientY <= 0) {

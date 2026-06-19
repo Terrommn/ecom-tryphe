@@ -30,6 +30,7 @@ export function CheckoutButton({ checkoutUrl, disabled, discountCodes }) {
       const param = codes.join(",");
       url += (url.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(param)}`;
     }
+    try { sessionStorage.setItem("went_to_checkout", "1"); } catch {}
     window.location.href = url;
   }
 
