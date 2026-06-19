@@ -160,9 +160,11 @@ export async function checkCartPromoStatus() {
     const isFlash = (line.attributes ?? []).some(
       (a) => a.key === "_source" && a.value === "flash_sale"
     );
+    console.log("[PROMO CHECK] variant:", vTitle, "qty:", line.quantity, "flash:", isFlash);
     if (vTitle.includes("100") && !isFlash) count100 += line.quantity;
     if (vTitle.includes("60")) has60 = true;
   }
+  console.log("[PROMO CHECK] result: count100=", count100, "has60=", has60, "unlocked=", count100 >= 2);
   return { unlocked: count100 >= 2, has60 };
 }
 

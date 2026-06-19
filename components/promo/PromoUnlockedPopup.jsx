@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { Free60mlGallery } from "./Free60mlGallery";
 import { getAll60mlProducts, checkCartPromoStatus } from "@/app/actions/cart";
@@ -45,90 +45,61 @@ function Confetti() {
   return <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none" />;
 }
 
-const SS_SHOW = "promo_60ml_show";
-const SS_CHOSE = "promo_2x100_chose";
-const SS_DISMISSED = "promo_60ml_dismissed";
-
 export function PromoUnlockedPopup() {
-  // Inicializar visible desde sessionStorage para sobrevivir router.refresh()
-  const [visible, setVisible] = useState(() => {
-    try {
-      return sessionStorage.getItem(SS_SHOW) === "1"
-        && !sessionStorage.getItem(SS_CHOSE)
-        && !sessionStorage.getItem(SS_DISMISSED);
-    } catch { return false; }
-  });
+  const [visible, setVisible] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [products60ml, setProducts60ml] = useState([]);
-  const checkingRef = useRef(false);
-
-  const show = useCallback(() => {
-    try {
-      if (sessionStorage.getItem(SS_CHOSE)) return;
-      if (sessionStorage.getItem(SS_DISMISSED)) return;
-      sessionStorage.setItem(SS_SHOW, "1");
-    } catch {}
-    setVisible(true);
-    getAll60mlProducts().then(setProducts60ml).catch(() => {});
-  }, []);
-
-  const checkAndShow = useCallback(async () => {
-    // Evitar checks simultaneos
-    if (checkingRef.current) return;
-    checkingRef.current = true;
-    try {
-      if (sessionStorage.getItem(SS_CHOSE)) { checkingRef.current = false; return; }
-      if (sessionStorage.getItem(SS_DISMISSED)) { checkingRef.current = false; return; }
-    } catch {}
-    try {
-      const status = await checkCartPromoStatus();
-      if (status.unlocked && !status.has60) {
-        show();
-      }
-    } catch {}
-    checkingRef.current = false;
-  }, [show]);
+  const [closedThisMount, setClosedThisMount] = useState(false);
 
   useEffect(() => {
-    // Si ya esta visible (restaurado de sessionStorage), cargar productos
-    if (visible && products60ml.length === 0) {
-      getAll60mlProducts().then(setProducts60ml).catch(() => {});
+    // Si el usuario ya cerro en este mount, no volver a verificar
+    if (closedThisMount) return;
+
+    async function check() {
+      try {
+        const status = await checkCartPromoStatus();
+        console.log("[POPUP CLIENT] status:", JSON.stringify(status));
+        if (status.unlocked && !status.has60) {
+          setVisible(true);
+          if (products60ml.length === 0) {
+            const p = await getAll60mlProducts();
+            setProducts60ml(p);
+          }
+        }
+      } catch (err) {
+        console.error("[POPUP CLIENT] error:", err);
+      }
     }
 
-    // Verificar al montar
-    checkAndShow();
+    // Verificar inmediatamente al montar
+    check();
 
-    // Verificar en cada cambio del carrito
-    function handleCartChange() {
-      // Delay para que el carrito se actualice en el servidor
-      setTimeout(() => checkAndShow(), 500);
+    // Verificar cada vez que cambia el carrito
+    function onCartChange() {
+      setTimeout(check, 600);
     }
 
-    // Evento directo desde ProductPurchase
-    function handlePromoEvent() {
-      show();
+    // Verificar cuando ProductPurchase detecta la promo
+    function onPromoEvent() {
+      check();
     }
 
-    window.addEventListener("store-cart", handleCartChange);
-    window.addEventListener("promo-2x100-unlocked", handlePromoEvent);
+    window.addEventListener("store-cart", onCartChange);
+    window.addEventListener("promo-2x100-unlocked", onPromoEvent);
     return () => {
-      window.removeEventListener("store-cart", handleCartChange);
-      window.removeEventListener("promo-2x100-unlocked", handlePromoEvent);
+      window.removeEventListener("store-cart", onCartChange);
+      window.removeEventListener("promo-2x100-unlocked", onPromoEvent);
     };
-  }, [checkAndShow, show, visible, products60ml.length]);
+  }, [closedThisMount, products60ml.length]);
 
   function handleChoose() {
     setVisible(false);
-    try { sessionStorage.removeItem(SS_SHOW); } catch {}
     setShowGallery(true);
   }
 
   function dismiss() {
     setVisible(false);
-    try {
-      sessionStorage.removeItem(SS_SHOW);
-      sessionStorage.setItem(SS_DISMISSED, "1");
-    } catch {}
+    setClosedThisMount(true);
   }
 
   if (showGallery && products60ml.length > 0) {
