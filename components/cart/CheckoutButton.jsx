@@ -1,6 +1,6 @@
 "use client";
 
-export function CheckoutButton({ checkoutUrl, disabled }) {
+export function CheckoutButton({ checkoutUrl, disabled, discountCodes }) {
   if (disabled || !checkoutUrl) {
     return (
       <button
@@ -15,13 +15,21 @@ export function CheckoutButton({ checkoutUrl, disabled }) {
 
   function handleCheckout() {
     let url = checkoutUrl;
+    // Pasar todos los codigos de descuento acumulados al checkout URL
+    const codes = (discountCodes ?? [])
+      .map((c) => c.code)
+      .filter(Boolean);
     try {
-      const code = localStorage.getItem("pending_discount");
-      if (code) {
-        url += (url.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(code)}`;
-        localStorage.removeItem("pending_discount");
+      const pending = localStorage.getItem("pending_discount");
+      if (pending && !codes.includes(pending)) {
+        codes.push(pending);
       }
+      localStorage.removeItem("pending_discount");
     } catch {}
+    if (codes.length > 0) {
+      const param = codes.join(",");
+      url += (url.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(param)}`;
+    }
     window.location.href = url;
   }
 

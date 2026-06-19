@@ -12,7 +12,6 @@ import {
 } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
 
-const PROMO_CODE = "DOSPERFUMES60ML";
 
 function Confetti() {
   const ref = useRef(null);
@@ -142,16 +141,9 @@ export function CartLines({ cart }) {
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-3 bg-[#fdf6ec] border border-[#d4a574]/30 rounded px-4 py-3">
-              <span className="text-sm">🏷️</span>
-              <p className="text-[12px] leading-relaxed text-neutral-700">
-                Aplica el código{" "}
-                <strong className="font-mono bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded text-neutral-950 select-all">
-                  {PROMO_CODE}
-                </strong>{" "}
-                en el checkout para hacer válida tu promoción.
-              </p>
-            </div>
+            <p className="mt-4 text-[12px] leading-relaxed text-neutral-600">
+              El descuento se aplica automaticamente.
+            </p>
 
             <Link
               href="/collections"
@@ -167,10 +159,9 @@ export function CartLines({ cart }) {
         <div className="flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 px-5 py-4">
           <span className="text-xl">✅</span>
           <div>
-            <p className="text-sm font-semibold text-neutral-900">Promoción activada</p>
+            <p className="text-sm font-semibold text-neutral-900">Promocion activada</p>
             <p className="text-[11px] text-neutral-600">
-              Tu perfume de 60ml va gratis con tu pedido. Aplica el código{" "}
-              <strong className="font-mono">{PROMO_CODE}</strong> en el checkout.
+              Tu perfume de 60ml va gratis con tu pedido. El descuento se aplica automaticamente al pagar.
             </p>
           </div>
         </div>

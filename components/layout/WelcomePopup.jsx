@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { subscribeAction } from "@/app/actions/subscribe";
+import { applyDiscountAction } from "@/app/actions/cart";
 
 const LS_KEY = "tryphe_welcome_dismissed";
 const DISCOUNT_CODE = "BIENVENIDO5";
@@ -35,6 +36,8 @@ export function WelcomePopup() {
     if (result.ok) {
       setSubmitted(true);
       localStorage.setItem(LS_KEY, "1");
+      // Auto-aplicar descuento sin que el cliente teclee nada
+      applyDiscountAction(DISCOUNT_CODE).catch(() => {});
     } else {
       setError(result.error);
     }
@@ -105,22 +108,19 @@ export function WelcomePopup() {
         ) : (
           <div className="text-center">
             <p className="text-[9px] font-bold tracking-[0.4em] text-neutral-500 uppercase">
-              Tu código de descuento
+              Descuento aplicado
             </p>
             <h2 className="mt-3 font-serif text-2xl font-medium text-neutral-950">
-              ¡Gracias!
+              Gracias!
             </h2>
             <p className="mt-3 text-sm text-neutral-600">
-              Usa este código en tu primera compra:
+              Tu <strong className="text-neutral-950">5% de descuento</strong> ya esta aplicado automaticamente en tu carrito.
             </p>
-            <button
-              onClick={copyCode}
-              className="mt-4 inline-block border-2 border-dashed border-neutral-950 px-6 py-3 font-mono text-lg font-bold tracking-widest text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-[#faf9f7]"
-            >
+            <div className="mt-4 inline-block border-2 border-dashed border-[#d4a574] px-6 py-3 font-mono text-lg font-bold tracking-widest text-[#d4a574]">
               {DISCOUNT_CODE}
-            </button>
+            </div>
             <p className="mt-2 text-xs text-neutral-400">
-              {copied ? "¡Código copiado!" : "Toca para copiar"}
+              Aplicado automaticamente
             </p>
             <button
               onClick={dismiss}

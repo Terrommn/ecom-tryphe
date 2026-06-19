@@ -6,6 +6,7 @@ import { CheckoutButton } from "@/components/cart/CheckoutButton";
 import { FreeShippingBar } from "@/components/cart/FreeShippingBar";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { TrypheShell } from "@/components/layout/TrypheShell";
+import { CartExitIntent } from "@/components/cart/CartExitIntent";
 
 export const metadata = {
   title: "Carrito | Tienda",
@@ -20,6 +21,7 @@ export default async function CartPage() {
 
   return (
     <TrypheShell>
+      <CartExitIntent hasItems={!!cart?.lines?.edges?.length} />
       <div className="bg-[#faf9f7]">
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-10 py-10 md:py-14">
           <h1 className="font-serif text-3xl md:text-4xl font-medium text-neutral-950 mb-2" data-gsap="fade-up">
@@ -37,7 +39,11 @@ export default async function CartPage() {
               </div>
               <div className="lg:col-span-1">
                 <div className="sticky top-28 rounded-lg border border-neutral-200 bg-neutral-100/40 p-6 space-y-6">
-                  <CheckoutButton checkoutUrl={cart?.checkoutUrl} disabled={!cart?.lines?.edges?.length} />
+                  <CheckoutButton
+                    checkoutUrl={cart?.checkoutUrl}
+                    disabled={!cart?.lines?.edges?.length}
+                    discountCodes={cart?.discountCodes}
+                  />
                   <p className="text-xs text-neutral-500">
                     Serás redirigido al checkout seguro de Shopify para completar el pago, envío y
                     facturación.
