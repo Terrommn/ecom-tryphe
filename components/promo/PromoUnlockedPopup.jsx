@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { Free60mlGallery } from "./Free60mlGallery";
@@ -88,18 +89,29 @@ export function PromoUnlockedPopup() {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="relative mx-4 w-full max-w-sm bg-[#faf9f7] p-8 shadow-2xl overflow-hidden">
+      <div className="relative mx-4 w-full max-w-md bg-[#faf9f7] shadow-2xl overflow-hidden">
         <Confetti />
 
         <button
           onClick={dismiss}
-          className="absolute right-3 top-3 text-neutral-400 hover:text-neutral-950 transition-colors z-10"
+          className="absolute right-3 top-3 text-neutral-400 hover:text-neutral-950 transition-colors z-20"
           aria-label="Cerrar"
         >
           <X size={20} />
         </button>
 
-        <div className="relative z-10">
+        <div className="relative h-40 sm:h-48 w-full bg-neutral-950">
+          <Image
+            src="/home/hero-bottles-lineup.png"
+            alt="Perfumes TRYPHE"
+            fill
+            className="object-cover opacity-90"
+            sizes="448px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f7] via-transparent to-transparent" />
+        </div>
+
+        <div className="relative z-10 px-8 pb-8 -mt-6">
           <div className="inline-flex items-center gap-2 rounded-full bg-[#d4a574]/15 px-4 py-1.5 mb-4">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d4a574] opacity-75" />

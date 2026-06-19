@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -67,17 +68,28 @@ export function CartExitIntent({ hasItems }) {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="relative mx-4 w-full max-w-sm bg-[#faf9f7] p-8 shadow-2xl">
+      <div className="relative mx-4 w-full max-w-sm bg-[#faf9f7] shadow-2xl overflow-hidden">
         <button
           onClick={handleDismiss}
-          className="absolute right-3 top-3 text-neutral-400 hover:text-neutral-950 transition-colors"
+          className="absolute right-3 top-3 text-white/80 hover:text-white transition-colors z-20"
           aria-label="Cerrar"
         >
           <X size={20} />
         </button>
 
+        <div className="relative h-36 w-full bg-neutral-950">
+          <Image
+            src="/home/bottle-ignis.png"
+            alt="Perfume TRYPHE Ignis"
+            fill
+            className="object-cover opacity-80"
+            sizes="384px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f7] via-transparent to-neutral-950/30" />
+        </div>
+
         {!applied ? (
-          <>
+          <div className="px-8 pb-8 -mt-4 relative z-10">
             <p className="text-[9px] font-bold tracking-[0.4em] text-[#a17952] uppercase">
               Oferta especial
             </p>
@@ -113,9 +125,9 @@ export function CartExitIntent({ hasItems }) {
             >
               No, gracias
             </button>
-          </>
+          </div>
         ) : (
-          <div className="text-center py-4">
+          <div className="text-center px-8 pb-8 -mt-4 relative z-10">
             <span className="text-3xl">✅</span>
             <h2 className="mt-3 font-serif text-xl font-medium text-neutral-950">
               Descuento aplicado!

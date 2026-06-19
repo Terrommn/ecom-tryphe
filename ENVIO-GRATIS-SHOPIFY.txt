@@ -1,0 +1,92 @@
+=====================================================
+CONFIGURAR ENVIO GRATIS ARRIBA DE $1,000 MXN EN SHOPIFY
+=====================================================
+
+PROBLEMA ACTUAL:
+El checkout cobra $94.86 de envio aunque el subtotal sea mayor a $1,000.
+Esto se configura directamente en el admin de Shopify, no en el codigo.
+
+PASOS:
+
+1. Ir a: https://admin.shopify.com
+   (o tu URL: https://vh3sx0-jz.myshopify.com/admin)
+
+2. Click en: Configuracion (esquina inferior izquierda)
+
+3. Click en: Envio y entrega
+
+4. En la seccion "Tarifas de envio", click en "Administrar tarifas"
+   junto a tu perfil de envio (General o el que uses)
+
+5. En la zona de envio "Mexico" (o la que aplique),
+   busca las tarifas existentes.
+
+6. OPCION A — Agregar tarifa de envio gratis condicional:
+   - Click en "Agregar tarifa"
+   - Nombre: "Envio gratis"
+   - Precio: $0
+   - Click en "Agregar condiciones"
+   - Seleccionar "Basado en el precio del pedido"
+   - Precio minimo: $1,000
+   - Precio maximo: (dejar vacio = sin limite)
+   - Guardar
+
+7. OPCION B — Si ya tienes una tarifa de envio con costo:
+   - Puedes dejarla para pedidos menores a $1,000
+   - Y agregar la tarifa gratis para pedidos >= $1,000
+   - Shopify mostrara ambas opciones al cliente
+   - El cliente elegira "Envio gratis" si su pedido califica
+
+8. IMPORTANTE: Si quieres que SOLO aparezca envio gratis
+   (sin opcion de pagar envio) para pedidos arriba de $1,000:
+   - Edita la tarifa con costo
+   - Agrega condicion: precio maximo $999.99
+   - Asi solo aparece para pedidos menores a $1,000
+
+VERIFICAR:
+- Haz un pedido de prueba con subtotal > $1,000
+- En el checkout, la seccion "Metodos de envio" debe mostrar "$0" o "Gratis"
+
+NOTAS:
+- El FreeShippingBar en el carrito ya muestra visualmente el progreso
+- Los descuentos (DOSPERFUMES60ML, etc.) se aplican al subtotal ANTES del envio
+- Si el subtotal despues de descuentos baja de $1,000, el envio ya no seria gratis
+  Ejemplo: Subtotal $1,298 - descuento $499 = $799 (podria no calificar)
+  Solucion: Usar el precio ANTES de descuento como condicion, o bajar el umbral
+
+=====================================================
+CODIGOS DE DESCUENTO QUE DEBEN EXISTIR EN SHOPIFY
+=====================================================
+
+Verifica que estos codigos esten creados en:
+Shopify Admin > Descuentos > Crear descuento
+
+1. DOSPERFUMES60ML
+   - Tipo: Porcentaje o Monto fijo
+   - Descuento: 100% en el producto de 60ml (o monto fijo del precio del 60ml)
+   - Condicion: Minimo 2 productos de 100ml en el carrito
+   - Combinable: SI (con otros descuentos)
+
+2. YACASITERMINAS
+   - Tipo: Porcentaje
+   - Descuento: 5%
+   - Aplica a: Todo el pedido
+   - Combinable: SI
+
+3. BIENVENIDO5
+   - Tipo: Porcentaje
+   - Descuento: 5%
+   - Aplica a: Todo el pedido
+   - Uso: 1 vez por cliente
+   - Combinable: SI
+
+4. RELAMPAGO
+   - Tipo: Porcentaje
+   - Descuento: 15%
+   - Aplica a: Todo el pedido
+   - Combinable: NO (exclusivo con oferta relampago)
+
+IMPORTANTE SOBRE COMBINACION:
+En Shopify Admin > Descuentos > cada codigo > seccion "Combinaciones":
+- Marcar "Se puede combinar con otros descuentos" para los 3 primeros
+- RELAMPAGO no debe ser combinable

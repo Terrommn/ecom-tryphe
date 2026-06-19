@@ -109,16 +109,26 @@ export function CartLines({ cart }) {
     <div className="space-y-8">
       {/* ── Promo: 2 de 100ml → cualquier 60ml gratis ── */}
       {showPromo && (
-        <div className="relative overflow-hidden border border-neutral-200 bg-white p-6 sm:p-8 rounded-lg shadow-sm">
+        <div className="relative overflow-hidden border border-neutral-200 bg-white rounded-lg shadow-sm">
           <Confetti />
-          <div className="relative z-10">
+          <div className="relative h-36 sm:h-44 w-full">
+            <Image
+              src="/home/hero-boxes-display.png"
+              alt="Cajas de perfumes TRYPHE"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 66vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+          </div>
+          <div className="relative z-10 px-6 sm:px-8 pb-6 sm:pb-8 -mt-8">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#d4a574]/15 px-4 py-1.5 mb-4">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d4a574] opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d4a574]" />
               </span>
               <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a17952]">
-                Promoción Desbloqueada
+                Promocion Desbloqueada
               </span>
             </div>
 
@@ -126,24 +136,21 @@ export function CartLines({ cart }) {
               Has desbloqueado un regalo exclusivo
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600 max-w-lg">
-              Por comprar 2 perfumes de 100ml a precio regular, te has ganado{" "}
+              Por comprar 2 perfumes de 100ml, te has ganado{" "}
               <strong className="text-neutral-950">cualquier perfume de 60ml totalmente gratis</strong>.
+              El descuento se aplica automaticamente.
             </p>
 
             <div className="mt-5">
               <div className="flex items-center gap-3 bg-neutral-50 border border-neutral-200 rounded px-4 py-3">
                 <span className="text-lg">🎁</span>
                 <div>
-                  <p className="text-sm font-semibold text-neutral-950">Perfume de 60ml a tu elección</p>
-                  <p className="text-[11px] text-neutral-500">Agrega cualquier perfume en presentación de 60ml a tu carrito</p>
+                  <p className="text-sm font-semibold text-neutral-950">Perfume de 60ml a tu eleccion</p>
+                  <p className="text-[11px] text-neutral-500">Agrega cualquier perfume en presentacion de 60ml a tu carrito</p>
                 </div>
                 <span className="ml-auto text-xs font-bold text-[#d4a574]">GRATIS</span>
               </div>
             </div>
-
-            <p className="mt-4 text-[12px] leading-relaxed text-neutral-600">
-              El descuento se aplica automaticamente.
-            </p>
 
             <Link
               href="/collections"
