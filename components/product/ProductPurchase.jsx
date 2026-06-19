@@ -82,15 +82,33 @@ export function ProductPurchase({ product }) {
         : [];
       const res = await addLineItemAction(activeVariant.id, 1, attrs);
       if (!res.ok) {
-        setMsg(res.error || "No se pudo añadir");
+        setMsg(res.error || "No se pudo anadir");
         return;
       }
-      // Auto-aplicar código RELAMPAGO si viene de oferta relámpago
+      // Auto-aplicar codigo RELAMPAGO si viene de oferta relampago
       if (isFlashSale) {
         await applyDiscountAction("RELAMPAGO");
       }
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("store-cart"));
+
+        // Detectar si se desbloqueo la promo 2x100ml
+        if (!isFlashSale && res.cart) {
+          const lines = res.cart.lines?.edges ?? [];
+          let count100 = 0;
+          let has60 = false;
+          for (const { node: line } of lines) {
+            const vTitle = (line.merchandise?.title ?? "").toLowerCase();
+            const isFlash = (line.attributes ?? []).some(
+              (a) => a.key === "_source" && a.value === "flash_sale"
+            );
+            if (vTitle.includes("100") && !isFlash) count100 += line.quantity;
+            if (vTitle.includes("60")) has60 = true;
+          }
+          if (count100 >= 2 && !has60) {
+            window.dispatchEvent(new Event("promo-2x100-unlocked"));
+          }
+        }
       }
       router.refresh();
     });

@@ -6,6 +6,7 @@ import { GsapScrollSetup } from "@/components/gsap/GsapScrollSetup";
 import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { WelcomePopup } from "@/components/layout/WelcomePopup";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { PromoUnlockedPopup } from "@/components/promo/PromoUnlockedPopup";
 
 const inter = Inter({
   variable: "--font-body",
@@ -76,6 +77,7 @@ export default function RootLayout({ children }) {
         <ConditionalChrome>{children}</ConditionalChrome>
         <WhatsAppFab />
         <WelcomePopup />
+        <PromoUnlockedPopup />
       </body>
     </html>
   );
