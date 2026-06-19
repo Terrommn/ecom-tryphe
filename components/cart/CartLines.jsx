@@ -3,14 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProductHref } from "@/lib/product-href";
-import { useTransition, useEffect, useRef } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   updateLineQuantityAction,
   removeLineAction,
   applyDiscountFormAction,
+  getAll60mlProducts,
 } from "@/app/actions/cart";
 import { formatMoney } from "@/lib/money";
+import { Free60mlGallery } from "@/components/promo/Free60mlGallery";
 
 
 function Confetti() {
@@ -55,6 +57,8 @@ function Confetti() {
 export function CartLines({ cart }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [showGallery, setShowGallery] = useState(false);
+  const [products60ml, setProducts60ml] = useState([]);
   const lines = cart?.lines?.edges ?? [];
 
   // ── Promo: 2+ perfumes de 100ml a precio regular → cualquier 60ml gratis ──
@@ -106,6 +110,13 @@ export function CartLines({ cart }) {
   const codes = cart?.discountCodes ?? [];
 
   return (
+    <>
+    {showGallery && products60ml.length > 0 && (
+      <Free60mlGallery
+        products={products60ml}
+        onClose={() => setShowGallery(false)}
+      />
+    )}
     <div className="space-y-8">
       {/* ── Promo: 2 de 100ml → cualquier 60ml gratis ── */}
       {showPromo && (
@@ -152,12 +163,18 @@ export function CartLines({ cart }) {
               </div>
             </div>
 
-            <Link
-              href="/collections"
-              className="mt-6 inline-block w-full sm:w-auto text-center px-8 py-4 bg-neutral-950 text-white text-[10px] font-bold uppercase tracking-[0.25em] transition hover:bg-neutral-800"
+            <button
+              type="button"
+              onClick={() => {
+                getAll60mlProducts().then((p) => {
+                  setProducts60ml(p);
+                  setShowGallery(true);
+                });
+              }}
+              className="mt-6 w-full sm:w-auto text-center px-8 py-4 bg-neutral-950 text-white text-[10px] font-bold uppercase tracking-[0.25em] transition hover:bg-neutral-800"
             >
               Elegir mi perfume de 60ml gratis
-            </Link>
+            </button>
           </div>
         </div>
       )}
@@ -315,5 +332,6 @@ export function CartLines({ cart }) {
         </p>
       </div>
     </div>
+    </>
   );
 }

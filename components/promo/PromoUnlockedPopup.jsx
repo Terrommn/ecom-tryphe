@@ -45,43 +45,68 @@ function Confetti() {
   return <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none" />;
 }
 
+const SS_SHOW = "promo_60ml_show";
+const SS_CHOSE = "promo_2x100_chose";
+const SS_DISMISSED = "promo_60ml_dismissed";
+
 export function PromoUnlockedPopup() {
-  const [visible, setVisible] = useState(false);
+  // Inicializar visible desde sessionStorage para sobrevivir router.refresh()
+  const [visible, setVisible] = useState(() => {
+    try {
+      return sessionStorage.getItem(SS_SHOW) === "1"
+        && !sessionStorage.getItem(SS_CHOSE)
+        && !sessionStorage.getItem(SS_DISMISSED);
+    } catch { return false; }
+  });
   const [showGallery, setShowGallery] = useState(false);
   const [products60ml, setProducts60ml] = useState([]);
-  const [dismissed, setDismissed] = useState(false);
+  const checkingRef = useRef(false);
 
-  const tryShowPopup = useCallback(async () => {
-    // Si el usuario ya eligio su 60ml en esta sesion, no molestar
+  const show = useCallback(() => {
     try {
-      if (sessionStorage.getItem("promo_2x100_chose")) return;
+      if (sessionStorage.getItem(SS_CHOSE)) return;
+      if (sessionStorage.getItem(SS_DISMISSED)) return;
+      sessionStorage.setItem(SS_SHOW, "1");
     } catch {}
-    // Si ya lo cerro manualmente, no volver a mostrar en esta sesion
-    if (dismissed) return;
+    setVisible(true);
+    getAll60mlProducts().then(setProducts60ml).catch(() => {});
+  }, []);
 
-    // Verificar directamente con el carrito (fuente de verdad)
+  const checkAndShow = useCallback(async () => {
+    // Evitar checks simultaneos
+    if (checkingRef.current) return;
+    checkingRef.current = true;
+    try {
+      if (sessionStorage.getItem(SS_CHOSE)) { checkingRef.current = false; return; }
+      if (sessionStorage.getItem(SS_DISMISSED)) { checkingRef.current = false; return; }
+    } catch {}
     try {
       const status = await checkCartPromoStatus();
       if (status.unlocked && !status.has60) {
-        setVisible(true);
-        // Pre-cargar productos 60ml
-        getAll60mlProducts().then(setProducts60ml).catch(() => {});
+        show();
       }
     } catch {}
-  }, [dismissed]);
+    checkingRef.current = false;
+  }, [show]);
 
   useEffect(() => {
-    // 1. Verificar al montar (por si ya tiene 2x100ml)
-    tryShowPopup();
-
-    // 2. Verificar en cada cambio del carrito
-    function handleCartChange() {
-      tryShowPopup();
+    // Si ya esta visible (restaurado de sessionStorage), cargar productos
+    if (visible && products60ml.length === 0) {
+      getAll60mlProducts().then(setProducts60ml).catch(() => {});
     }
 
-    // 3. Escuchar evento directo (feedback inmediato desde ProductPurchase)
+    // Verificar al montar
+    checkAndShow();
+
+    // Verificar en cada cambio del carrito
+    function handleCartChange() {
+      // Delay para que el carrito se actualice en el servidor
+      setTimeout(() => checkAndShow(), 500);
+    }
+
+    // Evento directo desde ProductPurchase
     function handlePromoEvent() {
-      tryShowPopup();
+      show();
     }
 
     window.addEventListener("store-cart", handleCartChange);
@@ -90,16 +115,20 @@ export function PromoUnlockedPopup() {
       window.removeEventListener("store-cart", handleCartChange);
       window.removeEventListener("promo-2x100-unlocked", handlePromoEvent);
     };
-  }, [tryShowPopup]);
+  }, [checkAndShow, show, visible, products60ml.length]);
 
   function handleChoose() {
     setVisible(false);
+    try { sessionStorage.removeItem(SS_SHOW); } catch {}
     setShowGallery(true);
   }
 
   function dismiss() {
     setVisible(false);
-    setDismissed(true);
+    try {
+      sessionStorage.removeItem(SS_SHOW);
+      sessionStorage.setItem(SS_DISMISSED, "1");
+    } catch {}
   }
 
   if (showGallery && products60ml.length > 0) {
