@@ -14,17 +14,18 @@ export function WelcomePopup() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem(LS_KEY)) return;
+    try {
+      if (localStorage.getItem(LS_KEY)) return;
+    } catch { return; }
     const t = setTimeout(() => setVisible(true), 3000);
     return () => clearTimeout(t);
   }, []);
 
   function dismiss() {
     setVisible(false);
-    localStorage.setItem(LS_KEY, "1");
+    try { localStorage.setItem(LS_KEY, "1"); } catch {}
   }
 
   async function handleSubmit(e) {
@@ -35,18 +36,12 @@ export function WelcomePopup() {
     setLoading(false);
     if (result.ok) {
       setSubmitted(true);
-      localStorage.setItem(LS_KEY, "1");
+      try { localStorage.setItem(LS_KEY, "1"); } catch {}
       // Auto-aplicar descuento sin que el cliente teclee nada
       applyDiscountAction(DISCOUNT_CODE).catch(() => {});
     } else {
       setError(result.error);
     }
-  }
-
-  function copyCode() {
-    navigator.clipboard.writeText(DISCOUNT_CODE);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   }
 
   if (!visible) return null;

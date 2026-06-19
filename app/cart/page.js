@@ -61,7 +61,7 @@ export default async function CartPage() {
 
           {configured && upsell.length > 0 && cart?.lines?.edges?.length ? (
             <section className="mt-20 border-t border-neutral-200 pt-12">
-              <h2 className="font-serif text-3xl md:text-4xl font-medium text-xl text-neutral-950 mb-6">
+              <h2 className="font-serif text-3xl md:text-4xl font-medium text-neutral-950 mb-6">
                 Completa tu look
               </h2>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
