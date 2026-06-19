@@ -70,16 +70,28 @@ export function CartExitIntent({ hasItems }) {
     };
   }, [hasItems, showPopup, forceShowFromCheckout]);
 
+  const [error, setError] = useState(null);
+
   async function handleApply() {
     setApplying(true);
-    const res = await applyDiscountAction("YACASITERMINAS");
-    setApplying(false);
-    if (res.ok) {
-      setApplied(true);
-      setTimeout(() => {
-        setVisible(false);
-        router.refresh();
-      }, 1500);
+    setError(null);
+    try {
+      const res = await applyDiscountAction("YACASITERMINAS");
+      setApplying(false);
+      console.log("[EXIT INTENT] applyDiscountAction result:", JSON.stringify(res));
+      if (res.ok) {
+        setApplied(true);
+        setTimeout(() => {
+          setVisible(false);
+          router.refresh();
+        }, 1500);
+      } else {
+        setError(res.error || "No se pudo aplicar el descuento");
+      }
+    } catch (err) {
+      setApplying(false);
+      console.error("[EXIT INTENT] Error:", err);
+      setError("Error de conexion. Intenta de nuevo.");
     }
   }
 
@@ -141,6 +153,10 @@ export function CartExitIntent({ hasItems }) {
             >
               {applying ? "Aplicando..." : "Aplicar descuento"}
             </button>
+
+            {error && (
+              <p className="mt-3 text-xs text-red-500 text-center">{error}</p>
+            )}
 
             <button
               onClick={handleDismiss}
