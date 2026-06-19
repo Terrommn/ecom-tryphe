@@ -26,6 +26,10 @@ export function CheckoutButton({ checkoutUrl, disabled, discountCodes }) {
       }
       localStorage.removeItem("pending_discount");
     } catch {}
+    // Promo mundialista: siempre aplicar GOL10
+    if (!codes.includes("GOL10")) {
+      codes.push("GOL10");
+    }
     if (codes.length > 0) {
       const param = codes.join(",");
       url += (url.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(param)}`;

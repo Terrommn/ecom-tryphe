@@ -199,7 +199,7 @@ export function TrypheLanding({
   santorVariantId = null,
   santorCheckoutUrl = null,
 }) {
-  const [heroIdx, setHeroIdx] = useState(0);
+  const [heroIdx, setHeroIdx] = useState(3);
   const [activeTab, setActiveTab] = useState("MÁS VENDIDOS");
   const [santorPending, startSantorTransition] = useTransition();
 
@@ -222,12 +222,14 @@ export function TrypheLanding({
     });
   }
 
+  const TOTAL_SLIDES = 4;
+
   const nextSlide = useCallback(() => {
-    setHeroIdx((i) => (i + 1) % 3);
+    setHeroIdx((i) => (i + 1) % TOTAL_SLIDES);
   }, []);
 
   const prevSlide = useCallback(() => {
-    setHeroIdx((i) => (i - 1 + 3) % 3);
+    setHeroIdx((i) => (i - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
   }, []);
 
   useEffect(() => {
@@ -407,6 +409,51 @@ export function TrypheLanding({
               </div>
             </div>
           </div>
+          {/* ── Banner 4: GOL DE MÉXICO = 10% DESCUENTO ── */}
+          <div className={`grid md:grid-cols-2 md:h-[85vh] md:max-h-[920px] transition-opacity duration-700 ${heroIdx === 3 ? "relative opacity-100" : "absolute inset-0 opacity-0 pointer-events-none"}`}>
+            <div className="relative min-h-[95vw] overflow-hidden bg-[#0a3d1f] md:min-h-0">
+              <Image
+                src="/promo-gol-mexico.jpg"
+                alt="Por cada gol de México 10% de descuento en todos nuestros perfumes"
+                fill
+                className={`object-cover object-top transition-transform duration-[4000ms] ease-out ${heroIdx === 3 ? "scale-100" : "scale-[1.06]"}`}
+                sizes="(max-width:768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-col justify-start bg-white px-4 relative z-10 rounded-t-2xl pt-4 pb-3 md:justify-center md:rounded-none md:py-10 md:px-12 lg:px-16 xl:px-20">
+              <div key={`b3-${heroIdx}`} className="flex flex-col gap-1.5 md:gap-0">
+                <p className="hero-enter hero-enter-d1 text-[9px] md:text-[11px] font-bold tracking-[0.35em] uppercase text-[#006847]">
+                  Promo mundialista
+                </p>
+                <h2 className="hero-enter hero-enter-d2 mt-3 md:mt-4 font-serif leading-[1.08] tracking-tight text-neutral-950">
+                  <span className="block text-[1.6rem] md:text-[clamp(1.5rem,3vw,2.4rem)] font-bold">
+                    Por cada gol de México
+                  </span>
+                  <span className="block text-[2.8rem] md:text-[clamp(2.2rem,4.5vw,3.8rem)] font-bold text-[#006847] mt-1">
+                    10% DESCUENTO
+                  </span>
+                  <span className="block text-[1.1rem] md:text-[clamp(1rem,2vw,1.5rem)] font-normal text-neutral-600 mt-1">
+                    en todos nuestros perfumes
+                  </span>
+                </h2>
+                <div className="hero-enter hero-enter-d3 mt-4 md:mt-5 h-[2px] w-14 bg-[#006847]/30" />
+                <p className="hero-enter hero-enter-d3 mt-3 md:mt-5 max-w-sm text-sm leading-[1.75] text-neutral-600">
+                  ¡Se viene GOLIZA! Usa el código con el descuento acumulado después de cada gol. Guarda esta promo y síguenos para no perdértelo.
+                </p>
+                <p className="hero-enter hero-enter-d4 mt-2 text-[10px] text-neutral-400 italic">
+                  * Términos y condiciones aplican. Válido durante el partido.
+                </p>
+                <div className="hero-enter hero-enter-d5 mt-4 md:mt-7">
+                  <Link
+                    href="/collections"
+                    className="inline-flex w-full min-h-[44px] md:min-h-[46px] items-center justify-center bg-[#006847] px-5 text-[9px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white transition duration-200 hover:scale-[1.02] hover:bg-[#004d35] active:scale-100"
+                  >
+                    Comprar ahora
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Flechas — centradas en la imagen (top-[20vh] en mobile = mitad de 40vh imagen) */}
@@ -431,7 +478,7 @@ export function TrypheLanding({
 
         {/* Dots — centrados en mobile, lado imagen en desktop */}
         <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-2 md:left-1/4">
-          {[0, 1, 2].map((i) => (
+          {[0, 1, 2, 3].map((i) => (
             <button
               key={i}
               onClick={() => setHeroIdx(i)}
