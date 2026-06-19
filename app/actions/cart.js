@@ -111,10 +111,21 @@ export async function applyDiscountAction(code) {
   const cartId = await getCartCookieId();
   if (!cartId) return { ok: false, error: "Sin carrito" };
   const trimmed = (code || "").trim();
-  const { cart, userErrors } = await updateCartDiscountCodes(
-    cartId,
-    trimmed ? [trimmed] : [],
-  );
+  if (!trimmed) return { ok: false, error: "Codigo vacio" };
+
+  // Leer codigos existentes del carrito para acumular
+  const currentCart = await getCart(cartId);
+  const existingCodes = (currentCart?.discountCodes ?? [])
+    .map((c) => c.code)
+    .filter(Boolean);
+
+  // No duplicar si ya esta aplicado
+  if (existingCodes.includes(trimmed)) {
+    return { ok: true, cart: currentCart };
+  }
+
+  const allCodes = [...existingCodes, trimmed];
+  const { cart, userErrors } = await updateCartDiscountCodes(cartId, allCodes);
   if (userErrors?.length) {
     return { ok: false, error: userErrors.map((u) => u.message).join(", ") };
   }
@@ -166,4 +177,32 @@ export async function getSantorPocketVariantId() {
       )
   );
   return v30?.node?.id ?? null;
+}
+
+export async function getAll60mlProducts() {
+  if (!isShopifyConfigured()) return [];
+  const { getProducts } = await import("@/lib/shopify");
+  const allProducts = await getProducts();
+  const results = [];
+  for (const product of allProducts) {
+    const variants = product.variants?.edges ?? [];
+    const v60 = variants.find((e) => {
+      const title = (e.node.title ?? "").toLowerCase();
+      return title.includes("60");
+    });
+    if (v60) {
+      results.push({
+        id: product.id,
+        handle: product.handle,
+        title: product.title,
+        featuredImage: product.featuredImage,
+        variant60ml: {
+          id: v60.node.id,
+          title: v60.node.title,
+          price: v60.node.price,
+        },
+      });
+    }
+  }
+  return results;
 }
